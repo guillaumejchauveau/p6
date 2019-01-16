@@ -44,7 +44,8 @@ after_failure: |
   [[ $TRAVIS_EVENT_TYPE == "push" && "master dmz $TRAVIS_TAG" =~ (^|[[:space:]])$TRAVIS_BRANCH($|[[:space:]]) ]] && \
   curl -# $WEBHOOK_SCRIPT | bash -s build_failed
 
-after_success: |
+after_success:
+  - |
   [[ $TRAVIS_EVENT_TYPE == "push" && "master $TRAVIS_TAG" =~ (^|[[:space:]])$TRAVIS_BRANCH($|[[:space:]]) ]] && \
-  curl -# $WEBHOOK_SCRIPT | bash -s build_succeeded && \
-  (ssh $FORGE_SYNC || true)
+  curl -# $WEBHOOK_SCRIPT | bash -s build_succeeded
+  - ssh $FORGE_SYNC || true
