@@ -15,7 +15,6 @@ stages:
   - build
   - name: CI_ops
     if: branch = dmz && type = push
-  - forge_syncing
 
 .gradle_template: &gradle
   language: java
@@ -40,8 +39,6 @@ jobs:
         - git remote add master_uplink ssh://git@github.com/$TRAVIS_REPO_SLUG.git
         - git push master_uplink dmz:master
         - git remote remove master_uplink
-    - stage: forge_syncing
-      script: ssh $FORGE_SYNC || true
 
 after_failure: |
   [[ $TRAVIS_EVENT_TYPE == "push" && "master dmz $TRAVIS_TAG" =~ (^|[[:space:]])$TRAVIS_BRANCH($|[[:space:]]) ]] && \
@@ -49,4 +46,5 @@ after_failure: |
 
 after_success: |
   [[ $TRAVIS_EVENT_TYPE == "push" && "master $TRAVIS_TAG" =~ (^|[[:space:]])$TRAVIS_BRANCH($|[[:space:]]) ]] && \
-  curl -# $WEBHOOK_SCRIPT | bash -s build_succeeded
+  curl -# $WEBHOOK_SCRIPT | bash -s build_succeeded && \
+  (ssh $FORGE_SYNC || true)
