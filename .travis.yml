@@ -30,8 +30,11 @@ jobs:
   include:
     - <<: *gradle
       stage: build
+      before_script:
+        - chmod +x ./gradlew
       script:
         - ./gradlew build --scan -s
+        - bash <(curl -s https://codecov.io/bash) -t
     - stage: CI_ops
       before_script:
         - curl -# $WEBHOOK_SCRIPT | bash -s new_commit
@@ -46,6 +49,6 @@ after_failure: |
 
 after_success:
   - |
-  [[ $TRAVIS_EVENT_TYPE == "push" && "master $TRAVIS_TAG" =~ (^|[[:space:]])$TRAVIS_BRANCH($|[[:space:]]) ]] && \
-  curl -# $WEBHOOK_SCRIPT | bash -s build_succeeded
-  - ssh $FORGE_SYNC || true
+    if [[ $TRAVIS_EVENT_TYPE == "push" && "master $TRAVIS_TAG" =~ (^|[[:space:]])$TRAVIS_BRANCH($|[[:space:]]) ]]; then \
+    curl -# $WEBHOOK_SCRIPT | bash -s build_succeeded; fi
+  - if [[ $TRAVIS_EVENT_TYPE == "cron" ]]; then ssh $FORGE_SYNC || true; fi
