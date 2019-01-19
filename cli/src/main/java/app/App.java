@@ -1,7 +1,7 @@
 package app;
 
 /**
- * Entry point
+ * Entry point.
  */
 public class App {
   /**
@@ -15,6 +15,8 @@ public class App {
   }
 
   /**
+   * The message is essentially useless.
+   *
    * @return The app's message
    */
   public String message() {
