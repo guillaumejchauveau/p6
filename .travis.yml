@@ -2,7 +2,7 @@ language: minimal
 install: true
 
 jdk:
-  - openjdk8
+  - openjdk11
 
 git:
   depth: 3
@@ -34,7 +34,7 @@ jobs:
         - chmod +x ./gradlew
       script:
         - ./gradlew build --scan -s
-        - bash <(curl -s https://codecov.io/bash) -t
+        - bash <(curl -s https://codecov.io/bash)
     - stage: CI_ops
       before_script:
         - curl -# $WEBHOOK_SCRIPT | bash -s new_commit
