@@ -1,4 +1,4 @@
-package app;
+package com.p6.cli.app;
 
 import org.junit.Assert;
 import org.junit.Test;
