@@ -1,4 +1,4 @@
-package solution;
+package com.p6.cli.solution;
 
 import java.util.Collection;
 import java.util.Set;
