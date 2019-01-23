@@ -10,8 +10,6 @@ public class App {
    * @param args System args
    */
   public static void main(String[] args) {
-    App app = new App();
-    System.out.println(app.message());
   }
 
   /**
@@ -19,7 +17,7 @@ public class App {
    *
    * @return The app's message
    */
-  public String message() {
+  String message() {
     return "Hello world";
   }
 }

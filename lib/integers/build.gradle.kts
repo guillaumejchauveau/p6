@@ -1,23 +1,17 @@
 plugins {
-  java
-  application
+  `java-library`
   jacoco
   checkstyle
   maven
 }
 
-application {
-  mainClassName = "com.p6.cli.app.App"
-}
-
 dependencies {
-  testCompile("junit:junit:4.12")
   implementation(project(":core"))
-  runtimeOnly(project(":lib:integers"))
+  testImplementation("junit:junit:4.12")
 }
 
 checkstyle {
-  configFile = File("../checkstyle.xml")
+  configFile = File("../../checkstyle.xml")
 }
 
 tasks.withType<Checkstyle>().configureEach {

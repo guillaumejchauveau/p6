@@ -1,2 +1,2 @@
 rootProject.name = "p6"
-include("cli")
+include("core", "lib:integers", "cli")
