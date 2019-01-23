@@ -1,4 +1,4 @@
-package com.p6.cli.chemicalprogramrunner;
+package com.p6.core.chemicalprogramrunner;
 
 import org.junit.Test;
 

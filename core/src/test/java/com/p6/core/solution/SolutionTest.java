@@ -1,4 +1,4 @@
-package com.p6.cli.solution;
+package com.p6.core.solution;
 
 import org.junit.Test;
 

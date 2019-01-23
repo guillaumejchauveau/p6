@@ -5,6 +5,7 @@ allprojects {
 }
 
 subprojects {
+  group = "com.p6"
   version = "1.0"
 }
 
