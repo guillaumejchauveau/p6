@@ -1,4 +1,4 @@
-package com.p6.lib.integers.solution;
+package com.p6.lib.integers;
 
 import com.p6.core.solution.Solution;
 import com.p6.core.solution.SolutionConfiguration;

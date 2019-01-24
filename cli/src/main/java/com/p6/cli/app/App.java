@@ -1,5 +1,9 @@
 package com.p6.cli.app;
 
+import com.p6.core.solution.SolutionConfigurator;
+
+import java.util.ServiceLoader;
+
 /**
  * Entry point.
  */
@@ -10,14 +14,9 @@ public class App {
    * @param args System args
    */
   public static void main(String[] args) {
-  }
-
-  /**
-   * The message is essentially useless.
-   *
-   * @return The app's message
-   */
-  String message() {
-    return "Hello world";
+    ServiceLoader<SolutionConfigurator> loader = ServiceLoader.load(SolutionConfigurator.class);
+    for (SolutionConfigurator configurator : loader) {
+      System.out.println(configurator);
+    }
   }
 }
