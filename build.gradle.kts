@@ -19,6 +19,16 @@ subprojects {
   apply(plugin = "checkstyle")
   apply(plugin = "maven")
 
+  tasks.withType<JacocoReport>().configureEach {
+    reports {
+      xml.isEnabled = true
+    }
+  }
+
+  tasks.check {
+    dependsOn(tasks.withType<JacocoReport>())
+  }
+
   checkstyle {
     configFile = File("../checkstyle.xml")
   }
