@@ -1,7 +1,6 @@
 package com.p6.cli.app;
 
 import com.p6.core.solution.SolutionConfigurator;
-
 import java.util.ServiceLoader;
 
 /**
