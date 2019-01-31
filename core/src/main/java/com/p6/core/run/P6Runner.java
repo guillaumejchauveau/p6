@@ -1,5 +1,5 @@
 package com.p6.core.run;
 
-interface P6Runner {
-  void run();
+public abstract class P6Runner {
+  public abstract void run();
 }

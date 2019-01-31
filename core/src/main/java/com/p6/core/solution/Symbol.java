@@ -1,4 +1,4 @@
 package com.p6.core.solution;
 
-public interface Symbol {
+public abstract class Symbol {
 }

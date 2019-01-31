@@ -1,5 +1,5 @@
 package com.p6.core.solution;
 
-public interface SolutionConfigurator {
-  void configure(Solution solution, SolutionConfiguration configuration);
+public abstract class SolutionConfigurator {
+  public abstract void configure(Solution solution, SolutionConfiguration configuration);
 }
