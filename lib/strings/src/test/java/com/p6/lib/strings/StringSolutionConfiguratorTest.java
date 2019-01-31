@@ -8,6 +8,6 @@ public class StringSolutionConfiguratorTest {
   @Test
   public void testConfiguration() {
     SolutionConfigurator configurator = new StringSolutionConfigurator();
-    configurator.configure(new Solution(), new StringSolutionConfiguration());
+    configurator.configure(new Solution());
   }
 }
