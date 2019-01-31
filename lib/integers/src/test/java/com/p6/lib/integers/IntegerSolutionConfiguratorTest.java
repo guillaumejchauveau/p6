@@ -8,6 +8,6 @@ public class IntegerSolutionConfiguratorTest {
   @Test
   public void testConfiguration() {
     SolutionConfigurator configurator = new IntegerSolutionConfigurator();
-    configurator.configure(new Solution(), new IntegerSolutionConfiguration());
+    configurator.configure(new Solution());
   }
 }
