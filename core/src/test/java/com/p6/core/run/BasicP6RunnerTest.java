@@ -7,6 +7,6 @@ public class BasicP6RunnerTest {
   @Test
   public void testRun() {
     P6Runner runner = new BasicP6Runner();
-    runner.cycle(new Solution(), 0);
+    runner.iterate(new Solution(), 0);
   }
 }
