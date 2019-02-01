@@ -3,18 +3,22 @@ package com.p6.core.solution;
 import com.p6.core.solution.rule.Condition;
 import com.p6.core.solution.rule.Result;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 
 public class Solution {
   private Map<Condition, Result> rules;
   private List<Symbol> symbols;
+  private Random random;
 
   public Solution() {
     this.rules = new HashMap<>();
     this.symbols = new ArrayList<>();
+    this.random = new Random();
   }
 
   public String toString() {
@@ -37,19 +41,18 @@ public class Solution {
     this.symbols.add(symbol);
   }
 
+  public void addAllSymbols(Collection<Symbol> symbols) {
+    this.symbols.addAll(symbols);
+  }
+
   public Integer getSymbolCount() {
     return this.symbols.size();
   }
 
-  public Symbol getSymbol(Integer id) {
-    return this.symbols.get(id);
-  }
-
-  public List<Symbol> getSymbols() {
-    return this.symbols;
-  }
-
-  public void removeSymbol(int id) {
-    this.symbols.remove(id);
+  public Symbol chooseSymbol() {
+    int symbolIndex = this.random.nextInt(this.getSymbolCount());
+    Symbol symbol = this.symbols.get(symbolIndex);
+    this.symbols.remove(symbolIndex);
+    return symbol;
   }
 }

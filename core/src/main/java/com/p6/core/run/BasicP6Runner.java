@@ -4,35 +4,32 @@ import com.p6.core.solution.Solution;
 import com.p6.core.solution.Symbol;
 import com.p6.core.solution.rule.Condition;
 import java.util.Collection;
-import java.util.Random;
 
 public class BasicP6Runner extends P6Runner {
-  private Random random;
-
-  public BasicP6Runner() {
-    this.random = new Random();
-  }
-
   @Override
-  public void cycle(Solution solution, Integer count) {
-    for (int cycle = 0; cycle < count; cycle++) {
-      int xsymbolId = this.random.nextInt(solution.getSymbolCount());
-      int ysymbolId = this.random.nextInt(solution.getSymbolCount());
-      Symbol x = solution.getSymbol(xsymbolId);
-      Symbol y = solution.getSymbol(ysymbolId);
-      if (count - 10 < cycle) {
-        System.out.println(x);
-        System.out.println(y);
+  public void iterate(Solution solution, Integer count) {
+    for (int iteration = 0; iteration < count; iteration++) {
+      if (solution.getSymbolCount() <= 1) {
+        System.out.println("Iteration overshoot: " + (count - iteration));
+        break;
       }
+
+      Symbol x = solution.chooseSymbol();
+      Symbol y = solution.chooseSymbol();
+
+      boolean reactionOccurred = false;
       for (Condition condition : solution.getConditions()) {
         if (condition.test(x, y)) {
           Collection<Symbol> products = solution.getResult(condition).apply(x, y);
-          solution.removeSymbol(xsymbolId);
-          solution.removeSymbol(ysymbolId - ((xsymbolId < ysymbolId) ? 1 : 0));
-          for (Symbol product : products) {
-            solution.addSymbol(product);
-          }
+          solution.addAllSymbols(products);
+          reactionOccurred = true;
+          break;
         }
+      }
+
+      if (!reactionOccurred) {
+        solution.addSymbol(x);
+        solution.addSymbol(y);
       }
     }
   }
