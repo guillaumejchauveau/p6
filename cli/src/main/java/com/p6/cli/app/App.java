@@ -23,7 +23,7 @@ public class App {
     }
     System.out.println(s);
     P6Runner runner = new BasicP6Runner();
-    runner.cycle(s, 21000);
+    runner.iterate(s, 21000);
     System.out.println(s);
   }
 }
