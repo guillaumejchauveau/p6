@@ -1,10 +1,11 @@
 package com.p6.cli.app;
 
-import com.p6.core.run.BasicP6Runner;
-import com.p6.core.run.P6Runner;
+import com.p6.core.reactor.BasicReactor;
+import com.p6.core.reactor.Reactor;
 import com.p6.core.solution.Solution;
-import com.p6.core.solution.SolutionConfigurator;
-import java.util.ServiceLoader;
+import com.p6.lib.common.reaction.ChooseXReactionProduct;
+import com.p6.lib.integers.IntegerElement;
+import com.p6.lib.integers.reaction.GreaterThanReactionCondition;
 
 /**
  * Entry point.
@@ -16,14 +17,14 @@ public class App {
    * @param args System args
    */
   public static void main(String[] args) {
-    ServiceLoader<SolutionConfigurator> loader = ServiceLoader.load(SolutionConfigurator.class);
-    Solution s = new Solution();
-    for (SolutionConfigurator configurator : loader) {
-      configurator.configure(s);
+    Solution solution = new Solution();
+    solution.createRule(new GreaterThanReactionCondition(), new ChooseXReactionProduct());
+    for (int i = 0; i < 10000; i++) {
+      solution.addElement(new IntegerElement(i));
     }
-    System.out.println(s);
-    P6Runner runner = new BasicP6Runner();
-    runner.iterate(s, 21000);
-    System.out.println(s);
+    System.out.println(solution);
+    Reactor reactor = new BasicReactor();
+    reactor.iterate(solution, 21000);
+    System.out.println(solution);
   }
 }

@@ -1,7 +1,7 @@
 package com.p6.core.solution;
 
-import com.p6.core.solution.rule.Condition;
-import com.p6.core.solution.rule.Result;
+import com.p6.core.reaction.ReactionCondition;
+import com.p6.core.reaction.ReactionProduct;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -11,48 +11,49 @@ import java.util.Random;
 import java.util.Set;
 
 public class Solution {
-  private Map<Condition, Result> rules;
-  private List<Symbol> symbols;
+  private Map<ReactionCondition, ReactionProduct> rules;
+  private List<Element> elements;
   private Random random;
 
   public Solution() {
     this.rules = new HashMap<>();
-    this.symbols = new ArrayList<>();
+    this.elements = new ArrayList<>();
     this.random = new Random();
   }
 
   public String toString() {
-    return this.rules.size() + " rules, " + this.symbols.size() + " symbols";
+    return this.rules.size() + " rules, " + this.elements.size() + " elements";
   }
 
-  public void createRule(Condition condition, Result result) {
-    this.rules.put(condition, result);
+  public void createRule(ReactionCondition reactionCondition, ReactionProduct reactionProduct) {
+    this.rules.put(reactionCondition, reactionProduct);
   }
 
-  public Set<Condition> getConditions() {
+  public Set<ReactionCondition> getConditions() {
     return this.rules.keySet();
   }
 
-  public Result getResult(Condition condition) {
-    return this.rules.get(condition);
+  public void applyRule(ReactionCondition reactionCondition, Element x, Element y) {
+    ReactionProduct rule = this.rules.get(reactionCondition);
+    this.addAllElements(rule.getProducts(x, y));
   }
 
-  public void addSymbol(Symbol symbol) {
-    this.symbols.add(symbol);
+  public void addElement(Element element) {
+    this.elements.add(element);
   }
 
-  public void addAllSymbols(Collection<Symbol> symbols) {
-    this.symbols.addAll(symbols);
+  public void addAllElements(Collection<Element> elements) {
+    this.elements.addAll(elements);
   }
 
-  public Integer getSymbolCount() {
-    return this.symbols.size();
+  public Integer getElementsCount() {
+    return this.elements.size();
   }
 
-  public Symbol chooseSymbol() {
-    int symbolIndex = this.random.nextInt(this.getSymbolCount());
-    Symbol symbol = this.symbols.get(symbolIndex);
-    this.symbols.remove(symbolIndex);
-    return symbol;
+  public Element chooseElement() {
+    int elementIndex = this.random.nextInt(this.getElementsCount());
+    Element element = this.elements.get(elementIndex);
+    this.elements.remove(elementIndex);
+    return element;
   }
 }
