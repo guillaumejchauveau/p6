@@ -1,9 +1,9 @@
 package com.p6.core.solution;
 
-public abstract class Symbol<T> {
+public abstract class Element<T> {
   private T value;
 
-  public Symbol(T value) {
+  public Element(T value) {
     this.assign(value);
   }
 
