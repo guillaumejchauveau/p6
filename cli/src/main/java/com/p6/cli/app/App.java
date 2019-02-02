@@ -1,11 +1,12 @@
 package com.p6.cli.app;
 
-import com.p6.core.run.BasicP6Runner;
-import com.p6.core.run.P6Runner;
+import com.p6.core.reactor.BasicReactor;
+import com.p6.core.reactor.Reactor;
 import com.p6.core.solution.Solution;
-import com.p6.core.solution.SolutionConfigurator;
+import com.p6.lib.common.reaction.ChooseXReactionProduct;
+import com.p6.lib.integers.IntegerElement;
+import com.p6.lib.integers.reaction.GreaterThanReactionCondition;
 import com.p6.utils.LoggingHelper;
-import java.util.ServiceLoader;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,18 +21,17 @@ public class App {
    * @param args System args
    */
   public static void main(String[] args) {
+    Solution solution = new Solution();
+    solution.createRule(new GreaterThanReactionCondition(), new ChooseXReactionProduct());
+    for (int i = 0; i < 10000; i++) {
+      solution.addElement(new IntegerElement(i));
+    }
     LoggingHelper.configureLoggingFramework(Level.ALL);
     Logger logger = LogManager.getLogger();
 
-    ServiceLoader<SolutionConfigurator> loader = ServiceLoader.load(SolutionConfigurator.class);
-    Solution s = new Solution();
-    for (SolutionConfigurator configurator : loader) {
-      logger.debug(configurator);
-      configurator.configure(s);
-    }
-    System.out.println(s);
-    P6Runner runner = new BasicP6Runner();
-    runner.iterate(s, 21000);
-    System.out.println(s);
+    logger.debug(solution);
+    Reactor reactor = new BasicReactor();
+    reactor.iterate(solution, 21000);
+    logger.debug(solution);
   }
 }

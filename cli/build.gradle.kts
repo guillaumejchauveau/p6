@@ -10,7 +10,7 @@ application {
 dependencies {
   implementation(project(":utils"))
   implementation(project(":core"))
-  runtimeOnly(project(":lib:integers"))
-  runtimeOnly(project(":lib:strings"))
+  implementation(project(":lib:common"))
+  implementation(project(":lib:integers"))
   testImplementation("junit:junit:4.12")
 }
