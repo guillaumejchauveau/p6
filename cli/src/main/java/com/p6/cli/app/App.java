@@ -1,7 +1,7 @@
 package com.p6.cli.app;
 
 import com.p6.core.solution.SolutionConfigurator;
-import com.p6.utils.Logging;
+import com.p6.utils.LoggingHelper;
 import java.util.ServiceLoader;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -17,7 +17,7 @@ public class App {
    * @param args System args
    */
   public static void main(String[] args) {
-    Logging.configureLoggingFramework(Level.ALL);
+    LoggingHelper.configureLoggingFramework(Level.ALL);
     Logger logger = LogManager.getLogger();
 
     ServiceLoader<SolutionConfigurator> loader = ServiceLoader.load(SolutionConfigurator.class);
