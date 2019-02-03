@@ -3,13 +3,17 @@ package com.p6.core.reactor;
 import com.p6.core.reaction.ReactionCondition;
 import com.p6.core.solution.Element;
 import com.p6.core.solution.Solution;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class BasicReactor extends Reactor {
   @Override
   public void iterate(Solution solution, Integer count) {
+    Logger logger = LogManager.getLogger();
+
     for (int iteration = 0; iteration < count; iteration++) {
       if (solution.getElementsCount() <= 1) {
-        System.out.println("Iteration overshoot: " + (count - iteration));
+        logger.debug("Iteration overshoot: " + (count - iteration));
         break;
       }
 

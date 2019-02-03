@@ -19,7 +19,7 @@ public class LoggingHelper {
     String pattern = "%d{HH:mm:ss,SS} ";
     pattern += "%highlight{%-5level}{";
     pattern += "FATAL=red bright, ERROR=red, WARN=yellow, INFO=blue, DEBUG=cyan, TRACE=white} ";
-    pattern += "%c{-2}: %msg{ansi}%n%style{%throwable}{white}";
+    pattern += "%style{%c{-2}}{bright}: %msg{ansi}%n%style{%throwable}{white}";
 
     ConfigurationBuilder<BuiltConfiguration> builder =
         ConfigurationBuilderFactory.newConfigurationBuilder();
