@@ -11,7 +11,7 @@ import org.apache.logging.log4j.core.config.builder.api.ConfigurationBuilderFact
 import org.apache.logging.log4j.core.config.builder.api.LayoutComponentBuilder;
 import org.apache.logging.log4j.core.config.builder.impl.BuiltConfiguration;
 
-public class Logging {
+public class LoggingHelper {
   /**
    * Configures Log4J application-wide.
    */
@@ -22,7 +22,7 @@ public class Logging {
     pattern += "%c{-2}: %msg{ansi}%n%style{%throwable}{white}";
 
     ConfigurationBuilder<BuiltConfiguration> builder =
-      ConfigurationBuilderFactory.newConfigurationBuilder();
+        ConfigurationBuilderFactory.newConfigurationBuilder();
     AppenderComponentBuilder appenderBuilder = builder.newAppender("StdERR", "CONSOLE")
                                                       .addAttribute("target",
                                                         ConsoleAppender.Target.SYSTEM_ERR);
