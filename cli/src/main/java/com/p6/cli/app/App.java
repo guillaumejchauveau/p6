@@ -16,8 +16,7 @@ import org.apache.logging.log4j.Logger;
  */
 public class App {
   /**
-   * Displays the app's message.
-   *
+   * A test script.
    * @param args System args
    */
   public static void main(String[] args) {
