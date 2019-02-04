@@ -6,7 +6,16 @@ import com.p6.core.solution.Solution;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * A single-threaded reactor.
+ */
 public class BasicReactor extends Reactor {
+  /**
+   * {@inheritDoc}
+   *
+   * @param solution The solution to use
+   * @param count    The number of time the reactor should react
+   */
   @Override
   public void iterate(Solution solution, Integer count) {
     Logger logger = LogManager.getLogger();

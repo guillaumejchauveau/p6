@@ -14,6 +14,7 @@ import org.apache.logging.log4j.core.config.builder.impl.BuiltConfiguration;
 public class LoggingHelper {
   /**
    * Configures Log4J application-wide.
+   * @param level The minimum logging level to print
    */
   public static void configureLoggingFramework(Level level) {
     String pattern = "%d{HH:mm:ss,SS} ";

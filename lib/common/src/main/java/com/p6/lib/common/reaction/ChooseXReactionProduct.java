@@ -5,7 +5,13 @@ import com.p6.core.solution.Element;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * The product of a reaction that will always keep the first element.
+ */
 public class ChooseXReactionProduct extends ReactionProduct {
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Collection<Element> getProducts(Element x, Element y) {
     Collection<Element> products = new ArrayList<>();
