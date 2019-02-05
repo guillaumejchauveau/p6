@@ -14,12 +14,13 @@ import org.apache.logging.log4j.core.config.builder.impl.BuiltConfiguration;
 public class LoggingHelper {
   /**
    * Configures Log4J application-wide.
+   * @param level The minimum logging level to print
    */
   public static void configureLoggingFramework(Level level) {
     String pattern = "%d{HH:mm:ss,SS} ";
     pattern += "%highlight{%-5level}{";
     pattern += "FATAL=red bright, ERROR=red, WARN=yellow, INFO=blue, DEBUG=cyan, TRACE=white} ";
-    pattern += "%c{-2}: %msg{ansi}%n%style{%throwable}{white}";
+    pattern += "%style{%c{-2}}{bright}: %msg{ansi}%n%style{%throwable}{white}";
 
     ConfigurationBuilder<BuiltConfiguration> builder =
         ConfigurationBuilderFactory.newConfigurationBuilder();
