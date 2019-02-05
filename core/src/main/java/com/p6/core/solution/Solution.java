@@ -67,8 +67,8 @@ public class Solution {
    * @param y The second element
    */
   public void applyRule(ReactionCondition reactionCondition, Element x, Element y) {
-    ReactionProduct rule = this.rules.get(reactionCondition);
-    this.addAllElements(rule.getProducts(x, y));
+    ReactionProduct product = this.rules.get(reactionCondition);
+    this.addAllElements(product.getProducts(x, y));
   }
 
   /**
