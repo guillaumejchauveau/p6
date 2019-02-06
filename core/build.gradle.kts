@@ -4,6 +4,7 @@ plugins {
 
 dependencies {
   implementation(project(":utils"))
-  implementation("org.jocl:jocl:2.0.1")
+  implementation("org.jogamp.gluegen:gluegen-rt-main:2.3.2")
+  implementation("org.jogamp.jocl:jocl-main:2.3.1")
   testImplementation("junit:junit:4.12")
 }
