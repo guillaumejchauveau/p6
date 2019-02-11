@@ -6,15 +6,18 @@ import com.p6.core.solution.Solution;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class OpenCLReactor extends Reactor {
+public class OpenClReactor extends Reactor {
   private final Logger logger;
 
-  public OpenCLReactor() {
+  public OpenClReactor() {
     this.logger = LogManager.getLogger();
   }
 
   @Override
   public void iterate(Solution solution, Integer count) {
+    if (!CLPlatform.isAvailable()) {
+      throw new RuntimeException("OpenCL is not available");
+    }
     CLPlatform.initialize();
     CLPlatform[] platforms = CLPlatform.listCLPlatforms();
     for (CLPlatform platform : platforms) {

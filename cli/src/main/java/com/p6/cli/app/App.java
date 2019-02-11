@@ -1,7 +1,6 @@
 package com.p6.cli.app;
 
-import com.p6.core.reactor.BasicReactor;
-import com.p6.core.reactor.OpenCLReactor;
+import com.p6.core.reactor.OpenClReactor;
 import com.p6.core.reactor.Reactor;
 import com.p6.core.solution.Solution;
 import com.p6.lib.common.reaction.ChooseXReactionProduct;
@@ -30,7 +29,7 @@ public class App {
     Logger logger = LogManager.getLogger();
 
     logger.debug(solution);
-    Reactor reactor = new OpenCLReactor();
+    Reactor reactor = new OpenClReactor();
     reactor.iterate(solution, 21000);
     logger.debug(solution);
   }
