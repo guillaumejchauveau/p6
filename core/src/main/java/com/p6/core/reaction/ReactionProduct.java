@@ -1,5 +1,6 @@
 package com.p6.core.reaction;
 
+import com.p6.core.solution.Cell;
 import com.p6.core.solution.Element;
 import java.util.Collection;
 
@@ -8,11 +9,10 @@ import java.util.Collection;
  */
 public abstract class ReactionProduct {
   /**
-   * Creates elements produced by the reaction between two elements.
+   * Creates elements produced by the reaction between the given elements.
    *
-   * @param x The first element
-   * @param y The second element
-   * @return A collection of all the created elements.
+   * @param reactants The input elements
+   * @param cell The cell in which the reaction occurs
    */
-  public abstract Collection<Element> getProducts(Element x, Element y);
+  public abstract void react(Collection<Element> reactants, Cell cell);
 }

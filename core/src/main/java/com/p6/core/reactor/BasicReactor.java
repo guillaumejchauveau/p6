@@ -1,7 +1,6 @@
 package com.p6.core.reactor;
 
 import com.p6.core.reaction.ReactionCondition;
-import com.p6.core.solution.Element;
 import com.p6.core.solution.Solution;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,22 +25,22 @@ public class BasicReactor extends Reactor {
         break;
       }
 
-      Element x = solution.chooseElement();
-      Element y = solution.chooseElement();
+      //Element x = solution.chooseElement();
+      //Element y = solution.chooseElement();
 
       boolean reactionOccurred = false;
       for (ReactionCondition reactionCondition : solution.getConditions()) {
-        if (reactionCondition.test(x, y)) {
+        /*if (reactionCondition.test()) {
           solution.applyRule(reactionCondition, x, y);
           reactionOccurred = true;
           break;
-        }
+        }*/
       }
-
+      /*
       if (!reactionOccurred) {
         solution.addElement(x);
         solution.addElement(y);
-      }
+      }*/
     }
   }
 }

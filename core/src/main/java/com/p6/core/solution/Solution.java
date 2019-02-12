@@ -13,7 +13,7 @@ import java.util.Set;
 /**
  * An object representing a P6 program with it's rules and elements.
  */
-public class Solution {
+public class Solution extends Cell {
   /**
    * The program's rules. A rule or reaction is defined with a condition that
    * must be fulfilled and the products of the reaction.
@@ -68,7 +68,7 @@ public class Solution {
    */
   public void applyRule(ReactionCondition reactionCondition, Element x, Element y) {
     ReactionProduct product = this.rules.get(reactionCondition);
-    this.addAllElements(product.getProducts(x, y));
+    //product.react(, this);
   }
 
   /**
