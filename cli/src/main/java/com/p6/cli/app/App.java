@@ -1,15 +1,10 @@
 package com.p6.cli.app;
 
-import com.p6.core.reactor.BasicReactor;
-import com.p6.core.reactor.Reactor;
-import com.p6.core.solution.Solution;
-import com.p6.lib.common.reaction.ChooseXReactionProduct;
-import com.p6.lib.integers.IntegerElement;
-import com.p6.lib.integers.reaction.GreaterThanReactionCondition;
 import com.p6.utils.LoggingHelper;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import java.io.*;
 
 /**
  * Entry point.
@@ -20,17 +15,41 @@ public class App {
    * @param args System args
    */
   public static void main(String[] args) {
-    Solution solution = new Solution();
-    solution.createRule(new GreaterThanReactionCondition(), new ChooseXReactionProduct());
-    for (int i = 0; i < 10000; i++) {
-      solution.addElement(new IntegerElement(i));
-    }
+
     LoggingHelper.configureLoggingFramework(Level.ALL);
     Logger logger = LogManager.getLogger();
 
-    logger.debug(solution);
-    Reactor reactor = new BasicReactor();
-    reactor.iterate(solution, 21000);
-    logger.debug(solution);
+    String line = null;
+    logger.info(System.getProperty("user.dir"));
+
+    try {
+      // FileReader reads text files in the default encoding.
+      FileReader fileReader = new FileReader("test.txt");
+
+      // Always wrap FileReader in BufferedReader.
+      BufferedReader bufferedReader =  new BufferedReader(fileReader);
+
+      while((line = bufferedReader.readLine()) != null) {
+        System.out.println(line);
+      }
+
+      // Always close files.
+      bufferedReader.close();
+    }
+    catch(FileNotFoundException ex) {
+      System.out.println(
+        "Unable to open file '");
+    }
+
+    catch(IOException ex) {
+      System.out.println(
+        "Error reading file '");
+      // Or we could just do this:
+      // ex.printStackTrace();
+    }
+
+
+
   }
 }
+
