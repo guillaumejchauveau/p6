@@ -15,15 +15,6 @@ import java.util.Set;
  */
 public class Solution extends Cell {
   /**
-   * The program's rules. A rule or reaction is defined with a condition that
-   * must be fulfilled and the products of the reaction.
-   */
-  private Map<ReactionCondition, ReactionProduct> rules;
-  /**
-   * The solution's elements.
-   */
-  private List<Element> elements;
-  /**
    * A random number generator used to select elements of the solution.
    */
   private Random random;
@@ -32,24 +23,12 @@ public class Solution extends Cell {
    * Creates a new solution.
    */
   public Solution() {
-    this.rules = new HashMap<>();
-    this.elements = new ArrayList<>();
+    super();
     this.random = new Random();
   }
 
   public String toString() {
     return this.rules.size() + " rules, " + this.elements.size() + " elements";
-  }
-
-  /**
-   * Adds a rule to the solution given a reaction condition and a reaction
-   * product.
-   *
-   * @param reactionCondition The condition for the reaction
-   * @param reactionProduct   The product of the reaction
-   */
-  public void createRule(ReactionCondition reactionCondition, ReactionProduct reactionProduct) {
-    this.rules.put(reactionCondition, reactionProduct);
   }
 
   /**
@@ -69,14 +48,6 @@ public class Solution extends Cell {
   public void applyRule(ReactionCondition reactionCondition, Element x, Element y) {
     ReactionProduct product = this.rules.get(reactionCondition);
     //product.react(, this);
-  }
-
-  /**
-   * Adds an element to the solution.
-   * @param element The element to add
-   */
-  public void addElement(Element element) {
-    this.elements.add(element);
   }
 
   /**
