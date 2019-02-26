@@ -13,8 +13,8 @@ public class BasicReactor extends Reactor {
   /**
    * {@inheritDoc}
    *
+   * @param maxCount The number of time the reactor should react
    * @parqehpiham solution The solution to use
-   * @param maxCount    The number of time the reactor should react
    */
   @Override
   public void iterate(Solution solution, Integer maxCount, Integer noReactionMaxUser) {
@@ -29,7 +29,7 @@ public class BasicReactor extends Reactor {
         break;
       }
 
-      if (noReactionMax>=noReactionMaxUser) {
+      if (noReactionMax >= noReactionMaxUser) {
         break;
       }
 
