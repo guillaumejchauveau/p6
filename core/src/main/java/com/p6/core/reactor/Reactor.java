@@ -9,8 +9,9 @@ public abstract class Reactor {
   /**
    * Tries to make a reaction happen a given number of times.
    *
-   * @param solution The solution to use
-   * @param maxCount    The number of time the reactor should react
+   * @param solution        The solution to use
+   * @param iterationTarget The maximum number of time the reactor should react
+   * @param stabilityTarget The maximum number of consecutive no-reaction
    */
-  public abstract void iterate(Solution solution, Integer maxCount, Integer noReactionMaxUser);
+  public abstract void iterate(Solution solution, Integer iterationTarget, Integer stabilityTarget);
 }

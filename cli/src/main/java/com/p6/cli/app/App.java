@@ -30,7 +30,7 @@ public class App {
 
     logger.debug(solution);
     Reactor reactor = new BasicReactor();
-    reactor.iterate(solution, 21000, 1000);
+    reactor.iterate(solution, 21000, 13);
     logger.debug(solution);
   }
 }

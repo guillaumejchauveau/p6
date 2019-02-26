@@ -12,24 +12,19 @@ import org.apache.logging.log4j.Logger;
 public class BasicReactor extends Reactor {
   /**
    * {@inheritDoc}
-   *
-   * @param maxCount The number of time the reactor should react
-   * @parqehpiham solution The solution to use
    */
   @Override
-  public void iterate(Solution solution, Integer maxCount, Integer noReactionMaxUser) {
+  public void iterate(Solution solution, Integer iterationTarget, Integer stabilityTarget) {
     Logger logger = LogManager.getLogger();
+    int stability = 0;
 
-    boolean noReaction = false;
-    int noReactionMax = 0;
-
-    for (int iteration = 0; iteration < maxCount; iteration++) {
+    for (int iteration = 0; iteration < iterationTarget; iteration++) {
       if (solution.getElementsCount() <= 1) {
-        logger.debug("Iteration overshoot: " + (maxCount - iteration));
+        logger.debug("Solution cannot react further");
         break;
       }
-
-      if (noReactionMax >= noReactionMaxUser) {
+      if (stability >= stabilityTarget) {
+        logger.debug("Solution reached target stability");
         break;
       }
 
@@ -41,21 +36,15 @@ public class BasicReactor extends Reactor {
         if (reactionCondition.test(x, y)) {
           solution.applyRule(reactionCondition, x, y);
           reactionOccurred = true;
-          noReactionMax = 0;
+          stability = 0;
           break;
         }
-      }
-
-      if (noReaction) {
-        noReactionMax++;
       }
 
       if (!reactionOccurred) {
         solution.addElement(x);
         solution.addElement(y);
-        noReaction = true;
-      } else {
-        noReaction = false;
+        stability++;
       }
     }
   }
