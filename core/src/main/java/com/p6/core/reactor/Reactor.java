@@ -1,6 +1,6 @@
 package com.p6.core.reactor;
 
-import com.p6.core.solution.Solution;
+import com.p6.core.solution.Cell;
 
 /**
  * Makes a solution's elements react according to the solution's rules.
@@ -8,9 +8,8 @@ import com.p6.core.solution.Solution;
 public abstract class Reactor {
   /**
    * Tries to make a reaction happen a given number of times.
-   *
-   * @param solution The solution to use
-   * @param count    The number of time the reactor should react
+   * @param cell  The solution to use
+   * @param count The number of time the reactor should react
    */
-  public abstract void iterate(Solution solution, Integer count);
+  public abstract void iterate(Cell cell, Integer count);
 }
