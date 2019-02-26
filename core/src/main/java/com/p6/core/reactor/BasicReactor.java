@@ -29,7 +29,7 @@ public class BasicReactor extends Reactor {
         break;
       }
 
-      if(noReactionMax>=noReactionMaxUser){
+      if (noReactionMax>=noReactionMaxUser){
         break;
       }
 
@@ -46,17 +46,16 @@ public class BasicReactor extends Reactor {
         }
       }
 
-      if(noReaction){
+      if (noReaction){
         noReactionMax++;
       }
 
-      if (!reactionOccurred) {
+      if (!reactionOccurred){
         solution.addElement(x);
         solution.addElement(y);
-        noReaction=true;
-      }
-      else{
-        noReaction=false;
+        noReaction = true;
+      } else {
+        noReaction = false;
       }
     }
   }
