@@ -20,7 +20,7 @@ public class BasicReactor extends Reactor {
     Logger logger = LogManager.getLogger();
 
     for (int iteration = 0; iteration < count; iteration++) {
-      if (cell.getElementsCount() <= 1) {
+      if (cell.getElementsCount() <= 1 || cell.isDissolved()) {
         logger.debug("Iteration overshoot: " + (count - iteration));
         break;
       }

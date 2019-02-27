@@ -1,7 +1,7 @@
 package com.p6.core.solution;
 
 /**
- * A unit of data in a solution.
+ * A unit of data in a cell.
  * @param <T> The type of the represented data
  */
 public abstract class Element<T> {
