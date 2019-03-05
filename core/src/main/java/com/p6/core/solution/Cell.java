@@ -2,6 +2,11 @@ package com.p6.core.solution;
 
 import com.p6.core.reaction.ReactionCondition;
 import com.p6.core.reaction.ReactionProduct;
+import com.p6.utils.LoggingHelper;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -37,6 +42,7 @@ public class Cell {
    */
   private Random random;
   private Boolean isDissolved;
+  private Logger logger;
 
   /**
    * Creates an empty cell.
@@ -47,6 +53,8 @@ public class Cell {
     this.subCells = new ArrayList<>();
     this.random = new Random();
     this.isDissolved = false;
+    LoggingHelper.configureLoggingFramework(Level.ALL);
+    this.logger = LogManager.getLogger();
   }
 
   /**

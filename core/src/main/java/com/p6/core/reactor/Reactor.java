@@ -3,7 +3,7 @@ package com.p6.core.reactor;
 import com.p6.core.solution.Cell;
 
 /**
- * Makes a solution's elements react according to the solution's rules.
+ * Makes a cell's elements react according to the cell's rules.
  */
 public abstract class Reactor {
   /**

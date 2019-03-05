@@ -8,17 +8,9 @@ import com.p6.lib.integers.IntegerElement;
  * A condition that will make two integer elements react if the first is greater
  * than the last.
  */
-public class GreaterThanReactionCondition extends ReactionCondition {
-  /**
-   * {@inheritDoc}
-   */
+public class GreaterThanReactionCondition extends IntegerReactionCondition {
   @Override
-  public Boolean test(Element x, Element y) {
-    if (x instanceof IntegerElement && y instanceof IntegerElement) {
-      IntegerElement x1 = (IntegerElement) x;
-      IntegerElement y1 = (IntegerElement) y;
-      return x1.evaluate() > y1.evaluate();
-    }
-    return false;
+  Boolean integerTest(IntegerElement x, IntegerElement y) {
+    return x.evaluate() > y.evaluate();
   }
 }
