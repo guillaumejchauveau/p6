@@ -1,4 +1,4 @@
-package com.p6.utils;
+package com.p6.utils.logging;
 
 import org.apache.logging.log4j.util.BiConsumer;
 import org.apache.logging.log4j.util.PropertySource;

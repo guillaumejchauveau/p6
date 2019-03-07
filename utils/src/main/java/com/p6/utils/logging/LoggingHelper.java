@@ -1,4 +1,4 @@
-package com.p6.utils;
+package com.p6.utils.logging;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -12,11 +12,17 @@ import org.apache.logging.log4j.core.config.builder.api.LayoutComponentBuilder;
 import org.apache.logging.log4j.core.config.builder.impl.BuiltConfiguration;
 
 public class LoggingHelper {
+  private static Boolean isConfigured = false;
+
   /**
    * Configures Log4J application-wide.
    * @param level The minimum logging level to print
    */
   public static void configureLoggingFramework(Level level) {
+    if (LoggingHelper.isConfigured) {
+      return;
+    }
+
     String pattern = "%d{HH:mm:ss,SS} ";
     pattern += "%highlight{%-5level}{";
     pattern += "FATAL=red bright, ERROR=red, WARN=yellow, INFO=blue, DEBUG=cyan, TRACE=white} ";
@@ -36,5 +42,6 @@ public class LoggingHelper {
     Configurator.initialize(builder.build());
     Logger logger = LogManager.getLogger();
     logger.trace("Logging framework configured");
+    LoggingHelper.isConfigured = true;
   }
 }

@@ -2,11 +2,6 @@ package com.p6.core.solution;
 
 import com.p6.core.reaction.ReactionCondition;
 import com.p6.core.reaction.ReactionProduct;
-import com.p6.utils.LoggingHelper;
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -14,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * A cell is a standalone p6 program. It contains it's own elements and rules and can also
@@ -21,26 +18,29 @@ import java.util.Set;
  */
 public class Cell {
   /**
-   * The program's rules. A rule or reaction is defined with a condition that
+   * The program's rules. A rule or reaction is defined by a condition that
    * must be fulfilled and the products of the reaction.
    */
-  protected Map<ReactionCondition, ReactionProduct> rules;
+  private Map<ReactionCondition, ReactionProduct> rules;
   /**
    * The solution's elements.
    */
-  protected List<Element> elements;
+  private List<Element> elements;
   /**
    * Cells inside the current cell.
    */
-  protected List<Cell> subCells;
+  private List<Cell> subCells;
   /**
    * The cell containing the current cell.
    */
-  protected Cell parentCell;
+  private Cell parentCell;
   /**
    * A random number generator used to select elements of the cell.
    */
   private Random random;
+  /**
+   * @see Cell#isDissolved()
+   */
   private Boolean isDissolved;
   private Logger logger;
 
@@ -53,7 +53,6 @@ public class Cell {
     this.subCells = new ArrayList<>();
     this.random = new Random();
     this.isDissolved = false;
-    LoggingHelper.configureLoggingFramework(Level.ALL);
     this.logger = LogManager.getLogger();
   }
 
@@ -148,15 +147,6 @@ public class Cell {
   }
 
   /**
-   * Adds a collection of elements to the cell.
-   *
-   * @param elements The elements to add
-   */
-  public void addAllElements(Collection<Element> elements) {
-    this.elements.addAll(elements);
-  }
-
-  /**
    * The number of elements in the cell.
    *
    * @return The number of element in the cell
@@ -172,6 +162,15 @@ public class Cell {
    */
   public void addElement(Element element) {
     this.elements.add(element);
+  }
+
+  /**
+   * Adds a collection of elements to the cell.
+   *
+   * @param elements The elements to add
+   */
+  public void addAllElements(Collection<Element> elements) {
+    this.elements.addAll(elements);
   }
 
   /**

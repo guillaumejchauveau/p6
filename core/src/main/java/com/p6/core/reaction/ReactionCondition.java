@@ -8,6 +8,7 @@ import com.p6.core.solution.Element;
 public abstract class ReactionCondition {
   /**
    * Test if two given elements can react.
+   *
    * @param x The first element
    * @param y The second element
    * @return The result of the test

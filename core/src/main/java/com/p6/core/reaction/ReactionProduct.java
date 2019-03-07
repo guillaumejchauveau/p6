@@ -9,6 +9,7 @@ import com.p6.core.solution.Element;
 public abstract class ReactionProduct {
   /**
    * Creates elements produced by the reaction between the given elements.
+   *
    * @param x    The first element
    * @param y    The second element
    * @param cell The cell in which the reaction occurs

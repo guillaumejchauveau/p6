@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 public class BasicReactor extends Reactor {
   /**
    * {@inheritDoc}
+   *
    * @param cell  The cell to use
    * @param count The number of time the reactor should react
    */

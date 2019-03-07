@@ -8,7 +8,7 @@ import com.p6.lib.common.reaction.ReactantsReactionProduct;
 import com.p6.lib.integers.IntegerElement;
 import com.p6.lib.integers.reaction.DivideReactionCondition;
 import com.p6.lib.integers.reaction.GreaterThanReactionCondition;
-import com.p6.utils.LoggingHelper;
+import com.p6.utils.logging.LoggingHelper;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
