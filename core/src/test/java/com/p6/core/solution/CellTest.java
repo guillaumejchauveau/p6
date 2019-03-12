@@ -27,7 +27,7 @@ public class CellTest extends TestCase {
     };
     ReactionProduct product = new ReactionProduct() {
       @Override
-      public void react(Element x, Element y, Cell cell) {
+      public void react(Element x, Element y) {
         x.assign(1);
       }
     };

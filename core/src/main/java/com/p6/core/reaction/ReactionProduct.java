@@ -8,11 +8,28 @@ import com.p6.core.solution.Element;
  */
 public abstract class ReactionProduct {
   /**
-   * Creates elements produced by the reaction between the given elements.
+   * The cell in which the reaction occurs.
+   */
+  private Cell cell;
+
+  public final Cell getCell() {
+    return this.cell;
+  }
+
+  /**
+   * Sets the cell af the reaction.
    *
-   * @param x    The first element
-   * @param y    The second element
    * @param cell The cell in which the reaction occurs
    */
-  public abstract void react(Element x, Element y, Cell cell);
+  public final void setCell(Cell cell) {
+    this.cell = cell;
+  }
+
+  /**
+   * Creates elements produced by the reaction between the given elements.
+   *
+   * @param x The first element
+   * @param y The second element
+   */
+  public abstract void react(Element x, Element y);
 }

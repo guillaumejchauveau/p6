@@ -118,6 +118,7 @@ public class Cell {
    * @param reactionProduct   The product of the reaction
    */
   public void createRule(ReactionCondition reactionCondition, ReactionProduct reactionProduct) {
+    reactionProduct.setCell(this);
     this.rules.put(reactionCondition, reactionProduct);
   }
 
@@ -143,7 +144,7 @@ public class Cell {
    */
   public void applyRule(ReactionCondition reactionCondition, Element x, Element y) {
     ReactionProduct product = this.rules.get(reactionCondition);
-    product.react(x, y, this);
+    product.react(x, y);
   }
 
   /**
@@ -189,12 +190,22 @@ public class Cell {
   /**
    * Marks the cell as dissolved and put all it's remaining elements in the parent cell.
    */
-  public void dissolve() {
+  public synchronized void dissolve() {
     if (this.getParentCell() == null) {
       throw new IllegalStateException("Cell doesn't have a parent cell");
     }
     this.parentCell.addAllElements(this.elements);
     this.parentCell.removeSubCell(this);
     this.isDissolved = true;
+  }
+
+  /**
+   * @param elements
+   * @param subCell
+   */
+  public synchronized void inject(Collection<Element> elements, Cell subCell) {
+    if (this.subCells.contains(subCell)) {
+      subCell.addAllElements(elements);
+    }
   }
 }

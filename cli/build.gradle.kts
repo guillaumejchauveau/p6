@@ -7,6 +7,14 @@ application {
   mainClassName = "com.p6.cli.app.App"
 }
 
+tasks.jar {
+  manifest {
+    attributes(
+      "Main-Class" to application.mainClassName
+    )
+  }
+}
+
 dependencies {
   implementation(project(":utils"))
   implementation(project(":core"))

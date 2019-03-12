@@ -4,18 +4,19 @@ import com.p6.core.solution.Cell;
 import com.p6.core.solution.Element;
 import com.p6.utils.tests.TestCase;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
-@Ignore
 public class DissolveCellReactionProductTest extends TestCase {
   @Test
   public void testDissolution() {
+    Cell rootCell = new Cell();
     Cell cell = new Cell();
+    rootCell.addSubCell(cell);
     DissolveCellReactionProduct product = new DissolveCellReactionProduct();
+    product.setCell(cell);
     Element el = new Element<>(null) {
     };
-    product.react(el, el, cell);
+    product.react(el, el);
     Assert.assertTrue(cell.isDissolved());
   }
 }

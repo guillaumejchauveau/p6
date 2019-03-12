@@ -2,9 +2,15 @@ package com.p6.core.solution;
 
 /**
  * A unit of data in a cell.
+ *
  * @param <T> The type of the represented data
  */
 public abstract class Element<T> {
+  public enum Side {
+    LEFT,
+    RIGHT
+  }
+
   /**
    * The represented data.
    */
@@ -12,6 +18,7 @@ public abstract class Element<T> {
 
   /**
    * Creates an element with a pre-determined value.
+   *
    * @param value The value to assign
    */
   public Element(T value) {
@@ -24,6 +31,7 @@ public abstract class Element<T> {
 
   /**
    * Assigns a new value to the element.
+   *
    * @param value The value to assign
    */
   public void assign(T value) {
@@ -32,6 +40,7 @@ public abstract class Element<T> {
 
   /**
    * Evaluates the element's value.
+   *
    * @return The element's value
    */
   public T evaluate() {
