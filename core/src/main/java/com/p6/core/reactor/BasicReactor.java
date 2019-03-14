@@ -3,7 +3,8 @@ package com.p6.core.reactor;
 import com.p6.core.reaction.ReactionPipeline;
 import com.p6.core.solution.Cell;
 import com.p6.core.solution.Element;
-import java.utils.ArrayList;
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -31,8 +32,8 @@ public class BasicReactor extends Reactor {
       Element y = cell.chooseElement();
 
       boolean reactionOccurred = false;
-      for (ReactionPipeline pipeline : cell.getRules()) {
-        List<Element> elements = new ArrayList();
+      for (ReactionPipeline pipeline : cell.getPipelines()) {
+        List<Element> elements = new ArrayList<>();
         elements.add(x);
         elements.add(y);
         if (pipeline.handle(elements, cell)) {

@@ -1,18 +1,19 @@
 package com.p6.lib.common.reaction;
 
-import com.p6.core.reaction.ReactionProduct;
+import com.p6.core.reaction.ReactionPipelineStep;
 import com.p6.core.solution.Cell;
 import com.p6.core.solution.Element;
+import java.util.List;
 
-public class InjectInSubCellReactionProduct extends ReactionProduct {
+public class InjectInSubCell implements ReactionPipelineStep {
   private final Cell subCell;
 
-  public InjectInSubCellReactionProduct(Cell subCell) {
+  public InjectInSubCell(Cell subCell) {
     this.subCell = subCell;
   }
 
-  @Override
-  public void react(Element x, Element y) {
-    //this.getCell().inject(, this.subCell);
+  public List<Element> handle(List<Element> inputElements, Cell cell) {
+    cell.inject(inputElements, this.subCell);
+    return inputElements;
   }
 }

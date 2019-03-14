@@ -1,24 +1,36 @@
 package com.p6.lib.integers.reaction;
 
 import com.p6.core.reaction.ReactionPipelineStep;
-import com.p6.core.solution.Element;
 import com.p6.core.solution.Cell;
+import com.p6.core.solution.Element;
 import com.p6.lib.integers.IntegerElement;
+import java.util.ArrayList;
+import java.util.List;
 
+/**
+ *
+ */
 abstract class IntegerReactionPipelineStep implements ReactionPipelineStep {
-  public void handle(List<Element> elements, Cell cell) {
-    boolean allIntegers = true;
-    for (Element element : elements) {
+  /**
+   * @param inputElements
+   * @param cell
+   * @return
+   */
+  public List<IntegerElement> handle(List<Element> inputElements, Cell cell) {
+    List<IntegerElement> integerElements = new ArrayList<>();
+    for (Element element : inputElements) {
       if (!(element instanceof IntegerElement)) {
-        allIntegers = false;
-        break;
+        return null;
       }
+      integerElements.add((IntegerElement) element);
     }
-    if (allIntegers) {
-      this.integerTest((List<IntegerElement>) elements, Cell cell);
-    }
-    return false;
+    return this.integerTest(integerElements, cell);
   }
 
-  abstract void integerTest(List<IntegerElement> elements, Cell cell);
+  /**
+   * @param elements
+   * @param cell
+   * @return
+   */
+  abstract List<IntegerElement> integerTest(List<IntegerElement> elements, Cell cell);
 }

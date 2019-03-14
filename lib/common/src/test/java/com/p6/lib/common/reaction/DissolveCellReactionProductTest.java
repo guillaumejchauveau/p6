@@ -12,11 +12,10 @@ public class DissolveCellReactionProductTest extends TestCase {
     Cell rootCell = new Cell();
     Cell cell = new Cell();
     rootCell.addSubCell(cell);
-    DissolveCellReactionProduct product = new DissolveCellReactionProduct();
-    product.setCell(cell);
+    DissolveCell step = new DissolveCell();
     Element el = new Element<>(null) {
     };
-    product.react(el, el);
+    //product.react(el, el);
     Assert.assertTrue(cell.isDissolved());
   }
 }

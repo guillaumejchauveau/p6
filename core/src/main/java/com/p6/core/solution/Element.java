@@ -6,8 +6,17 @@ package com.p6.core.solution;
  * @param <T> The type of the represented data
  */
 public abstract class Element<T> {
+  /**
+   *
+   */
   public enum Side {
+    /**
+     *
+     */
     LEFT,
+    /**
+     *
+     */
     RIGHT
   }
 

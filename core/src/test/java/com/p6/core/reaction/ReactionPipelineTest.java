@@ -1,9 +1,9 @@
-package com.p6.lib.common.reaction;
+package com.p6.core.reaction;
 
 import com.p6.utils.tests.TestCase;
 import org.junit.Test;
 
-public class ReactantsReactionProductTest extends TestCase {
+public class ReactionPipelineTest extends TestCase {
   @Test
   public void test() {
     throw new Error();

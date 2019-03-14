@@ -3,21 +3,21 @@ package com.p6.core.solution;
 import com.p6.core.reaction.ReactionPipeline;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * A cell is a standalone p6 program. It contains it's own elements and rules and can also
+ * A cell is a standalone p6 program. It contains it's own elements and pipelines and can also
  * contain sub-programs (sub-cells).
  */
 public class Cell {
   /**
    *
    */
-  private List<ReactionPipeline> rules;
+  private List<ReactionPipeline> pipelines;
   /**
    * The solution's elements.
    */
@@ -44,7 +44,7 @@ public class Cell {
    * Creates an empty cell.
    */
   public Cell() {
-    this.rules = new ArrayList<>();
+    this.pipelines = new ArrayList<>();
     this.elements = new ArrayList<>();
     this.subCells = new ArrayList<>();
     this.random = new Random();
@@ -65,7 +65,7 @@ public class Cell {
    * @return The collection of the sub-cells
    */
   public Collection<Cell> getSubCells() {
-    return this.subCells;
+    return Collections.unmodifiableCollection(this.subCells);
   }
 
   /**
@@ -110,11 +110,10 @@ public class Cell {
   /**
    * Adds a rule to the cell given a reaction condition and a reaction product.
    *
-   * @param reactionCondition The condition for the reaction
-   * @param reactionProduct   The product of the reaction
+   * @param pipeline
    */
-  public void addRule(ReactionPipeline pipeline) {
-    this.rules.add(pipeline);
+  public void addPipeline(ReactionPipeline pipeline) {
+    this.pipelines.add(pipeline);
   }
 
   /**
@@ -122,12 +121,12 @@ public class Cell {
    *
    * @return A set of the registered reaction conditions.
    */
-  public List<ReactionPipeline> getRules() {
-    return this.rules;
+  public List<ReactionPipeline> getPipelines() {
+    return Collections.unmodifiableList(this.pipelines);
   }
 
   public String toString() {
-    return this.rules.size() + " rules, " + this.elements.size() + " elements";
+    return this.pipelines.size() + " pipelines, " + this.elements.size() + " elements";
   }
 
   /**
@@ -153,7 +152,7 @@ public class Cell {
    *
    * @param elements The elements to add
    */
-  public void addAllElements(Collection<Element> elements) {
+  public void addAllElements(Collection<? extends Element> elements) {
     this.elements.addAll(elements);
   }
 
@@ -177,6 +176,7 @@ public class Cell {
     if (this.getParentCell() == null) {
       throw new IllegalStateException("Cell doesn't have a parent cell");
     }
+    logger.debug(this.getElementsCount());
     this.parentCell.addAllElements(this.elements);
     this.parentCell.removeSubCell(this);
     this.isDissolved = true;
@@ -186,7 +186,7 @@ public class Cell {
    * @param elements
    * @param subCell
    */
-  public synchronized void inject(Collection<Element> elements, Cell subCell) {
+  public synchronized void inject(Collection<? extends Element> elements, Cell subCell) {
     if (this.subCells.contains(subCell)) {
       subCell.addAllElements(elements);
     }
