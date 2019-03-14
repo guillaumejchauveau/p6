@@ -1,12 +1,9 @@
 package com.p6.core.solution;
 
-import com.p6.core.reaction.ReactionCondition;
-import com.p6.core.reaction.ReactionProduct;
+import com.p6.core.reaction.ReactionPipeline;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import org.apache.logging.log4j.LogManager;
@@ -18,10 +15,9 @@ import org.apache.logging.log4j.Logger;
  */
 public class Cell {
   /**
-   * The program's rules. A rule or reaction is defined by a condition that
-   * must be fulfilled and the products of the reaction.
+   *
    */
-  private Map<ReactionCondition, ReactionProduct> rules;
+  private List<ReactionPipeline> rules;
   /**
    * The solution's elements.
    */
@@ -48,7 +44,7 @@ public class Cell {
    * Creates an empty cell.
    */
   public Cell() {
-    this.rules = new HashMap<>();
+    this.rules = new ArrayList<>();
     this.elements = new ArrayList<>();
     this.subCells = new ArrayList<>();
     this.random = new Random();
@@ -117,13 +113,8 @@ public class Cell {
    * @param reactionCondition The condition for the reaction
    * @param reactionProduct   The product of the reaction
    */
-  public void createRule(ReactionCondition reactionCondition, ReactionProduct reactionProduct) {
-    reactionProduct.setCell(this);
-    this.rules.put(reactionCondition, reactionProduct);
-  }
-
-  public String toString() {
-    return this.rules.size() + " rules, " + this.elements.size() + " elements";
+  public void addRule(ReactionPipeline pipeline) {
+    this.rules.add(pipeline);
   }
 
   /**
@@ -131,20 +122,12 @@ public class Cell {
    *
    * @return A set of the registered reaction conditions.
    */
-  public Set<ReactionCondition> getConditions() {
-    return this.rules.keySet();
+  public List<ReactionPipeline> getRules() {
+    return this.rules;
   }
 
-  /**
-   * Adds a reaction's product given it's corresponding condition.
-   *
-   * @param reactionCondition The condition of the reaction
-   * @param x                 The first element for the reaction
-   * @param y                 The second element
-   */
-  public void applyRule(ReactionCondition reactionCondition, Element x, Element y) {
-    ReactionProduct product = this.rules.get(reactionCondition);
-    product.react(x, y);
+  public String toString() {
+    return this.rules.size() + " rules, " + this.elements.size() + " elements";
   }
 
   /**
