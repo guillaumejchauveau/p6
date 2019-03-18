@@ -19,6 +19,7 @@ public class ChooseReactant implements ReactionPipelineStep {
     this.elementSide = elementSide;
   }
 
+  @Override
   public List<Element> handle(List<Element> inputElements, Cell cell) {
     List<Element> output = new ArrayList<>();
     output.add(inputElements.get((this.elementSide == Element.Side.LEFT) ? 0 : 1));

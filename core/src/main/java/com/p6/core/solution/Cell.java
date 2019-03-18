@@ -176,7 +176,6 @@ public class Cell {
     if (this.getParentCell() == null) {
       throw new IllegalStateException("Cell doesn't have a parent cell");
     }
-    logger.debug(this.getElementsCount());
     this.parentCell.addAllElements(this.elements);
     this.parentCell.removeSubCell(this);
     this.isDissolved = true;

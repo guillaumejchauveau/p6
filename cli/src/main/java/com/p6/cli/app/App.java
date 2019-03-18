@@ -6,8 +6,9 @@ import com.p6.core.reactor.Reactor;
 import com.p6.core.solution.Cell;
 import com.p6.core.solution.Element;
 import com.p6.lib.common.reaction.ChooseReactant;
+import com.p6.lib.common.reaction.Sort;
 import com.p6.lib.integers.IntegerElement;
-import com.p6.lib.integers.reaction.Greater;
+import com.p6.lib.integers.genesis.Range;
 import com.p6.utils.logging.LoggingHelper;
 import java.util.List;
 import org.apache.logging.log4j.Level;
@@ -29,12 +30,10 @@ public class App {
 
     Cell solution = new Cell();
     ReactionPipeline pipeline = new ReactionPipeline();
-    pipeline.addStep(new Greater(Element.Side.LEFT));
+    pipeline.addStep(new Sort(Element.Side.LEFT));
     pipeline.addStep(new ChooseReactant(Element.Side.LEFT));
     solution.addPipeline(pipeline);
-    for (int i = 0; i < 10000; i++) {
-      solution.addElement(new IntegerElement(i));
-    }
+    new Range(0, 10000, 1).populate(solution);
 
     Cell solution2 = new Cell();
     ReactionPipeline pipeline2 = new ReactionPipeline();
@@ -46,15 +45,14 @@ public class App {
       return inputElements.subList(0, 1);
     });
     solution2.addPipeline(pipeline2);
-    for (int i = 10000; i < 20000; i++) {
-      solution2.addElement(new IntegerElement(i));
-    }
+    logger.debug("----------------");
+    new Range(10000, 20000, 1).populate(solution2);
 
     solution.addSubCell(solution2);
 
     Reactor reactor = new BasicReactor();
     logger.debug(solution2);
-    reactor.iterate(solution2, 1000);
+    reactor.iterate(solution2, 5000);
     logger.debug(solution2);
     logger.debug(solution);
     reactor.iterate(solution, 20000);

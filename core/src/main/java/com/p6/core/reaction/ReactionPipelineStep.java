@@ -14,5 +14,5 @@ public interface ReactionPipelineStep {
    * @param cell
    * @return
    */
-  List<? extends Element> handle(List<Element> inputElements, Cell cell);
+  List<Element> handle(List<Element> inputElements, Cell cell);
 }

@@ -8,11 +8,11 @@ import java.util.List;
 /**
  *
  */
-public class Equals implements ReactionPipelineStep {
+public class NotEquals implements ReactionPipelineStep {
   @Override
   public List<Element> handle(List<Element> inputElements, Cell cell) {
     for (int i = 1; i < inputElements.size(); i++) {
-      if (!inputElements.get(i).evaluate().equals(inputElements.get(0).evaluate())) {
+      if (inputElements.get(i).evaluate().equals(inputElements.get(0).evaluate())) {
         return null;
       }
     }

@@ -12,6 +12,7 @@ public class DissolveCell implements ReactionPipelineStep {
   /**
    *
    */
+  @Override
   public List<Element> handle(List<Element> inputElements, Cell cell) {
     cell.dissolve();
     return null;

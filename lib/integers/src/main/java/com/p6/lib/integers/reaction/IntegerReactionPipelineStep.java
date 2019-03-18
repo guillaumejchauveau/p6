@@ -16,7 +16,8 @@ abstract class IntegerReactionPipelineStep implements ReactionPipelineStep {
    * @param cell
    * @return
    */
-  public List<IntegerElement> handle(List<Element> inputElements, Cell cell) {
+  @Override
+  public List<Element> handle(List<Element> inputElements, Cell cell) {
     List<IntegerElement> integerElements = new ArrayList<>();
     for (Element element : inputElements) {
       if (!(element instanceof IntegerElement)) {
@@ -32,5 +33,5 @@ abstract class IntegerReactionPipelineStep implements ReactionPipelineStep {
    * @param cell
    * @return
    */
-  abstract List<IntegerElement> integerTest(List<IntegerElement> elements, Cell cell);
+  abstract List<Element> integerTest(List<IntegerElement> elements, Cell cell);
 }

@@ -31,7 +31,7 @@ public class ReactionPipeline {
    * @param cell
    * @return
    */
-  public Boolean handle(List<Element> inputElements, Cell cell) {
+  public Boolean handle(List<? extends Element> inputElements, Cell cell) {
     List<? extends Element> outputElements = inputElements;
     for (ReactionPipelineStep step : this.steps) {
       outputElements = step.handle(Collections.unmodifiableList(inputElements), cell);
