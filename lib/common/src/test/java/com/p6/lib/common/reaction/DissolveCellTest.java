@@ -6,9 +6,9 @@ import com.p6.utils.tests.TestCase;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class DissolveCellReactionProductTest extends TestCase {
+public class DissolveCellTest extends TestCase {
   @Test
-  public void testDissolution() {
+  public void test() {
     Cell rootCell = new Cell();
     Cell cell = new Cell();
     rootCell.addSubCell(cell);

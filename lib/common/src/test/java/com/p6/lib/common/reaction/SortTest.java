@@ -1,4 +1,4 @@
-package com.p6.lib.integers.reaction;
+package com.p6.lib.common.reaction;
 
 import com.p6.utils.tests.TestCase;
 import org.junit.Test;
