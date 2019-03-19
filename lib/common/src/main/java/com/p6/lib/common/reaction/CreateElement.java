@@ -14,8 +14,8 @@ public class CreateElement implements ReactionPipelineStep {
   private Constructor<Element> elementConstructor;
   private Object[] args;
 
-  public CreateElement(Class<Element> elementType, Class[] argTypes, Object[] args) throws NoSuchMethodException {
-    this.elementConstructor = elementType.getConstructor(argTypes);
+  public CreateElement(Constructor<Element> constructor, Object[] args) {
+    this.elementConstructor = constructor;
     this.args = args;
   }
 

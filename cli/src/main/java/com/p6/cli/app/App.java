@@ -28,14 +28,14 @@ public class App {
     LoggingHelper.configureLoggingFramework(Level.ALL);
     Logger logger = LogManager.getLogger();
 
-    Cell solution = new Cell();
-    ReactionPipeline pipeline = new ReactionPipeline();
-    pipeline.addStep(new Sort(Element.Side.LEFT));
-    pipeline.addStep(new ChooseReactant(Element.Side.LEFT));
-    solution.addPipeline(pipeline);
-    new Range(0, 10000, 1).populate(solution);
+    Cell cell1 = new Cell();
+    ReactionPipeline pipeline1 = new ReactionPipeline();
+    pipeline1.addStep(new Sort(Element.Side.LEFT));
+    pipeline1.addStep(new ChooseReactant(Element.Side.LEFT));
+    cell1.addPipeline(pipeline1);
+    cell1.addAllElements(new Range(0, 10000, 1));
 
-    Cell solution2 = new Cell();
+    Cell cell2 = new Cell();
     ReactionPipeline pipeline2 = new ReactionPipeline();
     pipeline2.addStep((List<Element> inputElements, Cell cell) -> {
       Element el = inputElements.get(0);
@@ -44,18 +44,18 @@ public class App {
       }
       return inputElements.subList(0, 1);
     });
-    solution2.addPipeline(pipeline2);
+    cell2.addPipeline(pipeline2);
     logger.debug("----------------");
-    new Range(10000, 20000, 1).populate(solution2);
+    cell2.addAllElements(new Range(10000, 20000, 1));
 
-    solution.addSubCell(solution2);
+    cell1.addSubCell(cell2);
 
     Reactor reactor = new BasicReactor();
-    logger.debug(solution2);
-    reactor.iterate(solution2, 5000);
-    logger.debug(solution2);
-    logger.debug(solution);
-    reactor.iterate(solution, 20000);
-    logger.debug(solution);
+    logger.debug(cell2);
+    reactor.iterate(cell2, 5000);
+    logger.debug(cell2);
+    logger.debug(cell1);
+    reactor.iterate(cell1, 20000);
+    logger.debug(cell1);
   }
 }

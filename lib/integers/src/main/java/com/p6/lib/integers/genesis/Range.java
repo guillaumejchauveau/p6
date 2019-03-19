@@ -1,13 +1,15 @@
 package com.p6.lib.integers.genesis;
 
-import com.p6.core.solution.Cell;
-import com.p6.lib.genesis.Populator;
+import com.p6.core.solution.Element;
+import com.p6.core.genesis.ElementGenerator;
 import com.p6.lib.integers.IntegerElement;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  */
-public class Range implements Populator {
+public class Range implements ElementGenerator {
   private Integer start;
   private Integer stop;
   private Integer step;
@@ -24,9 +26,11 @@ public class Range implements Populator {
   }
 
   @Override
-  public void populate(Cell cell) {
+  public List<Element> generate() {
+    List<Element> outputElement = new ArrayList<>();
     for (int i = this.start; i < this.stop; i += this.step) {
-      cell.addElement(new IntegerElement(i));
+      outputElement.add(new IntegerElement(i));
     }
+    return outputElement;
   }
 }

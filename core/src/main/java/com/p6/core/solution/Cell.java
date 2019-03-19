@@ -1,5 +1,6 @@
 package com.p6.core.solution;
 
+import com.p6.core.genesis.ElementGenerator;
 import com.p6.core.reaction.ReactionPipeline;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -152,8 +153,15 @@ public class Cell {
    *
    * @param elements The elements to add
    */
-  public void addAllElements(Collection<? extends Element> elements) {
+  public void addAllElements(Collection<Element> elements) {
     this.elements.addAll(elements);
+  }
+
+  /**
+   * @param generator
+   */
+  public void addAllElements(ElementGenerator generator) {
+    this.addAllElements(generator.generate());
   }
 
   /**
@@ -185,7 +193,7 @@ public class Cell {
    * @param elements
    * @param subCell
    */
-  public synchronized void inject(Collection<? extends Element> elements, Cell subCell) {
+  public synchronized void inject(Collection<Element> elements, Cell subCell) {
     if (this.subCells.contains(subCell)) {
       subCell.addAllElements(elements);
     }
