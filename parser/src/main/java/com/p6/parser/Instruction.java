@@ -21,5 +21,4 @@ public class Instruction {
     this.arguments.add(argument);
   }
 
-
 }

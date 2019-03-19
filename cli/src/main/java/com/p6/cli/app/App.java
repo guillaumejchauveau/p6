@@ -1,10 +1,15 @@
 package com.p6.cli.app;
 
+import com.p6.parser.Instruction;
 import com.p6.utils.LoggingHelper;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import java.io.*;
+import java.util.HashMap;
+
+import com.p6.parser.PipelineParser;
 
 /**
  * Entry point.
@@ -12,42 +17,22 @@ import java.io.*;
 public class App {
   /**
    * A test script.
+   *
    * @param args System args
    */
   public static void main(String[] args) {
-
     LoggingHelper.configureLoggingFramework(Level.ALL);
     Logger logger = LogManager.getLogger();
 
-    String line = null;
-    logger.info(System.getProperty("user.dir"));
-
-    try {
-      // FileReader reads text files in the default encoding.
-      FileReader fileReader = new FileReader("test.txt");
-
-      // Always wrap FileReader in BufferedReader.
-      BufferedReader bufferedReader =  new BufferedReader(fileReader);
-
-      while((line = bufferedReader.readLine()) != null) {
-        System.out.println(line);
+    PipelineParser pipelineParser = new PipelineParser(new HashMap<>());
+    for (Instruction instruction : pipelineParser.parse(" xxx , yyy :    greater: grea ( lo l , $yyy) : lol ;")) {
+      //for (Instruction instruction : pipelineParser.parse(" x,y:greater : superieur;")) {
+      logger.debug(instruction.name);
+      for (Object arg : instruction.getArguments()) {
+        logger.debug(arg);
       }
-
-      // Always close files.
-      bufferedReader.close();
+      logger.debug("----");
     }
-    catch(FileNotFoundException ex) {
-      System.out.println(
-        "Unable to open file '");
-    }
-
-    catch(IOException ex) {
-      System.out.println(
-        "Error reading file '");
-      // Or we could just do this:
-      // ex.printStackTrace();
-    }
-
 
 
   }
