@@ -1,8 +1,10 @@
 package com.p6.core.reactor;
 
-import com.p6.core.reaction.ReactionCondition;
+import com.p6.core.reaction.ReactionPipeline;
+import com.p6.core.solution.Cell;
 import com.p6.core.solution.Element;
-import com.p6.core.solution.Solution;
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -10,16 +12,21 @@ import org.apache.logging.log4j.Logger;
  * A single-threaded reactor.
  */
 public class BasicReactor extends Reactor {
+  private final Logger logger;
+
+  public BasicReactor() {
+    logger = LogManager.getLogger();
+  }
+
   /**
    * {@inheritDoc}
    */
   @Override
-  public void iterate(Solution solution, Integer iterationTarget, Integer stabilityTarget) {
-    Logger logger = LogManager.getLogger();
+  public void iterate(Cell cell, Integer iterationTarget, Integer stabilityTarget) {
     int stability = 0;
 
     for (int iteration = 0; iteration < iterationTarget; iteration++) {
-      if (solution.getElementsCount() <= 1) {
+      if (cell.getElementsCount() <= 1 || cell.isDissolved()) {
         logger.debug("Solution cannot react further");
         break;
       }
@@ -28,13 +35,15 @@ public class BasicReactor extends Reactor {
         break;
       }
 
-      Element x = solution.chooseElement();
-      Element y = solution.chooseElement();
+      Element x = cell.chooseElement();
+      Element y = cell.chooseElement();
 
       boolean reactionOccurred = false;
-      for (ReactionCondition reactionCondition : solution.getConditions()) {
-        if (reactionCondition.test(x, y)) {
-          solution.applyRule(reactionCondition, x, y);
+      for (ReactionPipeline pipeline : cell.getPipelines()) {
+        List<Element> elements = new ArrayList<>();
+        elements.add(x);
+        elements.add(y);
+        if (pipeline.handle(elements, cell)) {
           reactionOccurred = true;
           stability = 0;
           break;
@@ -42,8 +51,8 @@ public class BasicReactor extends Reactor {
       }
 
       if (!reactionOccurred) {
-        solution.addElement(x);
-        solution.addElement(y);
+        cell.addElement(x);
+        cell.addElement(y);
         stability++;
       }
     }

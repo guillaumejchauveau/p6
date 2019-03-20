@@ -1,7 +1,7 @@
 package com.p6.core.solution;
 
 /**
- * A unit of data in a solution.
+ * A unit of data in a cell.
  *
  * @param <T> The type of the represented data
  */
@@ -13,6 +13,7 @@ public abstract class Element<T> {
 
   /**
    * Creates an element with a pre-determined value.
+   *
    * @param value The value to assign
    */
   public Element(T value) {
@@ -25,6 +26,7 @@ public abstract class Element<T> {
 
   /**
    * Assigns a new value to the element.
+   *
    * @param value The value to assign
    */
   public void assign(T value) {
@@ -33,9 +35,24 @@ public abstract class Element<T> {
 
   /**
    * Evaluates the element's value.
+   *
    * @return The element's value
    */
   public T evaluate() {
     return this.value;
+  }
+
+  /**
+   * Describes an element's side in pipeline.
+   */
+  public enum Side {
+    /**
+     * The first element of the pipeline.
+     */
+    LEFT,
+    /**
+     * The second or last element of the pipeline.
+     */
+    RIGHT
   }
 }
