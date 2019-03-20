@@ -4,11 +4,13 @@ import com.p6.core.solution.Cell;
 import com.p6.core.solution.Element;
 import com.p6.utils.tests.TestCase;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
  * Test cases for {@link DissolveCell}.
  */
+@Ignore
 public class DissolveCellTest extends TestCase {
   @Test
   public void test() {
