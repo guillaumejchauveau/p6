@@ -1,1 +1,1 @@
-com.p6.utils.Log4jPropertySource
+com.p6.utils.logging.Log4jPropertySource
