@@ -30,7 +30,7 @@ public class LoggingHelper {
     pattern += "%style{%c{-2}}{bright}: %msg{ansi}%n%style{%throwable}{white}";
 
     ConfigurationBuilder<BuiltConfiguration> builder =
-      ConfigurationBuilderFactory.newConfigurationBuilder();
+        ConfigurationBuilderFactory.newConfigurationBuilder();
     AppenderComponentBuilder appenderBuilder = builder.newAppender("StdERR", "CONSOLE")
                                                       .addAttribute("target",
                                                         ConsoleAppender.Target.SYSTEM_ERR);
