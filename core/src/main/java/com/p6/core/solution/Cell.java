@@ -36,7 +36,7 @@ public class Cell {
    */
   private Random random;
   private Boolean isDissolved;
-  private Logger logger;
+  private final Logger logger;
 
   /**
    * Creates an empty cell.
@@ -192,6 +192,7 @@ public class Cell {
     this.parentCell.addAllElements(this.elements);
     this.parentCell.removeSubCell(this);
     this.isDissolved = true;
+    this.logger.debug("Cell dissolved");
   }
 
   /**

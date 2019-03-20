@@ -33,5 +33,5 @@ abstract class IntegerReactionPipelineStep implements ReactionPipelineStep {
    * @param cell     The current cell
    * @return The output elements
    */
-  abstract List<Element> integerTest(List<IntegerElement> elements, Cell cell);
+  protected abstract List<Element> integerTest(List<IntegerElement> elements, Cell cell);
 }

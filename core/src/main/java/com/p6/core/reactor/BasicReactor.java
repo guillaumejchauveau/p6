@@ -12,12 +12,17 @@ import org.apache.logging.log4j.Logger;
  * A single-threaded reactor.
  */
 public class BasicReactor extends Reactor {
+  private final Logger logger;
+
+  public BasicReactor() {
+    logger = LogManager.getLogger();
+  }
+
   /**
    * {@inheritDoc}
    */
   @Override
   public void iterate(Cell cell, Integer iterationTarget, Integer stabilityTarget) {
-    Logger logger = LogManager.getLogger();
     int stability = 0;
 
     for (int iteration = 0; iteration < iterationTarget; iteration++) {

@@ -26,7 +26,7 @@ public class App {
    */
   public static void main(String[] args) {
     LoggingHelper.configureLoggingFramework(Level.ALL);
-    Logger logger = LogManager.getLogger();
+    final Logger logger = LogManager.getLogger();
 
     Cell cell1 = new Cell();
     ReactionPipeline pipeline1 = new ReactionPipeline();
