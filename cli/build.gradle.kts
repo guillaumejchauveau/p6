@@ -19,7 +19,7 @@ dependencies {
   implementation(project(":utils"))
   implementation(project(":core"))
   implementation(project(":lib"))
-  implementation(project(":lib:common"))
-  implementation(project(":lib:integers"))
+  runtime(project(":lib:common"))
+  runtime(project(":lib:integers"))
   testImplementation("junit:junit:4.12")
 }
