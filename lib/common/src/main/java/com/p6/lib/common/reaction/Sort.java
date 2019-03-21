@@ -35,7 +35,7 @@ public class Sort implements ReactionPipelineStep {
       if (x1 instanceof Comparable) {
         return ((Comparable) x1).compareTo(x2) * (this.elementSide == Element.Side.LEFT ? 1 : -1);
       } else {
-        throw new ClassCastException();
+        throw new RuntimeException("Elements cannot be compared");
       }
     });
     return outputElements;

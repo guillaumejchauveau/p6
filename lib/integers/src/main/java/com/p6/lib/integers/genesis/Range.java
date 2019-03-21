@@ -24,7 +24,7 @@ public class Range implements ElementGenerator {
    */
   public Range(Integer start, Integer stop, Integer step) {
     if (step == 0 || step > 0 && stop < start || step < 0 && stop > start || start.equals(stop)) {
-      throw new IllegalArgumentException();
+      throw new IllegalArgumentException("Given arguments will result in a infinite loop");
     }
     this.start = start;
     this.stop = stop;

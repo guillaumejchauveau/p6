@@ -48,7 +48,7 @@ public class CellTest extends TestCase {
    */
   @Test
   public void elements() {
-    Element<Integer> x = new Element<>(0) {
+    Element<Integer> x = new Element<Integer>(0) {
     };
     Cell cell = new Cell();
     Assert.assertEquals("Cell should be initialized with 0 elements", 0,
@@ -99,13 +99,13 @@ public class CellTest extends TestCase {
     Assert.assertEquals("Sub-cell 1 should have parent cell", rootCell, subCell1.getParentCell());
 
     Cell subCell2 = new Cell();
-    subCell1.addElement(new Element<>(0) {
+    subCell1.addElement(new Element<Integer>(0) {
     });
-    subCell1.addElement(new Element<>(1) {
+    subCell1.addElement(new Element<Integer>(1) {
     });
-    subCell2.addElement(new Element<>(2) {
+    subCell2.addElement(new Element<Integer>(2) {
     });
-    subCell2.addElement(new Element<>(3) {
+    subCell2.addElement(new Element<Integer>(3) {
     });
     subCell1.addSubCell(subCell2);
     Assert.assertEquals("Root cell should have 1 sub-cell", 1, rootCell.getSubCells().size());
