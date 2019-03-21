@@ -23,5 +23,6 @@ public class App {
     logger.debug(registry.getElementGeneratorNames());
     logger.debug(registry.getReactionPipelineStepNames());
     logger.debug(registry.createReactionPipelineStep("clear"));
+    SolutionBuilder sb = new SolutionBuilder();
   }
 }
