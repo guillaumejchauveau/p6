@@ -18,7 +18,7 @@ public class DissolveCellTest extends TestCase {
     Cell cell = new Cell();
     rootCell.addSubCell(cell);
     DissolveCell step = new DissolveCell();
-    Element el = new Element<>(null) {
+    Element el = new Element<Object>(null) {
     };
     //product.react(el, el);
     Assert.assertTrue(cell.isDissolved());

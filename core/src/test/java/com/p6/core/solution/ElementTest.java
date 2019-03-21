@@ -14,7 +14,7 @@ public class ElementTest extends TestCase {
   @Test
   public void valuationTest() {
     Object initialValue = 3;
-    Element<Object> element = new Element<>(initialValue) {
+    Element<Object> element = new Element<Object>(initialValue) {
     };
     Assert.assertEquals("Evaluation should return initial value", initialValue, element.evaluate());
     Object newValue = "Hello";

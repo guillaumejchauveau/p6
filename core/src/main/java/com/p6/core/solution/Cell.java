@@ -75,7 +75,7 @@ public class Cell {
    */
   public void addSubCell(Cell subCell) {
     if (subCell == this || subCell == this.getParentCell()) {
-      throw new IllegalArgumentException();
+      throw new IllegalArgumentException("Given sub-cell is invalid");
     }
     subCell.setParentCell(this);
     this.subCells.add(subCell);
@@ -106,7 +106,7 @@ public class Cell {
    */
   public void setParentCell(Cell parentCell) {
     if (parentCell == this || this.subCells.contains(parentCell)) {
-      throw new IllegalArgumentException();
+      throw new IllegalArgumentException("Given parent cell is invalid");
     }
     this.parentCell = parentCell;
   }
