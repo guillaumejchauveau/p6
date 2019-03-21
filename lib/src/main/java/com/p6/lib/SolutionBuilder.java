@@ -1,10 +1,11 @@
 package com.p6.lib;
 
 import com.p6.core.genesis.ElementGenerator;
-import com.p6.core.reaction.ReactionPipelineStep;
 import com.p6.core.reaction.ReactionPipeline;
+import com.p6.core.reaction.ReactionPipelineStep;
 import com.p6.core.solution.Cell;
 import com.p6.core.solution.Element;
+
 import java.util.Collection;
 
 public class SolutionBuilder {

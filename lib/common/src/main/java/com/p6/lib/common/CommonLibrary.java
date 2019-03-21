@@ -4,7 +4,7 @@ import com.p6.core.genesis.ElementGenerator;
 import com.p6.core.reaction.ReactionPipelineStep;
 import com.p6.core.solution.Cell;
 import com.p6.core.solution.Element;
-import com.p6.lib.InitArgParser;
+import com.p6.lib.InitArgsParser;
 import com.p6.lib.Library;
 import com.p6.lib.common.reaction.ChooseReactant;
 import com.p6.lib.common.reaction.ClearPipeline;
@@ -23,14 +23,14 @@ public class CommonLibrary extends Library {
   }
 
   @Override
-  public Map<String, InitArgParser<? extends ElementGenerator>> getElementGenerators() {
-    Map<String, InitArgParser<? extends ElementGenerator>> elementGenerators = new HashMap<>();
+  public Map<String, InitArgsParser<? extends ElementGenerator>> getElementGenerators() {
+    Map<String, InitArgsParser<? extends ElementGenerator>> elementGenerators = new HashMap<>();
     return elementGenerators;
   }
 
   @Override
-  public Map<String, InitArgParser<? extends ReactionPipelineStep>> getReactionPipelineSteps() {
-    Map<String, InitArgParser<? extends ReactionPipelineStep>> reactionPipelineSteps =
+  public Map<String, InitArgsParser<? extends ReactionPipelineStep>> getReactionPipelineSteps() {
+    Map<String, InitArgsParser<? extends ReactionPipelineStep>> reactionPipelineSteps =
       new HashMap<>();
     reactionPipelineSteps.put("choose", args -> {
       if (!(args.length == 1 && args[0] instanceof Element.Side)) {

@@ -2,12 +2,22 @@ package com.p6.lib;
 
 import com.p6.core.genesis.ElementGenerator;
 import com.p6.core.reaction.ReactionPipelineStep;
+
 import java.util.Map;
 
+/**
+ * An object providing instructions for a P6 program.
+ */
 public abstract class Library {
+  /**
+   * The name of the library.
+   */
   public abstract String getName();
 
-  public abstract Map<String, InitArgParser<? extends ElementGenerator>> getElementGenerators();
+  /**
+   * The names of the provided {@link ElementGenerator}s mapped to their corresponding
+   */
+  public abstract Map<String, InitArgsParser<? extends ElementGenerator>> getElementGenerators();
 
-  public abstract Map<String, InitArgParser<? extends ReactionPipelineStep>> getReactionPipelineSteps();
+  public abstract Map<String, InitArgsParser<? extends ReactionPipelineStep>> getReactionPipelineSteps();
 }

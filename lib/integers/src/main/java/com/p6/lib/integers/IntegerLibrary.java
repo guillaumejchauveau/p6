@@ -2,7 +2,7 @@ package com.p6.lib.integers;
 
 import com.p6.core.genesis.ElementGenerator;
 import com.p6.core.reaction.ReactionPipelineStep;
-import com.p6.lib.InitArgParser;
+import com.p6.lib.InitArgsParser;
 import com.p6.lib.Library;
 import com.p6.lib.integers.genesis.Range;
 import java.util.HashMap;
@@ -15,8 +15,8 @@ public class IntegerLibrary extends Library {
   }
 
   @Override
-  public Map<String, InitArgParser<? extends ElementGenerator>> getElementGenerators() {
-    Map<String, InitArgParser<? extends ElementGenerator>> elementGenerators = new HashMap<>();
+  public Map<String, InitArgsParser<? extends ElementGenerator>> getElementGenerators() {
+    Map<String, InitArgsParser<? extends ElementGenerator>> elementGenerators = new HashMap<>();
     elementGenerators.put("range", args -> {
       try {
         if (!(
@@ -37,8 +37,8 @@ public class IntegerLibrary extends Library {
   }
 
   @Override
-  public Map<String, InitArgParser<? extends ReactionPipelineStep>> getReactionPipelineSteps() {
-    Map<String, InitArgParser<? extends ReactionPipelineStep>> reactionPipelineSteps =
+  public Map<String, InitArgsParser<? extends ReactionPipelineStep>> getReactionPipelineSteps() {
+    Map<String, InitArgsParser<? extends ReactionPipelineStep>> reactionPipelineSteps =
       new HashMap<>();
     return reactionPipelineSteps;
   }

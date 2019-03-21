@@ -2,6 +2,7 @@ package com.p6.lib;
 
 import com.p6.core.genesis.ElementGenerator;
 import com.p6.core.reaction.ReactionPipelineStep;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ServiceLoader;
@@ -9,8 +10,8 @@ import java.util.Set;
 
 public class LibraryRegistry {
   private Map<String, Library> libraries;
-  private Map<String, InitArgParser<? extends ElementGenerator>> elementGenerators;
-  private Map<String, InitArgParser<? extends ReactionPipelineStep>> reactionPipelineSteps;
+  private Map<String, InitArgsParser<? extends ElementGenerator>> elementGenerators;
+  private Map<String, InitArgsParser<? extends ReactionPipelineStep>> reactionPipelineSteps;
 
   public LibraryRegistry() {
     this.libraries = new HashMap<>();
@@ -27,12 +28,12 @@ public class LibraryRegistry {
       throw new RuntimeException("Duplicated library");
     }
     this.libraries.put(library.getName(), library);
-    Map<String, InitArgParser<? extends ElementGenerator>> libraryElementGenerators =
+    Map<String, InitArgsParser<? extends ElementGenerator>> libraryElementGenerators =
       library.getElementGenerators();
     for (String name : libraryElementGenerators.keySet()) {
       this.registerElementGenerator(name, libraryElementGenerators.get(name));
     }
-    Map<String, InitArgParser<? extends ReactionPipelineStep>> libraryPipelineSteps =
+    Map<String, InitArgsParser<? extends ReactionPipelineStep>> libraryPipelineSteps =
       library.getReactionPipelineSteps();
     for (String name : libraryPipelineSteps.keySet()) {
       this.registerPipelineStep(name, libraryPipelineSteps.get(name));
@@ -40,7 +41,7 @@ public class LibraryRegistry {
   }
 
   public void registerElementGenerator(String name,
-                                       InitArgParser<? extends ElementGenerator> elementGenerator) {
+                                       InitArgsParser<? extends ElementGenerator> elementGenerator) {
     if (this.elementGenerators.containsKey(name)) {
       throw new IllegalArgumentException("Duplicated element generator");
     }
@@ -48,7 +49,7 @@ public class LibraryRegistry {
   }
 
   public void registerPipelineStep(String name,
-                                   InitArgParser<? extends ReactionPipelineStep> pipelineStep) {
+                                   InitArgsParser<? extends ReactionPipelineStep> pipelineStep) {
     if (this.reactionPipelineSteps.containsKey(name)) {
       throw new IllegalArgumentException("Duplicated reaction pipeline step");
     }
