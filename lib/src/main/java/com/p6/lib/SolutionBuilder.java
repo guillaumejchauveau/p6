@@ -29,19 +29,19 @@ public class SolutionBuilder {
 
   private void checkSeal() {
     if (this.sealed) {
-      throw new RuntimeException("Solution is sealed");
+      throw new IllegalStateException("Solution is sealed");
     }
   }
 
   private void checkCurrentCell() {
     if (this.currentCell == null) {
-      throw new RuntimeException("Cell not created");
+      throw new IllegalStateException("Cell not created");
     }
   }
 
   private void checkCurrentPipeline() {
     if (this.currentPipeline == null) {
-      throw new RuntimeException("Pipeline not created");
+      throw new IllegalStateException("Pipeline not created");
     }
   }
 
@@ -52,7 +52,7 @@ public class SolutionBuilder {
    */
   public Cell getSolution() {
     if (!this.sealed) {
-      throw new RuntimeException("Solution is not sealed");
+      throw new IllegalStateException("Solution is not sealed");
     }
     return this.currentCell;
   }

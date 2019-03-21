@@ -37,7 +37,7 @@ public class LibraryRegistry {
    */
   public void addLibrary(Library library) {
     if (this.libraries.containsKey(library.getName())) {
-      throw new RuntimeException("Duplicated library");
+      throw new IllegalArgumentException("Duplicated library");
     }
     this.libraries.put(library.getName(), library);
     Map<String, InitArgsParser<? extends ElementGenerator>> libraryElementGenerators =
