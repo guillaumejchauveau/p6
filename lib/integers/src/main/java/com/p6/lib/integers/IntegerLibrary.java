@@ -5,6 +5,7 @@ import com.p6.core.reaction.ReactionPipelineStep;
 import com.p6.lib.InitArgsParser;
 import com.p6.lib.Library;
 import com.p6.lib.integers.genesis.Range;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,8 +21,8 @@ public class IntegerLibrary extends Library {
     elementGenerators.put("range", args -> {
       try {
         if (!(
-          args.length != 3 &&
-            args[0] instanceof String && args[1] instanceof String && args[2] instanceof String
+            args.length == 3
+            && args[0] instanceof String && args[1] instanceof String && args[2] instanceof String
         )) {
           throw new NumberFormatException();
         }

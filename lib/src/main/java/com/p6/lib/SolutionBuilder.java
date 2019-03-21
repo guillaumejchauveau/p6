@@ -8,13 +8,18 @@ import com.p6.core.solution.Element;
 
 import java.util.Collection;
 
+/**
+ * An object used to created easily a P6 program (a complete solution). It can create a cell
+ */
 public class SolutionBuilder {
   private Cell currentCell;
   private ReactionPipeline currentPipeline;
   private Boolean sealed;
+  private LibraryRegistry registry;
 
-  public SolutionBuilder() {
+  public SolutionBuilder(LibraryRegistry registry) {
     this.sealed = false;
+    this.registry = registry;
   }
 
   private void checkSeal() {
@@ -91,6 +96,10 @@ public class SolutionBuilder {
     return this;
   }
 
+  public SolutionBuilder addElement(String name, Object... args) {
+    return this.addElement(this.registry.createElementGenerator(name, args));
+  }
+
   public SolutionBuilder createPipeline() {
     this.checkSeal();
     this.checkCurrentCell();
@@ -107,5 +116,9 @@ public class SolutionBuilder {
     this.checkCurrentPipeline();
     this.currentPipeline.addStep(step);
     return this;
+  }
+
+  public SolutionBuilder addStep(String name, Object... args) {
+    return this.addStep(this.registry.createReactionPipelineStep(name, args));
   }
 }

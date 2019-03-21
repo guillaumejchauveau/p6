@@ -15,9 +15,12 @@ public abstract class Library {
   public abstract String getName();
 
   /**
-   * The names of the provided {@link ElementGenerator}s mapped to their corresponding
+   * The names of the provided {@link ElementGenerator}s mapped to their corresponding {@link InitArgsParser}.
    */
   public abstract Map<String, InitArgsParser<? extends ElementGenerator>> getElementGenerators();
 
+  /**
+   * The names of the provided {@link ReactionPipelineStep}s mapped to their corresponding {@link InitArgsParser}.
+   */
   public abstract Map<String, InitArgsParser<? extends ReactionPipelineStep>> getReactionPipelineSteps();
 }
