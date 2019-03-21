@@ -9,7 +9,11 @@ import com.p6.lib.common.reaction.ChooseReactant;
 import com.p6.lib.common.reaction.Sort;
 import com.p6.lib.integers.IntegerElement;
 import com.p6.lib.integers.genesis.Range;
+import com.p6.parser.Instruction;
+import com.p6.parser.PipelineParser;
 import com.p6.utils.logging.LoggingHelper;
+
+import java.util.HashMap;
 import java.util.List;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -57,5 +61,15 @@ public class App {
     logger.debug(cell1);
     reactor.iterate(cell1, 20000, 20000);
     logger.debug(cell1);
+
+    PipelineParser pipelineParser = new PipelineParser(new HashMap<>());
+    for (Instruction instruction : pipelineParser.parse(" xxx , yyy :    greater: grea ( lo l , $yyy) : lol ;")) {
+      //for (Instruction instruction : pipelineParser.parse(" x,y:greater : superieur;")) {
+      logger.debug(instruction.name);
+      for (Object arg : instruction.getArguments()) {
+        logger.debug(arg);
+      }
+      logger.debug("----");
+    }
   }
 }

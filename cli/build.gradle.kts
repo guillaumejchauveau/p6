@@ -21,5 +21,6 @@ dependencies {
   implementation(project(":lib"))
   implementation(project(":lib:common"))
   implementation(project(":lib:integers"))
+  implementation(project(":parser"))
   testImplementation("junit:junit:4.12")
 }
