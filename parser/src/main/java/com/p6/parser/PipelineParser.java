@@ -1,8 +1,5 @@
 package com.p6.parser;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +22,6 @@ public class PipelineParser {
   }
 
   public List<Instruction> parse(String clause) {
-    Logger logger = LogManager.getLogger();
     List<Instruction> instructions = new ArrayList<>();
     String buffer = "";
     Instruction instruction = null;
@@ -36,9 +32,6 @@ public class PipelineParser {
         buffer = buffer + separator;
       } else {
         buffer = buffer.trim();
-        logger.debug(buffer);
-        logger.debug(separator);
-        logger.debug(state);
 
         switch (state) {
           case LEFT_ELEMENT:
@@ -91,6 +84,4 @@ public class PipelineParser {
     }
     return instructions;
   }
-
-
 }
