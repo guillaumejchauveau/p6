@@ -29,12 +29,12 @@ public class App {
 
     SolutionBuilder sb = new SolutionBuilder(registry);
     sb.createCell();
-    sb.addElement("range", "0", "10000", "1");
-    sb.createPipeline()
+    sb.addElement("range", "0", "10000", "1")
+      .createPipeline()
       .addStep("notEquals")
       .addStep("sort", Element.Side.LEFT)
-      .addStep("choose", Element.Side.RIGHT);
-    sb.sealCell();
+      .addStep("choose", Element.Side.RIGHT)
+      .sealCell();
     Cell cell = sb.getSolution();
 
     logger.debug(cell);
