@@ -2,21 +2,24 @@ package com.p6.lib;
 
 import com.p6.core.genesis.ElementGenerator;
 import com.p6.core.reaction.ReactionPipelineStep;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ServiceLoader;
 import java.util.Set;
 
 /**
- * An object containing all the {@link ElementGenerator}s and {@link ReactionPipelineStep}s provided by libraries.
- * The libraries are loaded using a {@link ServiceLoader<Library>}.
+ * An object containing all the {@link ElementGenerator}s and {@link ReactionPipelineStep}s
+ * provided by libraries.
+ * The libraries are loaded using a {@link ServiceLoader}.
  */
 public class LibraryRegistry {
   private Map<String, Library> libraries;
   private Map<String, InitArgsParser<? extends ElementGenerator>> elementGenerators;
   private Map<String, InitArgsParser<? extends ReactionPipelineStep>> reactionPipelineSteps;
 
+  /**
+   * Creates a registry and loads all the services implementing {@link Library}.
+   */
   public LibraryRegistry() {
     this.libraries = new HashMap<>();
     this.elementGenerators = new HashMap<>();
@@ -38,12 +41,12 @@ public class LibraryRegistry {
     }
     this.libraries.put(library.getName(), library);
     Map<String, InitArgsParser<? extends ElementGenerator>> libraryElementGenerators =
-      library.getElementGenerators();
+        library.getElementGenerators();
     for (String name : libraryElementGenerators.keySet()) {
       this.registerElementGenerator(name, libraryElementGenerators.get(name));
     }
     Map<String, InitArgsParser<? extends ReactionPipelineStep>> libraryPipelineSteps =
-      library.getReactionPipelineSteps();
+        library.getReactionPipelineSteps();
     for (String name : libraryPipelineSteps.keySet()) {
       this.registerPipelineStep(name, libraryPipelineSteps.get(name));
     }
@@ -55,8 +58,8 @@ public class LibraryRegistry {
    * @param name             The unique name for the element generator
    * @param elementGenerator The {@link InitArgsParser} used to instantiate the object
    */
-  public void registerElementGenerator(String name,
-                                       InitArgsParser<? extends ElementGenerator> elementGenerator) {
+  public void registerElementGenerator(
+      String name, InitArgsParser<? extends ElementGenerator> elementGenerator) {
     if (this.elementGenerators.containsKey(name)) {
       throw new IllegalArgumentException("Duplicated element generator");
     }
@@ -89,14 +92,6 @@ public class LibraryRegistry {
    */
   public Set<String> getReactionPipelineStepNames() {
     return this.reactionPipelineSteps.keySet();
-  }
-
-  public Boolean hasElementGeneratorName(String name) {
-    return this.elementGenerators.containsKey(name);
-  }
-
-  public Boolean hasReactionPipelineStepName(String name) {
-    return this.reactionPipelineSteps.containsKey(name);
   }
 
   /**

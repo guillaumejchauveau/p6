@@ -2,7 +2,6 @@ package com.p6.lib;
 
 import com.p6.core.genesis.ElementGenerator;
 import com.p6.core.reaction.ReactionPipelineStep;
-
 import java.util.Map;
 
 /**
@@ -24,5 +23,6 @@ public abstract class Library {
    * The names of the provided {@link ReactionPipelineStep}s mapped to their corresponding
    * {@link InitArgsParser}.
    */
-  public abstract Map<String, InitArgsParser<? extends ReactionPipelineStep>> getReactionPipelineSteps();
+  public abstract Map<String, InitArgsParser<? extends ReactionPipelineStep>>
+      getReactionPipelineSteps();
 }

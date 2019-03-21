@@ -23,7 +23,7 @@ public class IntegerLibrary extends Library {
         if (!(
             args.length == 3
             && args[0] instanceof String && args[1] instanceof String && args[2] instanceof String
-        )) {
+          )) {
           throw new NumberFormatException();
         }
         return new Range(
@@ -40,7 +40,7 @@ public class IntegerLibrary extends Library {
   @Override
   public Map<String, InitArgsParser<? extends ReactionPipelineStep>> getReactionPipelineSteps() {
     Map<String, InitArgsParser<? extends ReactionPipelineStep>> reactionPipelineSteps =
-      new HashMap<>();
+        new HashMap<>();
     return reactionPipelineSteps;
   }
 }

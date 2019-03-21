@@ -31,11 +31,11 @@ public class CommonLibrary extends Library {
   @Override
   public Map<String, InitArgsParser<? extends ReactionPipelineStep>> getReactionPipelineSteps() {
     Map<String, InitArgsParser<? extends ReactionPipelineStep>> reactionPipelineSteps =
-      new HashMap<>();
+        new HashMap<>();
     reactionPipelineSteps.put("choose", args -> {
       if (!(args.length == 1 && args[0] instanceof Element.Side)) {
-        throw new IllegalArgumentException("Choose reaction pipeline step requires an element " +
-          "reference");
+        throw new IllegalArgumentException(
+          "Choose reaction pipeline step requires an element reference");
       }
       return new ChooseReactant((Element.Side) args[0]);
     });
@@ -44,16 +44,16 @@ public class CommonLibrary extends Library {
     reactionPipelineSteps.put("equals", args -> new Equals());
     reactionPipelineSteps.put("inject", args -> {
       if (!(args.length == 1 && args[0] instanceof Cell)) {
-        throw new IllegalArgumentException("Inject reaction pipeline step requires a cell " +
-          "reference");
+        throw new IllegalArgumentException(
+          "Inject reaction pipeline step requires a cell reference");
       }
       return new InjectInSubCell((Cell) args[0]);
     });
     reactionPipelineSteps.put("notEquals", args -> new NotEquals());
     reactionPipelineSteps.put("sort", args -> {
       if (!(args.length == 1 && args[0] instanceof Element.Side)) {
-        throw new IllegalArgumentException("Sort reaction pipeline step requires an element " +
-          "reference");
+        throw new IllegalArgumentException(
+          "Sort reaction pipeline step requires an element reference");
       }
       return new Sort((Element.Side) args[0]);
     });
