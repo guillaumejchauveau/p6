@@ -6,6 +6,7 @@ allprojects {
 
 plugins {
   id("com.gradle.build-scan") version "2.1"
+  id("io.freefair.aggregate-javadoc") version "3.1.4"
   jacoco
   checkstyle
   maven

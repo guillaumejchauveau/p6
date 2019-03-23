@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ServiceLoader;
 import java.util.Set;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * An object containing all the {@link ElementGenerator}s and {@link ReactionPipelineStep}s
@@ -16,6 +18,7 @@ public class LibraryRegistry {
   private Map<String, Library> libraries;
   private Map<String, InitArgsParser<? extends ElementGenerator>> elementGenerators;
   private Map<String, InitArgsParser<? extends ReactionPipelineStep>> reactionPipelineSteps;
+  private Logger logger;
 
   /**
    * Creates a registry and loads all the services implementing {@link Library}.
@@ -24,9 +27,11 @@ public class LibraryRegistry {
     this.libraries = new HashMap<>();
     this.elementGenerators = new HashMap<>();
     this.reactionPipelineSteps = new HashMap<>();
+    this.logger = LogManager.getLogger();
 
     for (Library library : ServiceLoader.load(Library.class)) {
       this.addLibrary(library);
+      this.logger.debug("Library '" + library.getName() + "' loaded");
     }
   }
 

@@ -6,10 +6,8 @@ import com.p6.core.solution.Cell;
 import com.p6.core.solution.Element;
 import com.p6.lib.LibraryRegistry;
 import com.p6.lib.SolutionBuilder;
-import com.p6.parser.Instruction;
-import com.p6.parser.PipelineParser;
+import com.p6.parser.InvalidSyntaxException;
 import com.p6.utils.logging.LoggingHelper;
-import java.util.HashMap;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,7 +21,7 @@ public class App {
    *
    * @param args System args
    */
-  public static void main(String[] args) {
+  public static void main(String[] args) throws InvalidSyntaxException {
     LoggingHelper.configureLoggingFramework(Level.ALL);
     final Logger logger = LogManager.getLogger();
 
@@ -44,14 +42,18 @@ public class App {
     reactor.iterate(cell, 10000, 5000);
     logger.debug(cell);
 
+    /*
+    StructureParser parser = new StructureParser();
+    System.out.println(parser.parseNextStructure());
+
     PipelineParser pipelineParser = new PipelineParser(new HashMap<>());
-    String clause = " xxx , yyy :    greater: grea ( lo l , $yyy) : lol ;";
+    String clause = " xxx , yyy :    greater: grea ( lo l , $yyy) : lol ";
     for (Instruction instruction : pipelineParser.parse(clause)) {
       logger.debug(instruction.name);
       for (Object arg : instruction.getArguments()) {
         logger.debug(arg);
       }
       logger.debug("----");
-    }
+    }*/
   }
 }

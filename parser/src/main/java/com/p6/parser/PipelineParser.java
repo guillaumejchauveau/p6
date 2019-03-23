@@ -1,5 +1,6 @@
 package com.p6.parser;
 
+import com.p6.core.solution.Element;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,33 +27,32 @@ public class PipelineParser {
     String buffer = "";
     Instruction instruction = null;
     State state = State.LEFT_ELEMENT;
+
     for (int i = 0; i < clause.length(); i++) {
-      char separator = clause.charAt(i);
-      if (!",:();".contains(Character.toString(separator))) {
-        buffer = buffer + separator;
-      } else {
+      char currentChar = clause.charAt(i);
+      // End of line
+      boolean eol = i == clause.length() - 1;
+
+      if (",:()".contains(Character.toString(currentChar)) || eol) {
         buffer = buffer.trim();
 
         switch (state) {
           case LEFT_ELEMENT:
-            this.references.put(buffer, true);
+            this.references.put(buffer, Element.Side.LEFT);
             state = State.RIGHT_ELEMENT;
             break;
 
           case RIGHT_ELEMENT:
-            this.references.put(buffer, false);
+            this.references.put(buffer, Element.Side.RIGHT);
             state = State.INSTRUCTION_NAME;
             break;
 
           case INSTRUCTION_NAME:
             instruction = new Instruction(buffer);
-            if (separator == '(') {
+            if (currentChar == '(') {
               state = State.INSTRUCTION_ARG;
-            } else if (separator == ':') {
+            } else if (currentChar == ':' || eol) {
               instructions.add(instruction);
-            } else if (separator == ';') {
-              instructions.add(instruction);
-              return instructions;
             }
             break;
 
@@ -62,25 +62,25 @@ public class PipelineParser {
             } else {
               instruction.addArgument(buffer);
             }
-            if (separator == ')') {
+            if (currentChar == ')') {
               instructions.add(instruction);
               state = State.INSTRUCTION_POST_ARG;
-            } else if (separator != ',') {
-              // Erreur de syntaxe.
             }
             break;
 
           case INSTRUCTION_POST_ARG:
-            if (separator == ';') {
-              return instructions;
-            } else if (separator == ':') {
+            if (currentChar == ':') {
               state = State.INSTRUCTION_NAME;
             }
             break;
+
+          default:
+            throw new IllegalStateException("State is illegal");
         }
         buffer = "";
+      } else {
+        buffer += currentChar;
       }
-
     }
     return instructions;
   }
