@@ -1,54 +1,49 @@
-package com.p6.parser;
+package com.p6.parser.instruction;
 
-import com.p6.core.solution.Element;
+import com.p6.parser.InvalidSyntaxException;
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PipelineParser {
+public class InstructionListParser<T extends Instruction> {
 
   enum State {
-    LEFT_ELEMENT,
-    RIGHT_ELEMENT,
     INSTRUCTION_NAME,
     INSTRUCTION_ARG,
     INSTRUCTION_POST_ARG
   }
 
-  private Map<String, Object> references;
+  protected Map<String, Object> references;
+  private Constructor<T> instructionConstructor;
 
-  public PipelineParser(Map<String, Object> parentReferences) {
+  public InstructionListParser(Map<String, Object> parentReferences,
+                               Constructor<T> instructionConstructor) {
     this.references = new HashMap<>(parentReferences);
+    this.instructionConstructor = instructionConstructor;
   }
 
-  public List<Instruction> parse(String clause) {
-    List<Instruction> instructions = new ArrayList<>();
+  public List<T> parse(String clause) throws InvalidSyntaxException {
+    List<T> instructions = new ArrayList<>();
     String buffer = "";
-    Instruction instruction = null;
-    State state = State.LEFT_ELEMENT;
+    T instruction = null;
+    State state = State.INSTRUCTION_NAME;
 
     for (int i = 0; i < clause.length(); i++) {
       char currentChar = clause.charAt(i);
-      // End of line
       boolean eol = i == clause.length() - 1;
 
       if (",:()".contains(Character.toString(currentChar)) || eol) {
         buffer = buffer.trim();
 
         switch (state) {
-          case LEFT_ELEMENT:
-            this.references.put(buffer, Element.Side.LEFT);
-            state = State.RIGHT_ELEMENT;
-            break;
-
-          case RIGHT_ELEMENT:
-            this.references.put(buffer, Element.Side.RIGHT);
-            state = State.INSTRUCTION_NAME;
-            break;
-
           case INSTRUCTION_NAME:
-            instruction = new Instruction(buffer);
+            try {
+              instruction = this.instructionConstructor.newInstance(buffer);
+            } catch (ReflectiveOperationException e) {
+              throw new RuntimeException(e);
+            }
             if (currentChar == '(') {
               state = State.INSTRUCTION_ARG;
             } else if (currentChar == ':' || eol) {
@@ -57,10 +52,12 @@ public class PipelineParser {
             break;
 
           case INSTRUCTION_ARG:
-            if (buffer.charAt(0) == '$') {
-              instruction.addArgument(references.get(buffer.substring(1)));
-            } else {
-              instruction.addArgument(buffer);
+            if (buffer.length() != 0) {
+              if (buffer.charAt(0) == '$') {
+                instruction.addArgument(references.get(buffer.substring(1)));
+              } else {
+                instruction.addArgument(buffer);
+              }
             }
             if (currentChar == ')') {
               instructions.add(instruction);
