@@ -20,7 +20,6 @@ import org.apache.logging.log4j.Logger;
  * }".
  */
 public class StructureParser {
-
   private static final char WHITESPACE = ' ';
   private static final String LINE_TERMINATORS = "\r\n";
   private static final char LIST_START = '[';
@@ -30,17 +29,17 @@ public class StructureParser {
   private static final char COMMENT = '#';
   private static final char MAP_KEY_STOP = ':';
 
-  @FunctionalInterface
-  private interface StructureCharParser {
-    Boolean parse(Character currentChar, Boolean eol) throws InvalidSyntaxException;
-  }
-
   private String source;
   private Integer position;
   private Stack<List<Object>> inProgressListsStack;
   private Stack<Map<String, Object>> inProgressMapsStack;
 
   private Logger logger;
+
+  @FunctionalInterface
+  private interface StructureCharParser {
+    Boolean parse(Character currentChar, Boolean eol) throws InvalidSyntaxException;
+  }
 
   /**
    * Initializes a new structure parser with the source to parse.
