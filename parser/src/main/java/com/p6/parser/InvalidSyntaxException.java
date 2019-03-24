@@ -19,4 +19,13 @@ public class InvalidSyntaxException extends Exception {
     this.source = source;
     this.position = position;
   }
+
+  /**
+   * Creates a new invalid syntax exception without the source.
+   *
+   * @param message Details about the error
+   */
+  public InvalidSyntaxException(String message) {
+    this(message, null, null);
+  }
 }

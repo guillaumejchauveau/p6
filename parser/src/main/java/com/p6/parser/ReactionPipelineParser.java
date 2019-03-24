@@ -8,12 +8,26 @@ import com.p6.parser.instruction.ReactionPipelineStepInstruction;
 import java.util.List;
 import java.util.Map;
 
+/**
+ *
+ */
 public class ReactionPipelineParser extends InstructionListParser<ReactionPipelineStepInstruction> {
+  /**
+   *
+   * @param parentReferences
+   * @throws ReflectiveOperationException
+   */
   public ReactionPipelineParser(Map<String, Object> parentReferences)
       throws ReflectiveOperationException {
     super(parentReferences, ReactionPipelineStepInstruction.class.getConstructor(String.class));
   }
 
+  /**
+   *
+   * @param clause
+   * @return
+   * @throws InvalidSyntaxException
+   */
   @Override
   public List<ReactionPipelineStepInstruction> parse(String clause) throws InvalidSyntaxException {
     int referencesIndex = clause.indexOf(':');
@@ -28,6 +42,13 @@ public class ReactionPipelineParser extends InstructionListParser<ReactionPipeli
     }
   }
 
+  /**
+   *
+   * @param clause
+   * @param registry
+   * @return
+   * @throws InvalidSyntaxException
+   */
   public ReactionPipeline create(String clause, LibraryRegistry registry)
       throws InvalidSyntaxException {
     List<ReactionPipelineStepInstruction> instructions = this.parse(clause);

@@ -7,9 +7,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ *
+ * @param <T>
+ */
 public class InstructionListParser<T extends Instruction> {
-
-  enum State {
+  private enum State {
     INSTRUCTION_NAME,
     INSTRUCTION_ARG,
     INSTRUCTION_POST_ARG
@@ -18,12 +21,23 @@ public class InstructionListParser<T extends Instruction> {
   protected Map<String, Object> references;
   private Constructor<T> instructionConstructor;
 
+  /**
+   *
+   * @param parentReferences
+   * @param instructionConstructor
+   */
   public InstructionListParser(Map<String, Object> parentReferences,
                                Constructor<T> instructionConstructor) {
     this.references = new HashMap<>(parentReferences);
     this.instructionConstructor = instructionConstructor;
   }
 
+  /**
+   *
+   * @param clause
+   * @return
+   * @throws InvalidSyntaxException
+   */
   public List<T> parse(String clause) throws InvalidSyntaxException {
     List<T> instructions = new ArrayList<>();
     String buffer = "";

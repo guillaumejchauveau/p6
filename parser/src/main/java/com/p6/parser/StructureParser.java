@@ -36,6 +36,9 @@ public class StructureParser {
 
   private Logger logger;
 
+  /**
+   *
+   */
   @FunctionalInterface
   private interface StructureCharParser {
     Boolean parse(Character currentChar, Boolean eol) throws InvalidSyntaxException;
@@ -87,6 +90,11 @@ public class StructureParser {
     return structure.get();
   }
 
+  /**
+   *
+   * @return
+   * @throws InvalidSyntaxException
+   */
   private String parseNextString() throws InvalidSyntaxException {
     StringBuilder builder = new StringBuilder();
     this.parseSource((Character currentChar, Boolean eol) -> {
@@ -99,6 +107,11 @@ public class StructureParser {
     return builder.toString().trim();
   }
 
+  /**
+   *
+   * @return
+   * @throws InvalidSyntaxException
+   */
   private List parseNextList() throws InvalidSyntaxException {
     List<Object> list = new ArrayList<>();
 
@@ -129,6 +142,11 @@ public class StructureParser {
     return this.inProgressListsStack.pop();
   }
 
+  /**
+   *
+   * @return
+   * @throws InvalidSyntaxException
+   */
   private Map<String, Object> parseNextMap() throws InvalidSyntaxException {
     Map<String, Object> map = new HashMap<>();
     AtomicReference<StringBuilder> key = new AtomicReference<>();
@@ -177,6 +195,11 @@ public class StructureParser {
     return this.inProgressMapsStack.pop();
   }
 
+  /**
+   *
+   * @param parser
+   * @throws InvalidSyntaxException
+   */
   private void parseSource(StructureCharParser parser) throws InvalidSyntaxException {
     boolean skipLine = false;
     boolean eol = false;

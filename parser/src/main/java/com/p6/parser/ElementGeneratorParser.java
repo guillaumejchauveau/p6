@@ -7,12 +7,27 @@ import com.p6.parser.instruction.InstructionListParser;
 import java.util.List;
 import java.util.Map;
 
+/**
+ *
+ */
 public class ElementGeneratorParser extends InstructionListParser<ElementGeneratorInstruction> {
+  /**
+   *
+   * @param parentReferences
+   * @throws ReflectiveOperationException
+   */
   public ElementGeneratorParser(Map<String, Object> parentReferences)
       throws ReflectiveOperationException {
     super(parentReferences, ElementGeneratorInstruction.class.getConstructor(String.class));
   }
 
+  /**
+   *
+   * @param clause
+   * @param registry
+   * @return
+   * @throws InvalidSyntaxException
+   */
   public ElementGenerator create(String clause, LibraryRegistry registry)
       throws InvalidSyntaxException {
     List<ElementGeneratorInstruction> instructions = this.parse(clause);
