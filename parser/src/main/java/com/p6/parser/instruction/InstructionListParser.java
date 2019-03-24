@@ -8,10 +8,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * A base class used to parse strings with the form "name(argument, ...) : ....". Those strings
+ * represent a list of {@link Instruction}s.
  *
- * @param <T>
+ * @param <T> The type of the objects represented by the instructions
  */
-public class InstructionListParser<T extends Instruction> {
+public abstract class InstructionListParser<T extends Instruction> {
   private enum State {
     INSTRUCTION_NAME,
     INSTRUCTION_ARG,
@@ -22,7 +24,6 @@ public class InstructionListParser<T extends Instruction> {
   private Constructor<T> instructionConstructor;
 
   /**
-   *
    * @param parentReferences
    * @param instructionConstructor
    */
@@ -33,7 +34,6 @@ public class InstructionListParser<T extends Instruction> {
   }
 
   /**
-   *
    * @param clause
    * @return
    * @throws InvalidSyntaxException

@@ -31,7 +31,6 @@ public class LibraryRegistry {
 
     for (Library library : ServiceLoader.load(Library.class)) {
       this.addLibrary(library);
-      this.logger.debug("Library '" + library.getName() + "' loaded");
     }
   }
 
@@ -55,6 +54,7 @@ public class LibraryRegistry {
     for (String name : libraryPipelineSteps.keySet()) {
       this.registerPipelineStep(name, libraryPipelineSteps.get(name));
     }
+    this.logger.info("Library '" + library.getName() + "' loaded");
   }
 
   /**

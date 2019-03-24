@@ -27,7 +27,6 @@ public class CellParser {
   private Logger logger;
 
   /**
-   *
    * @param source
    * @throws InvalidSyntaxException
    */
@@ -36,7 +35,6 @@ public class CellParser {
   }
 
   /**
-   *
    * @param structure
    * @throws InvalidSyntaxException
    */
@@ -54,7 +52,6 @@ public class CellParser {
   }
 
   /**
-   *
    * @return
    */
   public String getName() {
@@ -62,7 +59,6 @@ public class CellParser {
   }
 
   /**
-   *
    * @throws InvalidSyntaxException
    */
   private void loadCellStructure() throws InvalidSyntaxException {
@@ -123,7 +119,7 @@ public class CellParser {
       throw new InvalidSyntaxException("Cell elements expected");
     }
 
-    // Cell sub-cells.
+    // Cell sub-cells. Optional.
     try {
       if (structure.get("subCells") == null) {
         return;
@@ -138,7 +134,6 @@ public class CellParser {
   }
 
   /**
-   *
    * @param registry
    * @throws InvalidSyntaxException
    */
@@ -152,14 +147,13 @@ public class CellParser {
   }
 
   /**
-   *
    * @param registry
    * @throws InvalidSyntaxException
    */
   private void parseReactionPipelines(LibraryRegistry registry) throws InvalidSyntaxException {
     try {
+      ReactionPipelineParser reactionPipelineParser = new ReactionPipelineParser(this.references);
       for (String reactionPipelineSource : this.reactionPipelinesSources) {
-        ReactionPipelineParser reactionPipelineParser = new ReactionPipelineParser(this.references);
         this.reactionPipelines.add(reactionPipelineParser.create(reactionPipelineSource, registry));
       }
     } catch (ReflectiveOperationException e) {
@@ -168,14 +162,13 @@ public class CellParser {
   }
 
   /**
-   *
    * @param registry
    * @throws InvalidSyntaxException
    */
   private void parseElementGenerators(LibraryRegistry registry) throws InvalidSyntaxException {
     try {
+      ElementGeneratorParser elementGeneratorParser = new ElementGeneratorParser(this.references);
       for (String elementGeneratorSource : this.elementGeneratorsSources) {
-        ElementGeneratorParser elementGeneratorParser = new ElementGeneratorParser(this.references);
         this.elementGenerators.add(elementGeneratorParser.create(elementGeneratorSource, registry));
       }
     } catch (ReflectiveOperationException e) {
@@ -184,7 +177,6 @@ public class CellParser {
   }
 
   /**
-   *
    * @param registry
    * @return
    * @throws InvalidSyntaxException
@@ -193,16 +185,20 @@ public class CellParser {
     this.parseSubCells(registry);
     this.parseElementGenerators(registry);
     this.parseReactionPipelines(registry);
+    this.logger.debug("Creating cell '" + this.getName() + "'");
     Cell cell = new Cell();
     for (Cell subCell : this.subCells) {
       cell.addSubCell(subCell);
     }
+    this.logger.debug("Added " + this.subCells.size() + " sub-cells");
     for (ReactionPipeline reactionPipeline : this.reactionPipelines) {
       cell.addPipeline(reactionPipeline);
     }
+    this.logger.debug("Added " + this.reactionPipelines.size() + " reaction pipelines");
     for (ElementGenerator elementGenerator : this.elementGenerators) {
       cell.addAllElements(elementGenerator);
     }
+    this.logger.debug("Added " + this.elementGenerators.size() + " element generators");
     return cell;
   }
 }

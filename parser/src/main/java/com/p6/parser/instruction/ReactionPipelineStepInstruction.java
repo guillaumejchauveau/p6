@@ -4,21 +4,21 @@ import com.p6.core.reaction.ReactionPipelineStep;
 import com.p6.lib.LibraryRegistry;
 
 /**
- *
+ * An {@link Instruction} representing a {@link ReactionPipelineStep}.
  */
 public class ReactionPipelineStepInstruction extends Instruction<ReactionPipelineStep> {
   /**
-   *
-   * @param name
+   * {@inheritDoc}
    */
   public ReactionPipelineStepInstruction(String name) {
     super(name);
   }
 
   /**
+   * Creates the reaction pipeline step corresponding to the instruction.
    *
-   * @param registry
-   * @return
+   * @param registry The registry used to create the reaction pipeline step
+   * @return The reaction pipeline step created
    */
   @Override
   public ReactionPipelineStep create(LibraryRegistry registry) {
