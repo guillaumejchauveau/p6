@@ -9,13 +9,17 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *
+ * Parses a list of instructions to create an entire reaction pipeline. The string representing
+ * the pipeline starts with names for referencing the left and right element of the pipeline
+ * input. Therefore, the method {@link InstructionListParser} has been extended to handle this
+ * part of the string.
  */
 public class ReactionPipelineParser extends InstructionListParser<ReactionPipelineStepInstruction> {
   /**
+   * Initializes the instruction list parser for {@link ReactionPipelineStepInstruction}s.
    *
-   * @param parentReferences
-   * @throws ReflectiveOperationException
+   * @param parentReferences Inherited references
+   * @throws ReflectiveOperationException Thrown most likely in the case of a programmatic error
    */
   public ReactionPipelineParser(Map<String, Object> parentReferences)
       throws ReflectiveOperationException {
@@ -23,10 +27,11 @@ public class ReactionPipelineParser extends InstructionListParser<ReactionPipeli
   }
 
   /**
+   * Parses the string representing the reaction pipeline. Splits the string at the first ':'
+   * character to separate the {@link Element.Side} references add the actual
+   * instruction list for the pipeline's steps.
    *
-   * @param clause
-   * @return
-   * @throws InvalidSyntaxException
+   * {@inheritDoc}
    */
   @Override
   public List<ReactionPipelineStepInstruction> parse(String clause) throws InvalidSyntaxException {
@@ -43,11 +48,12 @@ public class ReactionPipelineParser extends InstructionListParser<ReactionPipeli
   }
 
   /**
+   * Creates the reaction pipeline defined by the input string using a {@link LibraryRegistry}.
    *
-   * @param clause
-   * @param registry
-   * @return
-   * @throws InvalidSyntaxException
+   * @param clause   The string to parse
+   * @param registry The registry to use
+   * @return The created reaction pipeline
+   * @throws InvalidSyntaxException Thrown of the string cannot be parsed
    */
   public ReactionPipeline create(String clause, LibraryRegistry registry)
       throws InvalidSyntaxException {

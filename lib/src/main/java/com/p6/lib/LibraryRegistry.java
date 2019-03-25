@@ -5,7 +5,6 @@ import com.p6.core.reaction.ReactionPipelineStep;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ServiceLoader;
-import java.util.Set;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -83,20 +82,6 @@ public class LibraryRegistry {
       throw new IllegalArgumentException("Duplicated reaction pipeline step");
     }
     this.reactionPipelineSteps.put(name, pipelineStep);
-  }
-
-  /**
-   * A set of all the registered element generator names.
-   */
-  public Set<String> getElementGeneratorNames() {
-    return this.elementGenerators.keySet();
-  }
-
-  /**
-   * A set of all the registered reaction pipeline step names.
-   */
-  public Set<String> getReactionPipelineStepNames() {
-    return this.reactionPipelineSteps.keySet();
   }
 
   /**
