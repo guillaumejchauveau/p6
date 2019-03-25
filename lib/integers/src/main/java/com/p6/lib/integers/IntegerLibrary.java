@@ -2,9 +2,11 @@ package com.p6.lib.integers;
 
 import com.p6.core.genesis.ElementGenerator;
 import com.p6.core.reaction.ReactionPipelineStep;
+import com.p6.core.solution.Element;
 import com.p6.lib.InitArgsParser;
 import com.p6.lib.Library;
 import com.p6.lib.integers.genesis.Range;
+import com.p6.lib.integers.reaction.SortIntegers;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -41,6 +43,13 @@ public class IntegerLibrary extends Library {
   public Map<String, InitArgsParser<? extends ReactionPipelineStep>> getReactionPipelineSteps() {
     Map<String, InitArgsParser<? extends ReactionPipelineStep>> reactionPipelineSteps =
         new HashMap<>();
+    reactionPipelineSteps.put("sortInt", args -> {
+      if (!(args.length == 1 && args[0] instanceof Element.Side)) {
+        throw new IllegalArgumentException(
+          "SortInt reaction pipeline step requires an element reference");
+      }
+      return new SortIntegers((Element.Side) args[0]);
+    });
     return reactionPipelineSteps;
   }
 }
