@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class ComparableReactionPipelineStep<T extends Comparable<T>>
-  implements ReactionPipelineStep {
+    implements ReactionPipelineStep {
   /**
    * {@inheritDoc}
    */
