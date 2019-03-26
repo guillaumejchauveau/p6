@@ -39,7 +39,7 @@ public class ReactionPipeline {
   public Boolean handle(List<Element> inputElements, Cell cell) {
     List<Element> outputElements = inputElements;
     for (ReactionPipelineStep step : this.steps) {
-      outputElements = step.handle(Collections.unmodifiableList(inputElements), cell);
+      outputElements = step.handle(outputElements, cell);
       if (cell.isDissolved()) {
         return true;
       }

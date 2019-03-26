@@ -1,20 +1,9 @@
 {
-  name: Aa
+  name: Eratosthene
   rules: [
-    a,b : sort($a) : choose($b) : inject($tro bien)
+    a, b : divisible($a) : choose($b)
   ]
   elements: [
-    range(10,20,1)
-  ]
-  subCells: [
-    {
-      name: tro bien
-      rules: [
-        gosh  ,  drouate : choose($  gosh)
-      ]
-      elements : [
-        range(0, 10, 1)
-      ]
-    }
+    range(2, 50, 1)
   ]
 }

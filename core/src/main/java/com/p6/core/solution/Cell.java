@@ -126,11 +126,11 @@ public class Cell {
    * @return A set of the registered reaction conditions.
    */
   public List<ReactionPipeline> getPipelines() {
-    return Collections.unmodifiableList(this.pipelines);
+    return this.pipelines;
   }
 
-  public String toString() {
-    return this.pipelines.size() + " pipelines, " + this.elements.size() + " elements, " + this.subCells.size() + " sub-cells";
+  public Collection<Element> getElements() {
+    return this.elements;
   }
 
   /**
@@ -147,7 +147,7 @@ public class Cell {
    *
    * @param element The element to add
    */
-  public void addElement(Element element) {
+  public synchronized void addElement(Element element) {
     this.elements.add(element);
   }
 
@@ -156,7 +156,7 @@ public class Cell {
    *
    * @param elements The elements to add
    */
-  public void addAllElements(Collection<Element> elements) {
+  public synchronized void addAllElements(Collection<Element> elements) {
     this.elements.addAll(elements);
   }
 
@@ -175,7 +175,7 @@ public class Cell {
    *
    * @return The chosen element
    */
-  public Element chooseElement() {
+  public synchronized Element chooseElement() {
     int elementIndex = this.random.nextInt(this.getElementsCount());
     Element element = this.elements.get(elementIndex);
     this.elements.remove(elementIndex);
@@ -185,9 +185,12 @@ public class Cell {
   /**
    * Marks the cell as dissolved and put all it's remaining elements in the parent cell.
    */
-  public void dissolve() {
+  public synchronized void dissolve() {
     if (this.getParentCell() == null) {
       throw new IllegalStateException("Cell doesn't have a parent cell");
+    }
+    if (this.isDissolved()) {
+      return;
     }
     this.parentCell.addAllElements(this.elements);
     this.parentCell.removeSubCell(this);
