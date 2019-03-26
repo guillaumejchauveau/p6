@@ -32,6 +32,7 @@ public class CommonLibrary extends Library {
   public Map<String, InitArgsParser<? extends ReactionPipelineStep>> getReactionPipelineSteps() {
     Map<String, InitArgsParser<? extends ReactionPipelineStep>> reactionPipelineSteps =
         new HashMap<>();
+
     reactionPipelineSteps.put("choose", args -> {
       if (!(args.length == 1 && args[0] instanceof Element.Side)) {
         throw new IllegalArgumentException(
@@ -39,6 +40,7 @@ public class CommonLibrary extends Library {
       }
       return new ChooseReactant((Element.Side) args[0]);
     });
+
     reactionPipelineSteps.put("clear", args -> new ClearPipeline());
     reactionPipelineSteps.put("dissolve", args -> new DissolveCell());
     reactionPipelineSteps.put("equals", args -> new Equals());
@@ -49,6 +51,7 @@ public class CommonLibrary extends Library {
       }
       return new InjectInSubCell((Cell) args[0]);
     });
+
     reactionPipelineSteps.put("notEquals", args -> new NotEquals());
     reactionPipelineSteps.put("sort", args -> {
       if (!(args.length == 1 && args[0] instanceof Element.Side)) {

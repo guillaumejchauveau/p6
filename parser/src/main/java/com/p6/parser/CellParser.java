@@ -76,7 +76,7 @@ public class CellParser {
       if (!(structure.get("name") instanceof String)) {
         throw new InvalidSyntaxException("Cell name expected to be a string");
       }
-      this.name = (String) structure.get("name");
+      this.name = ((String) structure.get("name")).trim();
     } catch (ClassCastException | NullPointerException e) {
       throw new InvalidSyntaxException("Cell name expected");
     }

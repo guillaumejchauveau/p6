@@ -84,7 +84,7 @@ public abstract class InstructionListParser<T extends Instruction> {
           case INSTRUCTION_ARG:
             if (buffer.length() != 0) {
               if (buffer.charAt(0) == '$') { // Reference mapping.
-                instruction.addArgument(references.get(buffer.substring(1)));
+                instruction.addArgument(references.get(buffer.substring(1).trim()));
               } else {
                 instruction.addArgument(buffer);
               }
