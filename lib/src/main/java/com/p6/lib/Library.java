@@ -5,7 +5,8 @@ import com.p6.core.reaction.ReactionPipelineStep;
 import java.util.Map;
 
 /**
- * An object providing instructions for a P6 program.
+ * An object providing implementations of {@link ReactionPipelineStep}s and
+ * {@link ElementGenerator}s.
  */
 public abstract class Library {
   /**

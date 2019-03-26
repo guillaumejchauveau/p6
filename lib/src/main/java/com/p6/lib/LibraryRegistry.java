@@ -5,17 +5,20 @@ import com.p6.core.reaction.ReactionPipelineStep;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ServiceLoader;
-import java.util.Set;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * An object containing all the {@link ElementGenerator}s and {@link ReactionPipelineStep}s
  * provided by libraries.
+ * <br>
  * The libraries are loaded using a {@link ServiceLoader}.
  */
 public class LibraryRegistry {
   private Map<String, Library> libraries;
   private Map<String, InitArgsParser<? extends ElementGenerator>> elementGenerators;
   private Map<String, InitArgsParser<? extends ReactionPipelineStep>> reactionPipelineSteps;
+  private Logger logger;
 
   /**
    * Creates a registry and loads all the services implementing {@link Library}.
@@ -24,6 +27,7 @@ public class LibraryRegistry {
     this.libraries = new HashMap<>();
     this.elementGenerators = new HashMap<>();
     this.reactionPipelineSteps = new HashMap<>();
+    this.logger = LogManager.getLogger();
 
     for (Library library : ServiceLoader.load(Library.class)) {
       this.addLibrary(library);
@@ -50,6 +54,7 @@ public class LibraryRegistry {
     for (String name : libraryPipelineSteps.keySet()) {
       this.registerPipelineStep(name, libraryPipelineSteps.get(name));
     }
+    this.logger.info("Library '" + library.getName() + "' loaded");
   }
 
   /**
@@ -81,21 +86,7 @@ public class LibraryRegistry {
   }
 
   /**
-   * A set of all the registered element generator names.
-   */
-  public Set<String> getElementGeneratorNames() {
-    return this.elementGenerators.keySet();
-  }
-
-  /**
-   * A set of all the registered reaction pipeline step names.
-   */
-  public Set<String> getReactionPipelineStepNames() {
-    return this.reactionPipelineSteps.keySet();
-  }
-
-  /**
-   * Instantiate an element generator.
+   * Instantiate an {@link ElementGenerator}.
    *
    * @param name The name of the element generator
    * @param args The arguments for the constructor
@@ -109,7 +100,7 @@ public class LibraryRegistry {
   }
 
   /**
-   * Instantiate a reaction pipeline step.
+   * Instantiate a {@link ReactionPipelineStep}.
    *
    * @param name The name of the reaction pipeline step
    * @param args The arguments for the constructor

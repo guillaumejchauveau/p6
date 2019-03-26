@@ -5,10 +5,10 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * Test cases for {@link ChooseReactant}.
+ * Test cases for {@link ChooseElement}.
  */
 @Ignore
-public class ChooseReactantTest extends TestCase {
+public class ChooseElementTest extends TestCase {
   @Test
   public void test() {
     throw new Error();

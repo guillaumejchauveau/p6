@@ -9,6 +9,9 @@ import com.p6.lib.integers.genesis.Range;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * A {@link Library} providing reaction pipeline steps and element generators for integers.
+ */
 public class IntegerLibrary extends Library {
   @Override
   public String getName() {

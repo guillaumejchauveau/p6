@@ -1,12 +1,12 @@
 package com.p6.cli.app;
 
-import com.p6.core.reactor.BasicReactor;
-import com.p6.core.reactor.Reactor;
-import com.p6.core.solution.Cell;
-import com.p6.core.solution.Element;
 import com.p6.lib.LibraryRegistry;
-import com.p6.lib.SolutionBuilder;
+import com.p6.parser.CellParser;
+import com.p6.parser.InvalidSyntaxException;
 import com.p6.utils.logging.LoggingHelper;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,26 +20,14 @@ public class App {
    *
    * @param args System args
    */
-  public static void main(String[] args) {
+  public static void main(String[] args) throws InvalidSyntaxException, IOException {
     LoggingHelper.configureLoggingFramework(Level.ALL);
     final Logger logger = LogManager.getLogger();
+
+    String source = Files.readString(Paths.get("test.txt"));
+
     LibraryRegistry registry = new LibraryRegistry();
-    logger.debug(registry.getElementGeneratorNames());
-    logger.debug(registry.getReactionPipelineStepNames());
-
-    SolutionBuilder sb = new SolutionBuilder(registry);
-    sb.createCell();
-    sb.addElement("range", "0", "10000", "1")
-      .createPipeline()
-      .addStep("notEquals")
-      .addStep("sort", Element.Side.LEFT)
-      .addStep("choose", Element.Side.RIGHT)
-      .sealCell();
-    Cell cell = sb.getSolution();
-
-    logger.debug(cell);
-    Reactor reactor = new BasicReactor();
-    reactor.iterate(cell, 10000, 5000);
-    logger.debug(cell);
+    CellParser cellParser = new CellParser(source);
+    logger.debug(cellParser.create(registry));
   }
 }
