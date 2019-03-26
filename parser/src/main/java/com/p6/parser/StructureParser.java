@@ -11,13 +11,18 @@ import org.apache.logging.log4j.Logger;
 
 /**
  * An object capable of parsing structures in a string.
+ * <br>
  * Structures can either be a string: "...\n",
- * a list of structures: "[\n
- * ...\n
+ * <br>
+ * a list of structures: "[\n<br>
+ * ...\n<br>
  * ]",
- * or a mapping between a set of strings and structures: "{\n
- * ...:...\n
+ * <br>
+ * or a mapping between a set of strings and structures: "{\n<br>
+ * ...:...\n<br>
  * }".
+ * <br>
+ * The syntax is in fact very close to JSON.
  */
 public class StructureParser {
   private static final char WHITESPACE = ' ';
@@ -37,10 +42,24 @@ public class StructureParser {
   private Logger logger;
 
   /**
+   * An object that determines the structure corresponding to a source.
+   * <br>
+   * The method {@link StructureCharParser#parse(Character, Boolean)} is called for each relevant
+   * character: multiple line termination characters and comments are skipped.
    *
+   * @see StructureParser#parseSource(StructureCharParser)
    */
   @FunctionalInterface
   private interface StructureCharParser {
+    /**
+     * Called for each relevant character.
+     *
+     * @param currentChar The character
+     * @param eol         Indicates if the character is the last of the line
+     * @return An indicator for {@link StructureParser#parseSource(StructureCharParser)}: true if
+     *     the structure is complete (the iteration stops); false otherwise.
+     * @throws InvalidSyntaxException The implementation may throw an invalid syntax exception
+     */
     Boolean parse(Character currentChar, Boolean eol) throws InvalidSyntaxException;
   }
 
@@ -108,8 +127,12 @@ public class StructureParser {
   }
 
   /**
-   * Crawls the source to extract an entire list. The start position must be on the list's start character (or before if there are whitespaces).
-   * Then, each structures of the list must be on their own line. They will be parsed with {@link StructureParser#parseNextStructure}.
+   * Crawls the source to extract an entire list. The position at start must be on the list's start
+   * character (or before it if there are whitespaces).
+   * <br>
+   * Then, each structures of the list must be on their own line. They will be parsed with
+   * {@link StructureParser#parseNextStructure}.
+   * <br>
    * The list's end character is also expected on a new line.
    *
    * @return The extracted list
@@ -145,9 +168,16 @@ public class StructureParser {
   }
 
   /**
-   * Crawls
-   * @return
-   * @throws InvalidSyntaxException
+   * Crawls the source to extract an entire map. The position at start must be on the map's start
+   * character (or before it if there are whitespaces).
+   * <br>
+   * The method expects to find a string followed with the character ':', indicating the key for
+   * the value. The beginning of the structure for the value must be on the same line as it's key.
+   * <br>
+   * The structure is parsed using {@link StructureParser#parseNextStructure}. The next value's
+   * key must be on a new line.
+   *
+   * @return The extracted map
    */
   private Map<String, Object> parseNextMap() throws InvalidSyntaxException {
     Map<String, Object> map = new HashMap<>();
@@ -198,8 +228,11 @@ public class StructureParser {
   }
 
   /**
-   * @param parser
-   * @throws InvalidSyntaxException
+   * Iterates over the source's character by updating the current position and detects any line
+   * termination sequences or comments. The {@link StructureCharParser} given as argument is
+   * called only if the current position should not be skipped.
+   *
+   * @param parser A function that use the current position's character to actually parse the source
    */
   private void parseSource(StructureCharParser parser) throws InvalidSyntaxException {
     boolean skipLine = false;

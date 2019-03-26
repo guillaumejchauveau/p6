@@ -6,7 +6,7 @@ import com.p6.core.solution.Cell;
 import com.p6.core.solution.Element;
 import com.p6.lib.InitArgsParser;
 import com.p6.lib.Library;
-import com.p6.lib.common.reaction.ChooseReactant;
+import com.p6.lib.common.reaction.ChooseElement;
 import com.p6.lib.common.reaction.ClearPipeline;
 import com.p6.lib.common.reaction.DissolveCell;
 import com.p6.lib.common.reaction.Equals;
@@ -16,6 +16,9 @@ import com.p6.lib.common.reaction.Sort;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * A {@link Library} providing reaction pipeline steps not dependent of the element's type.
+ */
 public class CommonLibrary extends Library {
   @Override
   public String getName() {
@@ -38,7 +41,7 @@ public class CommonLibrary extends Library {
         throw new IllegalArgumentException(
           "Choose reaction pipeline step requires an element reference");
       }
-      return new ChooseReactant((Element.Side) args[0]);
+      return new ChooseElement((Element.Side) args[0]);
     });
 
     reactionPipelineSteps.put("clear", args -> new ClearPipeline());

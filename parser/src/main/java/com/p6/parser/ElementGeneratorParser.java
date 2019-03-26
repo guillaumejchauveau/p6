@@ -8,10 +8,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Parses a list of instructions to create an element generator. As an element generator is
- * defined with only one instruction, the string to parse is supposed to have the form "name
- * (argument...)". The list of instruction parsed by {@link InstructionListParser#parse} should
- * contain only one element.
+ * Parses a list of instructions to create an {@link ElementGenerator}.
+ * <br>
+ * As an element generator is defined with only one instruction, the string to parse is supposed
+ * to have the form "name(argument...)".
+ * <br>
+ * The list of instruction parsed by {@link InstructionListParser#parse(String)} should contain
+ * only one element.
  */
 public class ElementGeneratorParser extends InstructionListParser<ElementGeneratorInstruction> {
   /**

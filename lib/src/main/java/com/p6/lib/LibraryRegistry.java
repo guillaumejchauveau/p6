@@ -11,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 /**
  * An object containing all the {@link ElementGenerator}s and {@link ReactionPipelineStep}s
  * provided by libraries.
+ * <br>
  * The libraries are loaded using a {@link ServiceLoader}.
  */
 public class LibraryRegistry {
@@ -85,7 +86,7 @@ public class LibraryRegistry {
   }
 
   /**
-   * Instantiate an element generator.
+   * Instantiate an {@link ElementGenerator}.
    *
    * @param name The name of the element generator
    * @param args The arguments for the constructor
@@ -99,7 +100,7 @@ public class LibraryRegistry {
   }
 
   /**
-   * Instantiate a reaction pipeline step.
+   * Instantiate a {@link ReactionPipelineStep}.
    *
    * @param name The name of the reaction pipeline step
    * @param args The arguments for the constructor

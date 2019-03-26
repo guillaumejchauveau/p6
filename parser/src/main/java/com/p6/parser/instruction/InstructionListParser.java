@@ -9,9 +9,10 @@ import java.util.Map;
 
 /**
  * A base class used to parse strings with the form "name(argument, ...) : ....". Those strings
- * represent a list of {@link Instruction}s. Any argument starting with the character '$' is
- * considered a reference: it is replaced by the value mapped to the remaining characters
- * following the '$'.
+ * represent a list of {@link Instruction}s.
+ * <br>
+ * Any argument starting with the character '$' is considered a reference: it is replaced by the
+ * value mapped to the remaining characters following the '$'.
  *
  * @param <T> The type of the objects represented by the instructions
  */
@@ -41,13 +42,17 @@ public abstract class InstructionListParser<T extends Instruction> {
   /**
    * Creates a list of instructions given a string. The parsing operation is done in 3 states in
    * a loop:
+   * <br>
    * - The instruction name: from the beginning until a character '(' or ',' is encountered,
    * corresponding to the instruction's arguments or the beginning of the next instruction.
+   * <br>
    * - An instruction argument: if a '(' was encountered, until a ',' or ')'. The first character
    * corresponds to the next argument and the second to the end of the instruction's arguments.
+   * <br>
    * - After the instruction's arguments: right after the precedent instruction ')' character,
    * waits for the ',' indicating the next instruction's name.
-   * The arguments are optional, this is why the third state is mandatory (it is skipped if there
+   * <br>
+   * The arguments are optional, this is why the third state is necessary (it is skipped if there
    * are no arguments).
    *
    * @param clause The string containing the instructions to parse

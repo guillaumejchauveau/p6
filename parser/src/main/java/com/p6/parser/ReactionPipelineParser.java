@@ -9,10 +9,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Parses a list of instructions to create an entire reaction pipeline. The string representing
- * the pipeline starts with names for referencing the left and right element of the pipeline
- * input. Therefore, the method {@link InstructionListParser} has been extended to handle this
- * part of the string.
+ * Parses a list of instructions to create an entire {@link ReactionPipeline}.
+ * <br>
+ * The string representing the pipeline starts with names for referencing the left and right
+ * element of the pipeline input. Therefore, the method
+ * {@link InstructionListParser#parse(String)} has been extended to handle this part of the string.
  */
 public class ReactionPipelineParser extends InstructionListParser<ReactionPipelineStepInstruction> {
   /**
@@ -27,10 +28,11 @@ public class ReactionPipelineParser extends InstructionListParser<ReactionPipeli
   }
 
   /**
-   * Parses the string representing the reaction pipeline. Splits the string at the first ':'
-   * character to separate the {@link Element.Side} references add the actual
-   * instruction list for the pipeline's steps.
-   *
+   * Parses the string representing the reaction pipeline.
+   * <br>
+   * Splits the string at the first ':' character to separate the {@link Element.Side} references
+   * add the actual instruction list for the pipeline's steps.
+   * <br>
    * {@inheritDoc}
    */
   @Override
