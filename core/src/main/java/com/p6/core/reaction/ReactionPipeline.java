@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * Represents a reaction rule with a set of steps. A pipeline can fail, in which case the reactor
- * processing the cell should try to execute another one.
+ * processing the cell should try to execute the next one.
  */
 public class ReactionPipeline {
   private List<ReactionPipelineStep> steps;

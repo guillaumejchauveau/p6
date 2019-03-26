@@ -43,7 +43,12 @@ public abstract class Element<T> {
   }
 
   /**
-   * Describes an element's side in pipeline.
+   * Describes an element's side in a pipeline. The signification of the "side" is open to
+   * interpretation, depending of the context.
+   * <br>
+   * A {@link com.p6.core.reaction.ReactionPipelineStep} can consider the right side as the last
+   * element of the pipeline or as the second element (right next to the left side). In general,
+   * the left side will always be the first element of the pipeline.
    */
   public enum Side {
     /**

@@ -130,7 +130,7 @@ public class Cell {
   }
 
   public String toString() {
-    return this.pipelines.size() + " pipelines, " + this.elements.size() + " elements";
+    return this.pipelines.size() + " pipelines, " + this.elements.size() + " elements, " + this.subCells.size() + " sub-cells";
   }
 
   /**

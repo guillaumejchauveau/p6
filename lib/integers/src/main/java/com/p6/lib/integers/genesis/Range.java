@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * An integer elements generator.
+ * An integer element generator.
  */
 public class Range implements ElementGenerator {
   private Integer start;

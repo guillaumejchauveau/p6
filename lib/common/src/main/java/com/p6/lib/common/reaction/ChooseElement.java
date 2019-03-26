@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Keeps the first (left) or second (right) element of the pipeline. Intended to be used as the
- * first step to modify the pipeline (with the reactants selected by the reactor).
+ * Keeps the first ({@link Element.Side#LEFT}) or second ({@link Element.Side#RIGHT}) element of
+ * the pipeline.
  */
-public class ChooseReactant implements ReactionPipelineStep {
+public class ChooseElement implements ReactionPipelineStep {
   private final Element.Side elementSide;
 
   /**
@@ -18,7 +18,7 @@ public class ChooseReactant implements ReactionPipelineStep {
    *
    * @param elementSide The side of the element
    */
-  public ChooseReactant(Element.Side elementSide) {
+  public ChooseElement(Element.Side elementSide) {
     this.elementSide = elementSide;
   }
 

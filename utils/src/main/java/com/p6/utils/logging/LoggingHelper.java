@@ -24,7 +24,7 @@ public class LoggingHelper {
       return;
     }
 
-    String pattern = "%d{HH:mm:ss,SS} ";
+    String pattern = "%d{HH:mm:ss,SS} %style{%thread}{underline} ";
     pattern += "%highlight{%-5level}{";
     pattern += "FATAL=red bright, ERROR=red, WARN=yellow, INFO=blue, DEBUG=cyan, TRACE=white} ";
     pattern += "%style{%c{-2}}{bright}: %msg{ansi}%n%style{%throwable}{white}";
