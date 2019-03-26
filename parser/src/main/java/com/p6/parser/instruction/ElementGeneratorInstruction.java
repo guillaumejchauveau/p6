@@ -8,7 +8,9 @@ import com.p6.lib.LibraryRegistry;
  */
 public class ElementGeneratorInstruction extends Instruction<ElementGenerator> {
   /**
-   * {@inheritDoc}
+   * Initializes a new instruction for an element generator.
+   *
+   * @param name The name of the element generator
    */
   public ElementGeneratorInstruction(String name) {
     super(name);

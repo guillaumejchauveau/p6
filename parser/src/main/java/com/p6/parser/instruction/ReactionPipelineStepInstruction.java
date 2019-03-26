@@ -8,7 +8,9 @@ import com.p6.lib.LibraryRegistry;
  */
 public class ReactionPipelineStepInstruction extends Instruction<ReactionPipelineStep> {
   /**
-   * {@inheritDoc}
+   * Initializes a new instruction for a reaction pipeline step.
+   *
+   * @param name The name of the reaction pipeline step
    */
   public ReactionPipelineStepInstruction(String name) {
     super(name);

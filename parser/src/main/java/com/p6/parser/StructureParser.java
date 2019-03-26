@@ -91,9 +91,9 @@ public class StructureParser {
   }
 
   /**
+   * Crawls the source to extract a string structure. The string is supposed to end at EOL.
    *
-   * @return
-   * @throws InvalidSyntaxException
+   * @return The extracted string
    */
   private String parseNextString() throws InvalidSyntaxException {
     StringBuilder builder = new StringBuilder();
@@ -108,9 +108,11 @@ public class StructureParser {
   }
 
   /**
+   * Crawls the source to extract an entire list. The start position must be on the list's start character (or before if there are whitespaces).
+   * Then, each structures of the list must be on their own line. They will be parsed with {@link StructureParser#parseNextStructure}.
+   * The list's end character is also expected on a new line.
    *
-   * @return
-   * @throws InvalidSyntaxException
+   * @return The extracted list
    */
   private List parseNextList() throws InvalidSyntaxException {
     List<Object> list = new ArrayList<>();
@@ -143,7 +145,7 @@ public class StructureParser {
   }
 
   /**
-   *
+   * Crawls
    * @return
    * @throws InvalidSyntaxException
    */
@@ -196,7 +198,6 @@ public class StructureParser {
   }
 
   /**
-   *
    * @param parser
    * @throws InvalidSyntaxException
    */

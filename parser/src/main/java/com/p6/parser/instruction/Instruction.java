@@ -27,13 +27,6 @@ public abstract class Instruction<T> {
   }
 
   /**
-   * @return The list of arguments for the instruction
-   */
-  public List<Object> getArguments() {
-    return arguments;
-  }
-
-  /**
    * Adds an argument for the instruction.
    *
    * @param argument The argument
