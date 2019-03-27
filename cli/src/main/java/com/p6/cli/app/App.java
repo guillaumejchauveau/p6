@@ -33,8 +33,7 @@ public class App {
     ReactorCoordinator reactorCoordinator = new ReactorCoordinator(cell, 1000, 100);
     reactorCoordinator.run();
     while (Thread.activeCount() != 1) {
-      Thread.sleep(100);
+      Thread.sleep(1000);
     }
-    logger.debug(cell.getElements());
   }
 }

@@ -4,17 +4,6 @@
     a, b : divisible($a) : choose($b)
   ]
   elements: [
-    range(2, 50, 1)
-  ]
-  subCells: [
-    {
-      name: sub
-      rules: [
-        a,b : dissolve()
-      ]
-      elements: [
-        range(50, 60, 1)
-      ]
-    }
+    range(2,80, 1)
   ]
 }

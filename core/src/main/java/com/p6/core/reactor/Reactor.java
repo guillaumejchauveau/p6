@@ -50,6 +50,12 @@ public class Reactor implements Runnable {
         if (pipeline.handle(elements, this.cell)) {
           reactionOccurred = true;
           stability = 0;
+
+          /*try {
+            Thread.sleep(100);
+          } catch (InterruptedException e) {
+
+          }*/
           break;
         }
       }
@@ -58,12 +64,6 @@ public class Reactor implements Runnable {
         this.cell.addElement(x);
         this.cell.addElement(y);
         stability++;
-      }
-
-      try {
-        Thread.sleep(100);
-      } catch (InterruptedException e) {
-
       }
     }
     if (iteration == this.iterationTarget) {
