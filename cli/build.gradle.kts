@@ -22,5 +22,6 @@ dependencies {
   runtime(project(":lib:common"))
   runtime(project(":lib:integers"))
   implementation(project(":parser"))
+  implementation("info.picocli:picocli:3.9.5")
   testImplementation("junit:junit:4.12")
 }

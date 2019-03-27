@@ -34,6 +34,7 @@ public class Cell {
    */
   private Random random;
   private Boolean isDissolved;
+  private String name;
 
   /**
    * Creates an empty cell.
@@ -44,6 +45,19 @@ public class Cell {
     this.subCells = new ArrayList<>();
     this.random = new Random();
     this.isDissolved = false;
+  }
+
+  public String getName() {
+    return this.name;
+  }
+
+  @Override
+  public String toString() {
+    return this.getName();
+  }
+
+  public void setName(String name) {
+    this.name = name;
   }
 
   /**

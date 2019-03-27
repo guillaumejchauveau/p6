@@ -22,4 +22,9 @@ public class NotEquals implements ReactionPipelineStep {
     }
     return inputElements;
   }
+
+  @Override
+  public String toString() {
+    return "NotEquals";
+  }
 }

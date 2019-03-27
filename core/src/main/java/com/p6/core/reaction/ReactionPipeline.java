@@ -2,6 +2,7 @@ package com.p6.core.reaction;
 
 import com.p6.core.solution.Cell;
 import com.p6.core.solution.Element;
+import com.p6.utils.logging.plugins.SleepFilter;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
@@ -21,15 +22,6 @@ public class ReactionPipeline {
   public ReactionPipeline() {
     this.steps = new ArrayList<>();
     this.logger = LogManager.getLogger();
-  }
-
-  private String printSteps() {
-    StringBuilder stringBuilder = new StringBuilder("[");
-    for (ReactionPipelineStep reactionPipelineStep : this.steps) {
-      stringBuilder.append(reactionPipelineStep.getClass().getName() + ", ");
-    }
-    stringBuilder.replace(stringBuilder.length() - 2, stringBuilder.length() - 1, "]");
-    return stringBuilder.toString();
   }
 
   /**
@@ -53,7 +45,7 @@ public class ReactionPipeline {
     for (ReactionPipelineStep step : this.steps) {
       outputElements = step.handle(outputElements, cell);
       if (cell.isDissolved()) {
-        this.logger.debug("Cell dissolved with steps " + this.printSteps());
+        this.logger.debug("Cell dissolved with steps " + this.steps);
         return true;
       }
       if (outputElements == null) {
@@ -61,7 +53,8 @@ public class ReactionPipeline {
       }
     }
     cell.addAllElements(outputElements);
-    this.logger.debug("Elements " + inputElements + " replaced by " + outputElements + " with steps " + this.printSteps());
+    this.logger.debug(SleepFilter.MARKER,
+      "Elements " + inputElements + " replaced by " + outputElements + " with steps " + this.steps);
     return this.steps.size() != 0;
   }
 }

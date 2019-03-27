@@ -8,8 +8,10 @@ import org.apache.logging.log4j.core.config.Configurator;
 import org.apache.logging.log4j.core.config.builder.api.AppenderComponentBuilder;
 import org.apache.logging.log4j.core.config.builder.api.ConfigurationBuilder;
 import org.apache.logging.log4j.core.config.builder.api.ConfigurationBuilderFactory;
+import org.apache.logging.log4j.core.config.builder.api.FilterComponentBuilder;
 import org.apache.logging.log4j.core.config.builder.api.LayoutComponentBuilder;
 import org.apache.logging.log4j.core.config.builder.impl.BuiltConfiguration;
+import org.apache.logging.log4j.core.config.plugins.util.PluginManager;
 
 public class LoggingHelper {
   private static Boolean isConfigured = false;
@@ -23,6 +25,7 @@ public class LoggingHelper {
     if (LoggingHelper.isConfigured) {
       return;
     }
+    PluginManager.addPackage("com.p6.utils.logging.plugins");
 
     String pattern = "%d{HH:mm:ss,SS} %style{%thread}{underline} ";
     pattern += "%highlight{%-5level}{";
@@ -36,7 +39,10 @@ public class LoggingHelper {
                                                         ConsoleAppender.Target.SYSTEM_ERR);
     LayoutComponentBuilder layout = builder.newLayout("PatternLayout")
                                            .addAttribute("pattern", pattern);
+    FilterComponentBuilder sleepFilter = builder.newFilter("SleepFilter", "NEUTRAL", "NEUTRAL")
+                                                .addAttribute("time", 500);
     appenderBuilder.add(layout);
+    appenderBuilder.add(sleepFilter);
     builder.add(appenderBuilder);
     builder.add(builder.newRootLogger(level).add(builder.newAppenderRef("StdERR")));
 

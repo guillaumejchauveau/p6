@@ -225,6 +225,7 @@ public class CellParser {
     this.parseReactionPipelines(registry);
     this.logger.debug("Creating cell '" + this.getName() + "'");
     Cell cell = new Cell();
+    cell.setName(this.getName());
     for (Cell subCell : this.subCells) {
       cell.addSubCell(subCell);
     }

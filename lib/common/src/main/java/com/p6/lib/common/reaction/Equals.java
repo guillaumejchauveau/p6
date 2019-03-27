@@ -22,4 +22,9 @@ public class Equals implements ReactionPipelineStep {
     }
     return inputElements;
   }
+
+  @Override
+  public String toString() {
+    return "Equals";
+  }
 }

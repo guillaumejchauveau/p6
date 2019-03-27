@@ -3,17 +3,17 @@ package com.p6.core.reactor;
 import com.p6.core.solution.Cell;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Stack;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class ReactorCoordinator {
-  private Collection<Reactor> reactors;
-  private Logger logger;
+  private Map<Cell, Reactor> reactors;
+  private Collection<Thread> threads;
 
   public ReactorCoordinator(Cell rootCell, Integer iterationTarget, Integer stabilityTarget) {
-    this.reactors = new ArrayList<>();
-    this.logger = LogManager.getLogger();
+    this.reactors = new HashMap<>();
+    this.threads = null;
 
     Stack<Cell> cellStack = new Stack<>();
     cellStack.push(rootCell);
@@ -22,14 +22,26 @@ public class ReactorCoordinator {
       for (Cell subCell : cell.getSubCells()) {
         cellStack.push(subCell);
       }
-      this.reactors.add(new Reactor(cell, iterationTarget, stabilityTarget));
+      this.reactors.put(cell, new Reactor(cell, iterationTarget, stabilityTarget));
     }
   }
 
   public void run() {
-    for (Reactor reactor : this.reactors) {
-      Thread thread = new Thread(reactor);
+    this.threads = new ArrayList<>();
+    for (Cell cell : this.reactors.keySet()) {
+      Thread thread = new Thread(this.reactors.get(cell), cell.getName());
       thread.start();
+      this.threads.add(thread);
+    }
+  }
+
+  public void interrupt() {
+    if (this.threads == null) {
+      throw new IllegalStateException("Reactors are not running");
+    }
+
+    for (Thread thread : this.threads) {
+      thread.interrupt();
     }
   }
 }

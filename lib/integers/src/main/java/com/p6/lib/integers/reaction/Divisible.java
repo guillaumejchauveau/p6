@@ -32,4 +32,9 @@ public class Divisible extends IntegerReactionPipelineStep {
     }
     return output;
   }
+
+  @Override
+  public String toString() {
+    return "Divisible";
+  }
 }

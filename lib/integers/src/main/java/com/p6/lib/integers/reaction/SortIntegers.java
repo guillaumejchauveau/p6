@@ -20,4 +20,9 @@ public class SortIntegers extends Sort<Integer> {
   protected Class<Integer> getComparisonClass() {
     return Integer.class;
   }
+
+  @Override
+  public String toString() {
+    return "SortIntegers";
+  }
 }

@@ -26,16 +26,17 @@ public class Reactor implements Runnable {
 
   @Override
   public void run() {
+    this.logger.info("Starting reactor for cell " + this.cell);
     int stability = 0;
     int iteration = 0;
 
-    for (; iteration < this.iterationTarget; iteration++) {
+    for (; iteration < this.iterationTarget && !Thread.currentThread().isInterrupted(); iteration++) {
       if (this.cell.getElementsCount() <= 1 || this.cell.isDissolved()) {
-        this.logger.debug("Solution cannot react further");
+        this.logger.info("Solution cannot react further");
         break;
       }
       if (stability >= this.stabilityTarget) {
-        this.logger.debug("Solution reached target stability");
+        this.logger.info("Solution reached target stability");
         break;
       }
 
@@ -50,12 +51,6 @@ public class Reactor implements Runnable {
         if (pipeline.handle(elements, this.cell)) {
           reactionOccurred = true;
           stability = 0;
-
-          /*try {
-            Thread.sleep(100);
-          } catch (InterruptedException e) {
-
-          }*/
           break;
         }
       }
@@ -67,7 +62,10 @@ public class Reactor implements Runnable {
       }
     }
     if (iteration == this.iterationTarget) {
-      this.logger.debug("Iteration target reached");
+      this.logger.info("Iteration target reached");
+    }
+    if (Thread.currentThread().isInterrupted()) {
+      this.logger.warn("Reactor interrupted");
     }
   }
 }

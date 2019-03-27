@@ -17,4 +17,9 @@ public class DissolveCell implements ReactionPipelineStep {
     cell.dissolve();
     return null;
   }
+
+  @Override
+  public String toString() {
+    return "DissolveCell";
+  }
 }

@@ -17,4 +17,9 @@ public class ClearPipeline implements ReactionPipelineStep {
   public List<Element> handle(List<Element> inputElements, Cell cell) {
     return new ArrayList<>();
   }
+
+  @Override
+  public String toString() {
+    return "ClearPipeline";
+  }
 }
