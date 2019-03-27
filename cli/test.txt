@@ -6,4 +6,15 @@
   elements: [
     range(2, 50, 1)
   ]
+  subCells: [
+    {
+      name: sub
+      rules: [
+        a,b : dissolve()
+      ]
+      elements: [
+        range(50, 60, 1)
+      ]
+    }
+  ]
 }

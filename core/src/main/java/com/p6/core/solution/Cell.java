@@ -7,8 +7,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 /**
  * A cell is a standalone P6 program. It contains it's own elements and pipelines and can also
@@ -36,7 +34,6 @@ public class Cell {
    */
   private Random random;
   private Boolean isDissolved;
-  private final Logger logger;
 
   /**
    * Creates an empty cell.
@@ -47,7 +44,6 @@ public class Cell {
     this.subCells = new ArrayList<>();
     this.random = new Random();
     this.isDissolved = false;
-    this.logger = LogManager.getLogger();
   }
 
   /**
@@ -195,7 +191,6 @@ public class Cell {
     this.parentCell.addAllElements(this.elements);
     this.parentCell.removeSubCell(this);
     this.isDissolved = true;
-    this.logger.debug("Cell dissolved");
   }
 
   /**

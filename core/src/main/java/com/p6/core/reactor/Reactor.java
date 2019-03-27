@@ -59,6 +59,12 @@ public class Reactor implements Runnable {
         this.cell.addElement(y);
         stability++;
       }
+
+      try {
+        Thread.sleep(100);
+      } catch (InterruptedException e) {
+
+      }
     }
     if (iteration == this.iterationTarget) {
       this.logger.debug("Iteration target reached");
