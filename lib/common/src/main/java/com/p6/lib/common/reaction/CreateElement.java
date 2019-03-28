@@ -38,4 +38,9 @@ public class CreateElement implements ReactionPipelineStep {
     }
     return outputElements;
   }
+
+  @Override
+  public String toString() {
+    return "CreateElement";
+  }
 }

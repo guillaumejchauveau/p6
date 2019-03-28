@@ -1,17 +1,17 @@
 package com.p6.lib.common.reaction;
 
-import com.p6.core.reaction.ReactionPipelineStep;
 import com.p6.core.solution.Cell;
 import com.p6.core.solution.Element;
+import com.p6.lib.common.solution.ComparableElement;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Sorts the pipeline's elements based on their values' implementation of
  * {@link Comparable#compareTo}. The first element will be the "greatest" if sort is
- * left-element-sided, the lowest otherwise. Throws an exception if the elements cannot be compared.
+ * left-element-sided, the lowest otherwise.
  */
-public class Sort implements ReactionPipelineStep {
+public abstract class Sort<T extends Comparable<T>> extends ComparableReactionPipelineStep<T> {
   private final Element.Side elementSide;
 
   /**
@@ -27,17 +27,10 @@ public class Sort implements ReactionPipelineStep {
    * {@inheritDoc}
    */
   @Override
-  public List<Element> handle(List<Element> inputElements, Cell cell) {
-    List<Element> outputElements = new ArrayList<>(inputElements);
-    outputElements.sort((Element o1, Element o2) -> {
-      Object x1 = o1.evaluate();
-      Object x2 = o2.evaluate();
-      if (x1 instanceof Comparable) {
-        return ((Comparable) x1).compareTo(x2) * (this.elementSide == Element.Side.LEFT ? 1 : -1);
-      } else {
-        throw new RuntimeException("Elements cannot be compared");
-      }
+  protected List<Element> comparableTest(List<ComparableElement<T>> comparableElements, Cell cell) {
+    comparableElements.sort((ComparableElement<T> o1, ComparableElement<T> o2) -> {
+      return o1.compareTo(o2) * (this.elementSide == Element.Side.LEFT ? -1 : 1);
     });
-    return outputElements;
+    return new ArrayList<>(comparableElements);
   }
 }

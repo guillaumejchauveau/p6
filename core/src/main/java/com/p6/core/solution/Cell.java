@@ -7,8 +7,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 /**
  * A cell is a standalone P6 program. It contains it's own elements and pipelines and can also
@@ -36,7 +34,7 @@ public class Cell {
    */
   private Random random;
   private Boolean isDissolved;
-  private final Logger logger;
+  private String name;
 
   /**
    * Creates an empty cell.
@@ -47,7 +45,29 @@ public class Cell {
     this.subCells = new ArrayList<>();
     this.random = new Random();
     this.isDissolved = false;
-    this.logger = LogManager.getLogger();
+  }
+
+  /**
+   * An identifier for the cell.
+   *
+   * @return An identifier for the cell
+   */
+  public String getName() {
+    return this.name;
+  }
+
+  @Override
+  public String toString() {
+    return this.getName();
+  }
+
+  /**
+   * Sets the identifier for the cell.
+   *
+   * @param name The identifier for the cell
+   */
+  public void setName(String name) {
+    this.name = name;
   }
 
   /**
@@ -126,11 +146,16 @@ public class Cell {
    * @return A set of the registered reaction conditions.
    */
   public List<ReactionPipeline> getPipelines() {
-    return Collections.unmodifiableList(this.pipelines);
+    return this.pipelines;
   }
 
-  public String toString() {
-    return this.pipelines.size() + " pipelines, " + this.elements.size() + " elements, " + this.subCells.size() + " sub-cells";
+  /**
+   * The elements currently in the cell.
+   *
+   * @return The elements currently in the cell
+   */
+  public Collection<Element> getElements() {
+    return this.elements;
   }
 
   /**
@@ -147,7 +172,7 @@ public class Cell {
    *
    * @param element The element to add
    */
-  public void addElement(Element element) {
+  public synchronized void addElement(Element element) {
     this.elements.add(element);
   }
 
@@ -156,7 +181,7 @@ public class Cell {
    *
    * @param elements The elements to add
    */
-  public void addAllElements(Collection<Element> elements) {
+  public synchronized void addAllElements(Collection<Element> elements) {
     this.elements.addAll(elements);
   }
 
@@ -175,7 +200,7 @@ public class Cell {
    *
    * @return The chosen element
    */
-  public Element chooseElement() {
+  public synchronized Element chooseElement() {
     int elementIndex = this.random.nextInt(this.getElementsCount());
     Element element = this.elements.get(elementIndex);
     this.elements.remove(elementIndex);
@@ -183,16 +208,37 @@ public class Cell {
   }
 
   /**
-   * Marks the cell as dissolved and put all it's remaining elements in the parent cell.
+   * Marks the cell as dissolved and put all it's remaining elements and sub-cells in the parent
+   * cell.
    */
-  public void dissolve() {
+  public synchronized void dissolve() {
     if (this.getParentCell() == null) {
       throw new IllegalStateException("Cell doesn't have a parent cell");
     }
+    if (this.isDissolved()) {
+      return;
+    }
     this.parentCell.addAllElements(this.elements);
     this.parentCell.removeSubCell(this);
+    for (Cell subCell : this.getSubCells()) {
+      this.parentCell.addSubCell(subCell);
+    }
     this.isDissolved = true;
-    this.logger.debug("Cell dissolved");
+  }
+
+  /**
+   * Ejects elements in the parent cell.
+   *
+   * @param elements The elements to eject
+   */
+  public void eject(Collection<Element> elements) {
+    if (this.getParentCell() == null) {
+      throw new IllegalStateException("Cell doesn't have a parent cell");
+    }
+    if (this.isDissolved()) {
+      return;
+    }
+    this.parentCell.addAllElements(elements);
   }
 
   /**
@@ -202,7 +248,7 @@ public class Cell {
    * @param subCell  The sub-cell
    */
   public void inject(Collection<Element> elements, Cell subCell) {
-    if (this.subCells.contains(subCell)) {
+    if (!this.isDissolved() && this.subCells.contains(subCell) && !subCell.isDissolved()) {
       subCell.addAllElements(elements);
     }
   }

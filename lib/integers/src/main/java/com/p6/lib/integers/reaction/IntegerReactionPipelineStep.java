@@ -3,7 +3,7 @@ package com.p6.lib.integers.reaction;
 import com.p6.core.reaction.ReactionPipelineStep;
 import com.p6.core.solution.Cell;
 import com.p6.core.solution.Element;
-import com.p6.lib.integers.IntegerElement;
+import com.p6.lib.integers.solution.IntegerElement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +29,8 @@ abstract class IntegerReactionPipelineStep implements ReactionPipelineStep {
   /**
    * The method that actually handles the integer elements.
    *
-   * @param elements The integer elements to handle
+   * @param elements The integer elements to handle. The list is safe from the original pipeline
+   *                 input
    * @param cell     The current cell
    * @return The output elements
    */

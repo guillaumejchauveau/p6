@@ -31,4 +31,9 @@ public class ChooseElement implements ReactionPipelineStep {
     output.add(inputElements.get((this.elementSide == Element.Side.LEFT) ? 0 : 1));
     return output;
   }
+
+  @Override
+  public String toString() {
+    return "ChooseElement";
+  }
 }

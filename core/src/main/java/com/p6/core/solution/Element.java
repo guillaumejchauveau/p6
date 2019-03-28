@@ -24,6 +24,14 @@ public abstract class Element<T> {
     return this.evaluate().toString();
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (!(o instanceof Element)) {
+      return false;
+    }
+    return this.evaluate().equals(((Element) o).evaluate());
+  }
+
   /**
    * Assigns a new value to the element.
    *

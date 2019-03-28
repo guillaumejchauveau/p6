@@ -30,4 +30,9 @@ public class InjectInSubCell implements ReactionPipelineStep {
     cell.inject(inputElements, this.subCell);
     return new ArrayList<>();
   }
+
+  @Override
+  public String toString() {
+    return "InjectInSubCell";
+  }
 }

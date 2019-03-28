@@ -2,7 +2,7 @@ package com.p6.lib.integers.genesis;
 
 import com.p6.core.genesis.ElementGenerator;
 import com.p6.core.solution.Element;
-import com.p6.lib.integers.IntegerElement;
+import com.p6.lib.integers.solution.IntegerElement;
 import java.util.ArrayList;
 import java.util.List;
 

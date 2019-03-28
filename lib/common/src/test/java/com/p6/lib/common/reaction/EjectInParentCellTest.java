@@ -1,14 +1,14 @@
-package com.p6.core.reactor;
+package com.p6.lib.common.reaction;
 
 import com.p6.utils.tests.TestCase;
 import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * Test cases for {@link BasicReactor}.
+ * Test cases for {@link EjectInParentCell}.
  */
 @Ignore
-public class BasicReactorTest extends TestCase {
+public class EjectInParentCellTest extends TestCase {
   @Test
   public void test() {
     throw new Error();
