@@ -2,6 +2,7 @@ package com.p6.cli.app;
 
 import com.p6.core.reactor.ReactorCoordinator;
 import com.p6.core.solution.Cell;
+import com.p6.core.solution.Element;
 import com.p6.lib.LibraryRegistry;
 import com.p6.parser.CellParser;
 import com.p6.parser.InvalidSyntaxException;
@@ -30,12 +31,16 @@ public class App implements Callable<Boolean> {
   @CommandLine.Option(names = {"-v", "--verbose"})
   private Boolean verbose;
 
+  @CommandLine.Option(names = {"-e", "--export"})
+  private Boolean export;
+
   public static void main(String[] args) {
     System.exit(CommandLine.call(new App(), args) ? 0 : 1);
   }
 
   private App() {
     this.verbose = false;
+    this.export = false;
   }
 
   public Boolean call() {
@@ -73,10 +78,17 @@ public class App implements Callable<Boolean> {
       logger.fatal("Unexpected main thread interruption", e);
       return false;
     }
-    this.printCell(cell, 0);
+    if (this.export) {
+      this.exportCell(cell);
+    } else {
+      this.printCell(cell, 0);
+    }
     return true;
   }
 
+  /**
+   *
+   */
   private void printCell(Cell cell, Integer level) {
     System.out.println("  ".repeat(level) + cell.getName());
     System.out.println("  ".repeat(level) + cell.getElements());
@@ -84,5 +96,17 @@ public class App implements Callable<Boolean> {
     for (Cell subCell : cell.getSubCells()) {
       printCell(subCell, level + 1);
     }
+  }
+
+  private void exportCell(Cell cell) {
+    for (Element element : cell.getElements()) {
+      System.out.print(cell.getName() + " ");
+      System.out.print(element.getClass().getName() + " ");
+      System.out.println(element.toString());
+    }
+    for (Cell subCell : cell.getSubCells()) {
+      this.exportCell(subCell);
+    }
+    System.out.println("---");
   }
 }
