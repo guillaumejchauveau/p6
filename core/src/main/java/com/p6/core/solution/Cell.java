@@ -47,6 +47,11 @@ public class Cell {
     this.isDissolved = false;
   }
 
+  /**
+   * An identifier for the cell.
+   *
+   * @return An identifier for the cell
+   */
   public String getName() {
     return this.name;
   }
@@ -56,6 +61,11 @@ public class Cell {
     return this.getName();
   }
 
+  /**
+   * Sets the identifier for the cell.
+   *
+   * @param name The identifier for the cell
+   */
   public void setName(String name) {
     this.name = name;
   }
@@ -139,6 +149,11 @@ public class Cell {
     return this.pipelines;
   }
 
+  /**
+   * The elements currently in the cell.
+   *
+   * @return The elements currently in the cell
+   */
   public Collection<Element> getElements() {
     return this.elements;
   }
@@ -193,7 +208,8 @@ public class Cell {
   }
 
   /**
-   * Marks the cell as dissolved and put all it's remaining elements in the parent cell.
+   * Marks the cell as dissolved and put all it's remaining elements and sub-cells in the parent
+   * cell.
    */
   public synchronized void dissolve() {
     if (this.getParentCell() == null) {
@@ -204,7 +220,25 @@ public class Cell {
     }
     this.parentCell.addAllElements(this.elements);
     this.parentCell.removeSubCell(this);
+    for (Cell subCell : this.getSubCells()) {
+      this.parentCell.addSubCell(subCell);
+    }
     this.isDissolved = true;
+  }
+
+  /**
+   * Ejects elements in the parent cell.
+   *
+   * @param elements The elements to eject
+   */
+  public void eject(Collection<Element> elements) {
+    if (this.getParentCell() == null) {
+      throw new IllegalStateException("Cell doesn't have a parent cell");
+    }
+    if (this.isDissolved()) {
+      return;
+    }
+    this.parentCell.addAllElements(elements);
   }
 
   /**
@@ -214,7 +248,7 @@ public class Cell {
    * @param subCell  The sub-cell
    */
   public void inject(Collection<Element> elements, Cell subCell) {
-    if (this.subCells.contains(subCell)) {
+    if (!this.isDissolved() && this.subCells.contains(subCell) && !subCell.isDissolved()) {
       subCell.addAllElements(elements);
     }
   }

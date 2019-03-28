@@ -76,13 +76,6 @@ public class CellParser {
   }
 
   /**
-   * The name of the cell being currently parsed.
-   */
-  public String getName() {
-    return this.name;
-  }
-
-  /**
    * Loads the data contained in the source structure. If the data is incorrect or missing, an
    * {@link InvalidSyntaxException} is thrown.
    */
@@ -170,7 +163,7 @@ public class CellParser {
       CellParser subCellParser = new CellParser(subCellStructure);
       Cell subCell = subCellParser.create(registry);
       this.subCells.add(subCell);
-      this.references.put(subCellParser.getName(), subCell);
+      this.references.put(subCell.getName(), subCell);
     }
   }
 
@@ -223,9 +216,9 @@ public class CellParser {
     this.parseSubCells(registry);
     this.parseElementGenerators(registry);
     this.parseReactionPipelines(registry);
-    this.logger.debug("Creating cell '" + this.getName() + "'");
+    this.logger.debug("Creating cell '" + this.name + "'");
     Cell cell = new Cell();
-    cell.setName(this.getName());
+    cell.setName(this.name);
     for (Cell subCell : this.subCells) {
       cell.addSubCell(subCell);
     }

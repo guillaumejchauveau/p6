@@ -24,6 +24,10 @@ public class ReactionPipeline {
     this.logger = LogManager.getLogger();
   }
 
+  public String toString() {
+    return this.steps.toString();
+  }
+
   /**
    * Adds a step to the pipeline.
    *
@@ -45,7 +49,7 @@ public class ReactionPipeline {
     for (ReactionPipelineStep step : this.steps) {
       outputElements = step.handle(outputElements, cell);
       if (cell.isDissolved()) {
-        this.logger.debug("Cell dissolved with steps " + this.steps);
+        this.logger.debug("Cell dissolved with steps " + this);
         return true;
       }
       if (outputElements == null) {
@@ -53,8 +57,8 @@ public class ReactionPipeline {
       }
     }
     cell.addAllElements(outputElements);
-    this.logger.debug(SleepFilter.MARKER,
-      "Elements " + inputElements + " replaced by " + outputElements + " with steps " + this.steps);
+    this.logger.debug(SleepFilter.MARKER, String.format("Elements %s replaced by %s with steps %s",
+        inputElements, outputElements, this));
     return this.steps.size() != 0;
   }
 }

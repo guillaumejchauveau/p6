@@ -17,6 +17,13 @@ public class Reactor implements Runnable {
   private Integer iterationTarget;
   private Integer stabilityTarget;
 
+  /**
+   * Initializes the reactor with execution settings.
+   *
+   * @param cell The cell to execute
+   * @param iterationTarget The maximum number of reactions
+   * @param stabilityTarget The maximum number of consecutive no-reactions
+   */
   public Reactor(Cell cell, Integer iterationTarget, Integer stabilityTarget) {
     this.cell = cell;
     this.iterationTarget = iterationTarget;
@@ -24,13 +31,17 @@ public class Reactor implements Runnable {
     this.logger = LogManager.getLogger();
   }
 
+  /**
+   * Starts the execution.
+   */
   @Override
   public void run() {
     this.logger.info("Starting reactor for cell " + this.cell);
     int stability = 0;
     int iteration = 0;
 
-    for (; iteration < this.iterationTarget && !Thread.currentThread().isInterrupted(); iteration++) {
+    for (; iteration < this.iterationTarget && !Thread.currentThread().isInterrupted();
+         iteration++) {
       if (this.cell.getElementsCount() <= 1 || this.cell.isDissolved()) {
         this.logger.info("Solution cannot react further");
         break;
@@ -40,9 +51,11 @@ public class Reactor implements Runnable {
         break;
       }
 
+      // Chooses the reactants.
       Element x = this.cell.chooseElement();
       Element y = this.cell.chooseElement();
 
+      // Tries to execute a reaction pipeline. If one fails, continues to the next one.
       boolean reactionOccurred = false;
       for (ReactionPipeline pipeline : this.cell.getPipelines()) {
         List<Element> elements = new ArrayList<>();
@@ -55,6 +68,7 @@ public class Reactor implements Runnable {
         }
       }
 
+      // If all the pipelines fail, there is a no-reaction, increasing the stability.
       if (!reactionOccurred) {
         this.cell.addElement(x);
         this.cell.addElement(y);

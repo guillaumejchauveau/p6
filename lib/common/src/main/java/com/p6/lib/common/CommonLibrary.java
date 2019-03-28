@@ -9,6 +9,7 @@ import com.p6.lib.Library;
 import com.p6.lib.common.reaction.ChooseElement;
 import com.p6.lib.common.reaction.ClearPipeline;
 import com.p6.lib.common.reaction.DissolveCell;
+import com.p6.lib.common.reaction.EjectInParentCell;
 import com.p6.lib.common.reaction.Equals;
 import com.p6.lib.common.reaction.InjectInSubCell;
 import com.p6.lib.common.reaction.NotEquals;
@@ -54,6 +55,7 @@ public class CommonLibrary extends Library {
       return new InjectInSubCell((Cell) args[0]);
     });
 
+    reactionPipelineSteps.put("eject", args -> new EjectInParentCell());
     reactionPipelineSteps.put("notEquals", args -> new NotEquals());
     return reactionPipelineSteps;
   }

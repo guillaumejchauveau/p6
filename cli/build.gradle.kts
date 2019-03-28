@@ -4,7 +4,7 @@ plugins {
 }
 
 application {
-  mainClassName = "com.p6.cli.app.App"
+  mainClassName = "com.p6.cli.App"
 }
 
 tasks.jar {

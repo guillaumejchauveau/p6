@@ -7,14 +7,26 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
+/**
+ * An object used to coordinate the creation and execution of reactors for a program's cells.
+ */
 public class ReactorCoordinator {
   private Map<Cell, Reactor> reactors;
   private Collection<Thread> threads;
 
+  /**
+   * Initializes the coordinator with the execution settings for the reactors.
+   *
+   * @param rootCell        The top cell in the cell tree
+   * @param iterationTarget The maximum number of reactions (per-reactor)
+   * @param stabilityTarget The maximum number of consecutive no-reactions (per-reactor)
+   * @see Reactor
+   */
   public ReactorCoordinator(Cell rootCell, Integer iterationTarget, Integer stabilityTarget) {
     this.reactors = new HashMap<>();
     this.threads = null;
 
+    // Crawls the cell tree and a creates a reactor for each cell.
     Stack<Cell> cellStack = new Stack<>();
     cellStack.push(rootCell);
     while (!cellStack.empty()) {
@@ -26,6 +38,9 @@ public class ReactorCoordinator {
     }
   }
 
+  /**
+   * Starts the execution of the whole program. Starts the reactors in their own threads.
+   */
   public void run() {
     this.threads = new ArrayList<>();
     for (Cell cell : this.reactors.keySet()) {
@@ -35,6 +50,9 @@ public class ReactorCoordinator {
     }
   }
 
+  /**
+   * Tries to interrupt the reactors' threads.
+   */
   public void interrupt() {
     if (this.threads == null) {
       throw new IllegalStateException("Reactors are not running");
