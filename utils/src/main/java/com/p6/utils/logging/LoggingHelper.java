@@ -27,7 +27,7 @@ public class LoggingHelper {
     }
     PluginManager.addPackage("com.p6.utils.logging.plugins");
 
-    String pattern = "%d{HH:mm:ss,SS} %style{%thread}{underline} ";
+    String pattern = "%d{HH:mm:ss} %style{%thread}{underline} ";
     pattern += "%highlight{%-5level}{";
     pattern += "FATAL=red bright, ERROR=red, WARN=yellow, INFO=blue, DEBUG=cyan, TRACE=white} ";
     pattern += "%style{%c{-2}}{bright}: %msg{ansi}%n%style{%throwable}{white}";

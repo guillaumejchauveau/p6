@@ -12,15 +12,25 @@ import org.apache.logging.log4j.Logger;
  * Makes a cell's elements react according to the cell's reaction pipelines.
  */
 public class Reactor implements Runnable {
+  public enum State {
+    IDLE,
+    PROCESSING,
+    STABLE,
+    STOPPED,
+    FAILED,
+    INTERRUPTED
+  }
+
   private final Logger logger;
   private Cell cell;
   private Integer iterationTarget;
   private Integer stabilityTarget;
+  private State state;
 
   /**
    * Initializes the reactor with execution settings.
    *
-   * @param cell The cell to execute
+   * @param cell            The cell to execute
    * @param iterationTarget The maximum number of reactions
    * @param stabilityTarget The maximum number of consecutive no-reactions
    */
@@ -29,24 +39,33 @@ public class Reactor implements Runnable {
     this.iterationTarget = iterationTarget;
     this.stabilityTarget = stabilityTarget;
     this.logger = LogManager.getLogger();
+    this.state = State.IDLE;
   }
 
   /**
-   * Starts the execution.
+   * Indicates the state of the reactor.
+   *
+   * @return The state of the reactor
    */
-  @Override
-  public void run() {
-    this.logger.info("Starting reactor for cell " + this.cell);
+  public State getState() {
+    return this.state;
+  }
+
+  /**
+   * Executes the program with the pre-configured parameters.
+   */
+  private void process() {
     int stability = 0;
     int iteration = 0;
-
     for (; iteration < this.iterationTarget && !Thread.currentThread().isInterrupted();
          iteration++) {
       if (this.cell.getElementsCount() <= 1 || this.cell.isDissolved()) {
+        this.state = State.STOPPED;
         this.logger.info("Solution cannot react further");
         break;
       }
       if (stability >= this.stabilityTarget) {
+        this.state = State.STABLE;
         this.logger.info("Solution reached target stability");
         break;
       }
@@ -75,11 +94,28 @@ public class Reactor implements Runnable {
         stability++;
       }
     }
+    this.state = State.STOPPED;
     if (iteration == this.iterationTarget) {
       this.logger.info("Iteration target reached");
     }
-    if (Thread.currentThread().isInterrupted()) {
-      this.logger.warn("Reactor interrupted");
+  }
+
+  /**
+   * Starts the execution.
+   */
+  @Override
+  public void run() {
+    try {
+      this.state = State.PROCESSING;
+      this.logger.info("Starting reactor for cell " + this.cell);
+      this.process();
+      if (Thread.currentThread().isInterrupted()) {
+        this.state = State.INTERRUPTED;
+        this.logger.warn("Reactor interrupted");
+      }
+    } catch (Exception e) {
+      this.state = State.FAILED;
+      this.logger.error("An error occurred while processing cell '" + this.cell + "'", e);
     }
   }
 }

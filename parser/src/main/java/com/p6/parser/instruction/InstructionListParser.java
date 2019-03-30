@@ -69,7 +69,12 @@ public abstract class InstructionListParser<T extends Instruction> {
       char currentChar = clause.charAt(i);
       boolean eol = i == clause.length() - 1;
 
-      if (",:()".contains(Character.toString(currentChar)) || eol) {
+      boolean specialChar = ",:()".contains(Character.toString(currentChar));
+
+      if (specialChar || eol) {
+        if (!specialChar) {
+          buffer += currentChar;
+        }
         buffer = buffer.trim();
 
         switch (state) {

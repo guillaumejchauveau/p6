@@ -11,6 +11,13 @@ import java.util.Stack;
  * An object used to coordinate the creation and execution of reactors for a program's cells.
  */
 public class ReactorCoordinator {
+  public enum State {
+    IDLE,
+    PROCESSING,
+    STOPPED,
+    FAILED
+  }
+
   private Map<Cell, Reactor> reactors;
   private Collection<Thread> threads;
 
@@ -36,6 +43,30 @@ public class ReactorCoordinator {
       }
       this.reactors.put(cell, new Reactor(cell, iterationTarget, stabilityTarget));
     }
+  }
+
+  /**
+   * Checks the state of each reactor and returns a suitable value.
+   * Does not differentiates reactors that are stable, stopped or interrupted.
+   *
+   * @return The state depending of the reactors' state
+   */
+  public State getState() {
+    boolean idle = true;
+
+    for (Reactor reactor : this.reactors.values()) {
+      switch (reactor.getState()) {
+        case IDLE:
+          continue;
+        case PROCESSING:
+          return State.PROCESSING;
+        case FAILED:
+          return State.FAILED;
+        default:
+          idle = false;
+      }
+    }
+    return idle ? State.IDLE : State.STOPPED;
   }
 
   /**

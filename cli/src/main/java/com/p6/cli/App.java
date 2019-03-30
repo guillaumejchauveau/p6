@@ -112,7 +112,7 @@ public class App implements Callable<Boolean> {
     try {
       CellParser cellParser = new CellParser(source);
       cell = cellParser.create(registry);
-    } catch (InvalidSyntaxException e) {
+    } catch (InvalidSyntaxException | IllegalArgumentException e) {
       if (!this.verbose) {
         e.setStackTrace(new StackTraceElement[]{});
       }
@@ -129,6 +129,10 @@ public class App implements Callable<Boolean> {
     try {
       while (Thread.activeCount() != 1) {
         Thread.sleep(1000);
+        if (reactorCoordinator.getState() == ReactorCoordinator.State.FAILED) {
+          logger.error("A reactor entered FAILED state");
+          return false;
+        }
       }
     } catch (InterruptedException e) {
       if (!this.verbose) {
@@ -150,7 +154,7 @@ public class App implements Callable<Boolean> {
         if (!this.verbose) {
           e.setStackTrace(new StackTraceElement[]{});
         }
-        logger.error("Could not output results to file '" + this.output + "'", e);
+        logger.error("Could not save results to file '" + this.output + "'", e);
         return false;
       }
     } else if (!this.quiet) {

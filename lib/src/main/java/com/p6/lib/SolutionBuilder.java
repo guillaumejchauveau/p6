@@ -7,7 +7,6 @@ import com.p6.core.solution.Cell;
 import com.p6.core.solution.Element;
 import java.util.Collection;
 
-// TODO: Create a guide.
 /**
  * An object used to created easily a P6 program (a complete solution).
  */

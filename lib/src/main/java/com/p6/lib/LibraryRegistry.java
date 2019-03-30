@@ -66,7 +66,7 @@ public class LibraryRegistry {
   public void registerElementGenerator(
       String name, InitArgsParser<? extends ElementGenerator> elementGenerator) {
     if (this.elementGenerators.containsKey(name)) {
-      throw new IllegalArgumentException("Duplicated element generator");
+      throw new IllegalArgumentException("Duplicated element generator '" + name + "'");
     }
     this.elementGenerators.put(name, elementGenerator);
   }
@@ -80,7 +80,7 @@ public class LibraryRegistry {
   public void registerPipelineStep(String name,
                                    InitArgsParser<? extends ReactionPipelineStep> pipelineStep) {
     if (this.reactionPipelineSteps.containsKey(name)) {
-      throw new IllegalArgumentException("Duplicated reaction pipeline step");
+      throw new IllegalArgumentException("Duplicated reaction pipeline step '" + name + "'");
     }
     this.reactionPipelineSteps.put(name, pipelineStep);
   }
@@ -94,7 +94,7 @@ public class LibraryRegistry {
    */
   public ElementGenerator createElementGenerator(String name, Object... args) {
     if (!this.elementGenerators.containsKey(name)) {
-      throw new IllegalArgumentException("Unknown element generator");
+      throw new IllegalArgumentException("Unknown element generator '" + name + "'");
     }
     return this.elementGenerators.get(name).parseArgs(args);
   }
@@ -108,7 +108,7 @@ public class LibraryRegistry {
    */
   public ReactionPipelineStep createReactionPipelineStep(String name, Object... args) {
     if (!this.reactionPipelineSteps.containsKey(name)) {
-      throw new IllegalArgumentException("Unknown reaction pipeline step");
+      throw new IllegalArgumentException("Unknown reaction pipeline step '" + name + "'");
     }
     return this.reactionPipelineSteps.get(name).parseArgs(args);
   }
