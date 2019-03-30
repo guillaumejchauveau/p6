@@ -12,6 +12,22 @@ plugins {
   maven
 }
 
+tasks.register<Copy>("dist") {
+  dependsOn("aggregateJavadoc", ":cli:installDist")
+  from("$buildDir/docs/aggregateJavadoc") {
+    into("docs")
+  }
+  from("$buildDir/../cli/build/install/cli") {
+    into("cli")
+  }
+  into("dist")
+  finalizedBy("clean")
+}
+
+tasks.register<Delete>("cleanDist") {
+  delete("dist/docs", "dist/cli")
+}
+
 subprojects {
   group = "com.p6"
   version = "1.0"

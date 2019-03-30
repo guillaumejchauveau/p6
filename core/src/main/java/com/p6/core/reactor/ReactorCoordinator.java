@@ -64,6 +64,7 @@ public class ReactorCoordinator {
           return State.FAILED;
         default:
           idle = false;
+          break;
       }
     }
     return idle ? State.IDLE : State.STOPPED;
