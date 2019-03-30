@@ -127,12 +127,10 @@ public class App implements Callable<Boolean> {
 
     // Waits for all the reactors to finish.
     try {
-      while (Thread.activeCount() != 1) {
-        Thread.sleep(1000);
-        if (reactorCoordinator.getState() == ReactorCoordinator.State.FAILED) {
-          logger.error("A reactor entered FAILED state");
-          return false;
-        }
+      reactorCoordinator.block();
+      if (reactorCoordinator.getState() == ReactorCoordinator.State.FAILED) {
+        logger.error("A reactor entered FAILED state");
+        return false;
       }
     } catch (InterruptedException e) {
       if (!this.verbose) {

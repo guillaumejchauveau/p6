@@ -76,7 +76,12 @@ public class ReactorCoordinator {
   public void run() {
     this.threads = new ArrayList<>();
     for (Cell cell : this.reactors.keySet()) {
-      Thread thread = new Thread(this.reactors.get(cell), cell.getName());
+      Thread thread;
+      if (cell.getName() != null) {
+        thread = new Thread(this.reactors.get(cell), cell.getName());
+      } else {
+        thread = new Thread(this.reactors.get(cell));
+      }
       thread.start();
       this.threads.add(thread);
     }
@@ -87,11 +92,22 @@ public class ReactorCoordinator {
    */
   public void interrupt() {
     if (this.threads == null) {
-      throw new IllegalStateException("Reactors are not running");
+      return;
     }
 
     for (Thread thread : this.threads) {
       thread.interrupt();
     }
+  }
+
+  /**
+   * Blocks the execution in the current thread if a reactor is still running.
+   *
+   * @throws InterruptedException Thrown of the current thread is interrupted
+   */
+  public void block() throws InterruptedException {
+    do {
+      Thread.sleep(1000);
+    } while (this.getState() == State.PROCESSING);
   }
 }

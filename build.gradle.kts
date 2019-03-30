@@ -12,12 +12,21 @@ plugins {
   maven
 }
 
+tasks.clean {
+  subprojects.forEach {
+    val cleanTask = it.tasks.findByName("clean")
+    if (cleanTask != null) {
+      dependsOn(cleanTask)
+    }
+  }
+}
+
 tasks.register<Copy>("dist") {
   dependsOn("aggregateJavadoc", ":cli:installDist")
-  from("$buildDir/docs/aggregateJavadoc") {
+  from("build/docs/aggregateJavadoc") {
     into("docs")
   }
-  from("$buildDir/../cli/build/install/cli") {
+  from("cli/build/install/cli") {
     into("cli")
   }
   into("dist")
@@ -25,7 +34,10 @@ tasks.register<Copy>("dist") {
 }
 
 tasks.register<Delete>("cleanDist") {
-  delete("dist/docs", "dist/cli")
+  dependsOn("clean")
+  delete("dist/docs", "dist/cli", fileTree("dist/demos").matching {
+    include("**/*.class")
+  })
 }
 
 subprojects {
