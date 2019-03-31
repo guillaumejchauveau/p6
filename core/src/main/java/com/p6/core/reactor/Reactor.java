@@ -71,12 +71,12 @@ public class Reactor implements Runnable {
       }
 
       // Chooses the reactants.
-      Element x = this.cell.chooseElement();
-      Element y = this.cell.chooseElement();
+      var x = this.cell.chooseElement();
+      var y = this.cell.chooseElement();
 
       // Tries to execute a reaction pipeline. If one fails, continues to the next one.
       boolean reactionOccurred = false;
-      for (ReactionPipeline pipeline : this.cell.getPipelines()) {
+      for (var pipeline : this.cell.getPipelines()) {
         List<Element> elements = new ArrayList<>();
         elements.add(x);
         elements.add(y);

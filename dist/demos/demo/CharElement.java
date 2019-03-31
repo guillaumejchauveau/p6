@@ -1,4 +1,4 @@
-package demos.java;
+package demo;
 
 import com.p6.core.solution.Element;
 

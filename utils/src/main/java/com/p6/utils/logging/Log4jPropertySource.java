@@ -28,10 +28,10 @@ public class Log4jPropertySource implements PropertySource {
    */
   @Override
   public CharSequence getNormalForm(Iterable<? extends CharSequence> tokens) {
-    final StringBuilder sb = new StringBuilder("LOG4J");
-    for (final CharSequence token : tokens) {
+    var sb = new StringBuilder("LOG4J");
+    for (var token : tokens) {
       sb.append('_');
-      for (int i = 0; i < token.length(); i++) {
+      for (var i = 0; i < token.length(); i++) {
         sb.append(Character.toUpperCase(token.charAt(i)));
       }
     }

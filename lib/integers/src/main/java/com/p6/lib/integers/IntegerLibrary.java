@@ -23,7 +23,7 @@ public class IntegerLibrary extends Library {
 
   @Override
   public Map<String, InitArgsParser<? extends ElementGenerator>> getElementGenerators() {
-    Map<String, InitArgsParser<? extends ElementGenerator>> elementGenerators = new HashMap<>();
+    var elementGenerators = super.getElementGenerators();
     elementGenerators.put("range", args -> {
       try {
         if (!(
@@ -45,8 +45,7 @@ public class IntegerLibrary extends Library {
 
   @Override
   public Map<String, InitArgsParser<? extends ReactionPipelineStep>> getReactionPipelineSteps() {
-    Map<String, InitArgsParser<? extends ReactionPipelineStep>> reactionPipelineSteps =
-        new HashMap<>();
+    var reactionPipelineSteps = super.getReactionPipelineSteps();
     reactionPipelineSteps.put("sortInt", args -> {
       if (!(args.length == 1 && args[0] instanceof Element.Side)) {
         throw new IllegalArgumentException(

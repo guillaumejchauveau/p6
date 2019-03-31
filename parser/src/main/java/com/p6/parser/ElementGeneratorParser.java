@@ -38,7 +38,7 @@ public class ElementGeneratorParser extends InstructionListParser<ElementGenerat
    */
   public ElementGenerator create(String clause, LibraryRegistry registry)
       throws InvalidSyntaxException {
-    List<ElementGeneratorInstruction> instructions = this.parse(clause);
+    var instructions = this.parse(clause);
     if (instructions.size() == 0) {
       throw new InvalidSyntaxException("Element generator instruction expected", clause, 0);
     }

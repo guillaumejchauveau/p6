@@ -95,7 +95,7 @@ public class ReactorCoordinator {
       return;
     }
 
-    for (Thread thread : this.threads) {
+    for (var thread : this.threads) {
       thread.interrupt();
     }
   }

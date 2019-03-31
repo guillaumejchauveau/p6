@@ -14,8 +14,8 @@ public abstract class ComparableReactionPipelineStep<T extends Comparable<T>>
    */
   @Override
   public List<Element> handle(List<Element> inputElements, Cell cell) {
-    List<ComparableElement<T>> comparableElements = new ArrayList<>();
-    for (Element element : inputElements) {
+    var comparableElements = new ArrayList<ComparableElement<T>>();
+    for (var element : inputElements) {
       if (!(element instanceof ComparableElement)) {
         return null;
       }

@@ -36,7 +36,7 @@ public class Range implements ElementGenerator {
    */
   @Override
   public List<Element> generate() {
-    List<Element> outputElement = new ArrayList<>();
+    var outputElement = new ArrayList<Element>();
     for (int i = this.start; (step > 0) ? i < this.stop : i > this.stop; i += this.step) {
       outputElement.add(new IntegerElement(i));
     }

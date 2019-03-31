@@ -65,7 +65,7 @@ public class SolutionBuilder {
    */
   public Cell createCell() {
     this.checkSeal();
-    Cell cell = new Cell();
+    var cell = new Cell();
     if (this.currentCell != null) {
       if (this.currentPipeline != null) {
         this.currentCell.addPipeline(this.currentPipeline);

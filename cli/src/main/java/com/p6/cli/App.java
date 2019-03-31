@@ -15,7 +15,6 @@ import java.nio.file.Paths;
 import java.util.concurrent.Callable;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import picocli.CommandLine;
 
 /**
@@ -90,9 +89,9 @@ public class App implements Callable<Boolean> {
     // Configures the loggers depending of the user's configuration.
     LoggingHelper.configureLoggingFramework(
         this.verbose ? Level.DEBUG : (this.quiet ? Level.WARN : Level.INFO));
-    final Logger logger = LogManager.getLogger();
+    var logger = LogManager.getLogger();
 
-    LibraryRegistry registry = new LibraryRegistry();
+    var registry = new LibraryRegistry();
 
     // Loads the P6 program specified by the user.
     logger.info("Loading file '" + this.path + "'");
@@ -110,7 +109,7 @@ public class App implements Callable<Boolean> {
     // Parses the program.
     Cell cell;
     try {
-      CellParser cellParser = new CellParser(source);
+      var cellParser = new CellParser(source);
       cell = cellParser.create(registry);
     } catch (InvalidSyntaxException | IllegalArgumentException e) {
       if (!this.verbose) {
@@ -121,14 +120,13 @@ public class App implements Callable<Boolean> {
     }
 
     // Runs the program.
-    ReactorCoordinator reactorCoordinator = new ReactorCoordinator(cell, this.iterationTarget,
-        this.stabilityTarget);
-    reactorCoordinator.run();
+    var coordinator = new ReactorCoordinator(cell, this.iterationTarget, this.stabilityTarget);
+    coordinator.run();
 
     // Waits for all the reactors to finish.
     try {
-      reactorCoordinator.block();
-      if (reactorCoordinator.getState() == ReactorCoordinator.State.FAILED) {
+      coordinator.block();
+      if (coordinator.getState() == ReactorCoordinator.State.FAILED) {
         logger.error("A reactor entered FAILED state");
         return false;
       }
@@ -142,9 +140,9 @@ public class App implements Callable<Boolean> {
 
     // Displays the results or saves them in a file.
     if (this.output != null) {
-      String export = this.exportCell(cell);
+      var export = this.exportCell(cell);
       try {
-        FileWriter fileWriter = new FileWriter(new File(this.output));
+        var fileWriter = new FileWriter(new File(this.output));
         fileWriter.write(export);
         fileWriter.close();
         logger.info("Results saved in file '" + this.output + "'");
@@ -172,7 +170,7 @@ public class App implements Callable<Boolean> {
     System.out.println("  ".repeat(level) + cell.getName());
     System.out.println("  ".repeat(level) + cell.getElements());
     System.out.println();
-    for (Cell subCell : cell.getSubCells()) {
+    for (var subCell : cell.getSubCells()) {
       printCell(subCell, level + 1);
     }
   }
@@ -198,13 +196,13 @@ public class App implements Callable<Boolean> {
    * @return The string representing the cell
    */
   private String exportCell(Cell cell) {
-    StringBuilder builder = new StringBuilder();
+    var builder = new StringBuilder();
     for (Element element : cell.getElements()) {
       builder.append(cell.getName()).append(" ");
       builder.append(element.getClass().getName()).append(" ");
       builder.append(element.toString()).append("\n");
     }
-    for (Cell subCell : cell.getSubCells()) {
+    for (var subCell : cell.getSubCells()) {
       builder.append(this.exportCell(subCell));
     }
     builder.append("---\n");

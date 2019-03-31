@@ -16,8 +16,8 @@ abstract class IntegerReactionPipelineStep implements ReactionPipelineStep {
    */
   @Override
   public List<Element> handle(List<Element> inputElements, Cell cell) {
-    List<IntegerElement> integerElements = new ArrayList<>();
-    for (Element element : inputElements) {
+    var integerElements = new ArrayList<IntegerElement>();
+    for (var element : inputElements) {
       if (!(element instanceof IntegerElement)) {
         return null;
       }

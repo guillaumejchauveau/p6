@@ -37,9 +37,9 @@ public class ReactionPipelineParser extends InstructionListParser<ReactionPipeli
    */
   @Override
   public List<ReactionPipelineStepInstruction> parse(String clause) throws InvalidSyntaxException {
-    int referencesIndex = clause.indexOf(':');
+    var referencesIndex = clause.indexOf(':');
     try {
-      String[] elementReferenceNames = clause.substring(0, referencesIndex).split(",");
+      var elementReferenceNames = clause.substring(0, referencesIndex).split(",");
       this.references.put(elementReferenceNames[0].trim(), Element.Side.LEFT);
       this.references.put(elementReferenceNames[1].trim(), Element.Side.RIGHT);
       return super.parse(clause.substring(referencesIndex + 1));
@@ -59,12 +59,12 @@ public class ReactionPipelineParser extends InstructionListParser<ReactionPipeli
    */
   public ReactionPipeline create(String clause, LibraryRegistry registry)
       throws InvalidSyntaxException {
-    List<ReactionPipelineStepInstruction> instructions = this.parse(clause);
+    var instructions = this.parse(clause);
     if (instructions.size() == 0) {
       throw new InvalidSyntaxException("Reaction pipeline step instruction expected", clause, 0);
     }
-    ReactionPipeline pipeline = new ReactionPipeline();
-    for (ReactionPipelineStepInstruction stepInstruction : instructions) {
+    var pipeline = new ReactionPipeline();
+    for (var stepInstruction : instructions) {
       pipeline.addStep(stepInstruction.create(registry));
     }
     return pipeline;

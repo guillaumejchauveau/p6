@@ -202,7 +202,7 @@ public class Cell {
    */
   public synchronized Element chooseElement() {
     int elementIndex = this.random.nextInt(this.getElementsCount());
-    Element element = this.elements.get(elementIndex);
+    var element = this.elements.get(elementIndex);
     this.elements.remove(elementIndex);
     return element;
   }
@@ -220,7 +220,7 @@ public class Cell {
     }
     this.parentCell.addAllElements(this.elements);
     this.parentCell.removeSubCell(this);
-    for (Cell subCell : this.getSubCells()) {
+    for (var subCell : this.getSubCells()) {
       this.parentCell.addSubCell(subCell);
     }
     this.isDissolved = true;

@@ -48,9 +48,9 @@ public class CellTest extends TestCase {
    */
   @Test
   public void elements() {
-    Element<Integer> x = new Element<Integer>(0) {
+    var x = new Element<>(0) {
     };
-    Cell cell = new Cell();
+    var cell = new Cell();
     Assert.assertEquals("Cell should be initialized with 0 elements", 0,
         cell.getElementsCount().intValue());
     cell.addElement(x);
@@ -59,7 +59,7 @@ public class CellTest extends TestCase {
     Assert.assertEquals("Cell should choose the only available element", x, cell.chooseElement());
     Assert.assertEquals("Cell should remove chosen elements", 0,
         cell.getElementsCount().intValue());
-    List<Element> elements = new ArrayList<>();
+    var elements = new ArrayList<Element>();
     cell.addAllElements(elements);
     elements.add(x);
     Assert.assertEquals("Cell should have 0 elements", 0,
@@ -74,7 +74,7 @@ public class CellTest extends TestCase {
    */
   @Test(expected = IllegalArgumentException.class)
   public void emptyCellElementChoice() {
-    Cell cell = new Cell();
+    var cell = new Cell();
     cell.chooseElement();
   }
 
@@ -83,13 +83,13 @@ public class CellTest extends TestCase {
    */
   @Test
   public void subCells() {
-    Cell rootCell = new Cell();
+    var rootCell = new Cell();
     Assert.assertFalse("Cell should not be initialized dissolved", rootCell.isDissolved());
     Assert.assertNull("Cell should not be initialized with a parent cell",
         rootCell.getParentCell());
     Assert.assertEquals("Cell should not be initialized with sub-cells", 0,
         rootCell.getSubCells().size());
-    Cell subCell1 = new Cell();
+    var subCell1 = new Cell();
     subCell1.setParentCell(rootCell);
     Assert.assertEquals("Parent cell should be set", rootCell, subCell1.getParentCell());
     subCell1 = new Cell();
@@ -98,14 +98,14 @@ public class CellTest extends TestCase {
     Assert.assertEquals(subCell1, rootCell.getSubCells().iterator().next());
     Assert.assertEquals("Sub-cell 1 should have parent cell", rootCell, subCell1.getParentCell());
 
-    Cell subCell2 = new Cell();
-    subCell1.addElement(new Element<Integer>(0) {
+    var subCell2 = new Cell();
+    subCell1.addElement(new Element<>(0) {
     });
-    subCell1.addElement(new Element<Integer>(1) {
+    subCell1.addElement(new Element<>(1) {
     });
-    subCell2.addElement(new Element<Integer>(2) {
+    subCell2.addElement(new Element<>(2) {
     });
-    subCell2.addElement(new Element<Integer>(3) {
+    subCell2.addElement(new Element<>(3) {
     });
     subCell1.addSubCell(subCell2);
     Assert.assertEquals("Root cell should have 1 sub-cell", 1, rootCell.getSubCells().size());
@@ -119,35 +119,35 @@ public class CellTest extends TestCase {
 
   @Test(expected = IllegalArgumentException.class)
   public void subCellLoop() {
-    Cell rootCell = new Cell();
-    Cell parentCell = new Cell();
+    var rootCell = new Cell();
+    var parentCell = new Cell();
     rootCell.addSubCell(parentCell);
     parentCell.addSubCell(rootCell);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void parentCellLoop() {
-    Cell parentCell = new Cell();
-    Cell subCell = new Cell();
+    var parentCell = new Cell();
+    var subCell = new Cell();
     parentCell.addSubCell(subCell);
     parentCell.setParentCell(subCell);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void subCellSelfLoop() {
-    Cell parentCell = new Cell();
+    var parentCell = new Cell();
     parentCell.addSubCell(parentCell);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void parentCellSelfLoop() {
-    Cell subCell = new Cell();
+    var subCell = new Cell();
     subCell.setParentCell(subCell);
   }
 
   @Test(expected = IllegalStateException.class)
   public void nonSubCellDissolution() {
-    Cell cell = new Cell();
+    var cell = new Cell();
     cell.dissolve();
   }
 }

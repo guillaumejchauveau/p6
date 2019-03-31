@@ -29,7 +29,7 @@ public class LibraryRegistry {
     this.reactionPipelineSteps = new HashMap<>();
     this.logger = LogManager.getLogger();
 
-    for (Library library : ServiceLoader.load(Library.class)) {
+    for (var library : ServiceLoader.load(Library.class)) {
       this.addLibrary(library);
     }
   }
@@ -44,14 +44,12 @@ public class LibraryRegistry {
       throw new IllegalArgumentException("Duplicated library");
     }
     this.libraries.put(library.getName(), library);
-    Map<String, InitArgsParser<? extends ElementGenerator>> libraryElementGenerators =
-        library.getElementGenerators();
-    for (String name : libraryElementGenerators.keySet()) {
+    var libraryElementGenerators = library.getElementGenerators();
+    for (var name : libraryElementGenerators.keySet()) {
       this.registerElementGenerator(name, libraryElementGenerators.get(name));
     }
-    Map<String, InitArgsParser<? extends ReactionPipelineStep>> libraryPipelineSteps =
-        library.getReactionPipelineSteps();
-    for (String name : libraryPipelineSteps.keySet()) {
+    var libraryPipelineSteps = library.getReactionPipelineSteps();
+    for (var name : libraryPipelineSteps.keySet()) {
       this.registerPipelineStep(name, libraryPipelineSteps.get(name));
     }
     this.logger.info("Library '" + library.getName() + "' loaded");
