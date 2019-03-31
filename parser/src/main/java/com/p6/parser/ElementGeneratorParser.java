@@ -4,7 +4,6 @@ import com.p6.core.genesis.ElementGenerator;
 import com.p6.lib.LibraryRegistry;
 import com.p6.parser.instruction.ElementGeneratorInstruction;
 import com.p6.parser.instruction.InstructionListParser;
-import java.util.List;
 import java.util.Map;
 
 /**

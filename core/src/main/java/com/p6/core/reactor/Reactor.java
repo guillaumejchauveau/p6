@@ -1,6 +1,5 @@
 package com.p6.core.reactor;
 
-import com.p6.core.reaction.ReactionPipeline;
 import com.p6.core.solution.Cell;
 import com.p6.core.solution.Element;
 import java.util.ArrayList;

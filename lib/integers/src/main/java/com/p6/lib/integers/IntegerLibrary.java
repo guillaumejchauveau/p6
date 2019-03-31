@@ -9,7 +9,6 @@ import com.p6.lib.integers.genesis.Range;
 import com.p6.lib.integers.reaction.Divisible;
 import com.p6.lib.integers.reaction.SortIntegers;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**

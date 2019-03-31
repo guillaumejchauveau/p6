@@ -2,7 +2,6 @@ package com.p6.core.solution;
 
 import com.p6.utils.tests.TestCase;
 import java.util.ArrayList;
-import java.util.List;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
