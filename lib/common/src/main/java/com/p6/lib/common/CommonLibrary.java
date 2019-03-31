@@ -24,7 +24,7 @@ public class CommonLibrary extends Library {
   }
 
   @Override
-  public Map<String, InitArgsParser<? extends ReactionPipelineStep>> getReactionPipelineSteps() {
+  public Map<String, InitArgsParser<ReactionPipelineStep>> getReactionPipelineSteps() {
     var reactionPipelineSteps = super.getReactionPipelineSteps();
 
     reactionPipelineSteps.put("choose", args -> {

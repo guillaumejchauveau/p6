@@ -16,8 +16,8 @@ import org.apache.logging.log4j.Logger;
  */
 public class LibraryRegistry {
   private Map<String, Library> libraries;
-  private Map<String, InitArgsParser<? extends ElementGenerator>> elementGenerators;
-  private Map<String, InitArgsParser<? extends ReactionPipelineStep>> reactionPipelineSteps;
+  private Map<String, InitArgsParser<ElementGenerator>> elementGenerators;
+  private Map<String, InitArgsParser<ReactionPipelineStep>> reactionPipelineSteps;
   private Logger logger;
 
   /**
@@ -62,7 +62,7 @@ public class LibraryRegistry {
    * @param elementGenerator The {@link InitArgsParser} used to instantiate the object
    */
   public void registerElementGenerator(
-      String name, InitArgsParser<? extends ElementGenerator> elementGenerator) {
+      String name, InitArgsParser<ElementGenerator> elementGenerator) {
     if (this.elementGenerators.containsKey(name)) {
       throw new IllegalArgumentException("Duplicated element generator '" + name + "'");
     }
@@ -75,8 +75,7 @@ public class LibraryRegistry {
    * @param name         The unique name for the reaction pipeline step
    * @param pipelineStep The {@link InitArgsParser} used to instantiate the object
    */
-  public void registerPipelineStep(String name,
-                                   InitArgsParser<? extends ReactionPipelineStep> pipelineStep) {
+  public void registerPipelineStep(String name, InitArgsParser<ReactionPipelineStep> pipelineStep) {
     if (this.reactionPipelineSteps.containsKey(name)) {
       throw new IllegalArgumentException("Duplicated reaction pipeline step '" + name + "'");
     }

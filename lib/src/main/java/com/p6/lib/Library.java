@@ -23,7 +23,7 @@ public abstract class Library {
    * @return The names of the provided {@link ElementGenerator}s mapped to their corresponding
    *      {@link InitArgsParser}.
    */
-  public Map<String, InitArgsParser<? extends ElementGenerator>> getElementGenerators() {
+  public Map<String, InitArgsParser<ElementGenerator>> getElementGenerators() {
     return new HashMap<>();
   }
 
@@ -34,7 +34,7 @@ public abstract class Library {
    * @return The names of the provided {@link ReactionPipelineStep}s mapped to their corresponding
    *     {@link InitArgsParser}.
    */
-  public Map<String, InitArgsParser<? extends ReactionPipelineStep>> getReactionPipelineSteps() {
+  public Map<String, InitArgsParser<ReactionPipelineStep>> getReactionPipelineSteps() {
     return new HashMap<>();
   }
 }

@@ -11,7 +11,7 @@ import java.util.List;
 import org.apache.logging.log4j.Level;
 
 
-public class CoreAPI {
+public class CoreDemo {
   public static void main(String[] args) throws InterruptedException {
     LoggingHelper.configureLoggingFramework(Level.DEBUG);
 
@@ -26,7 +26,7 @@ public class CoreAPI {
 
     cell.addAllElements(() -> {
       var elements = new ArrayList<Element>();
-      for (char c = 'a'; c <= 'z'; c++) {
+      for (var c = 'a'; c <= 'z'; c++) {
         elements.add(new CharElement(c));
       }
       return elements;
