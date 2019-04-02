@@ -1,3 +1,3 @@
 @echo off
 
-%~dp0\..\cli\bin\cli.bat %*
+java -cp %~dp0\..\cli\lib\*;. com.p6.cli.App %*

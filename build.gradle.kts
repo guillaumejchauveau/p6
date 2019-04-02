@@ -26,8 +26,8 @@ tasks.register<Copy>("dist") {
   from("build/docs/aggregateJavadoc") {
     into("docs")
   }
-  from("cli/build/install/cli") {
-    into("cli")
+  from("cli/build/install/cli/lib") {
+    into("cli/lib")
   }
   into("dist")
   finalizedBy("clean")

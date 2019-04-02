@@ -1,4 +1,3 @@
 #!/usr/bin/env bash
 
-chmod +x $(dirname $0)/../cli/bin/cli
-$(dirname $0)/../cli/bin/cli $*
+java -cp "$(dirname $0)/../cli/lib/*:." com.p6.cli.App $*

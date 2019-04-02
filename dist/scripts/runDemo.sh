@@ -6,6 +6,4 @@ if [[ $# -eq 0 ]]; then
 fi
 
 cd $(dirname $0)/..
-javac -cp "cli/lib/*" demos/demo/*.java
 java -cp "cli/lib/*:demos" $1
-rm demos/demo/*.class
