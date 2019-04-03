@@ -19,13 +19,13 @@ public abstract class ComparableReactionPipelineStep<T extends Comparable<T>>
       if (!(element instanceof ComparableElement)) {
         return null;
       }
-      // Checks if the value of the element is comparable with the other element values.
+      // Checks if the value of the element is comparable with the other elements' value.
       if (!this.getComparisonClass().isInstance(element.evaluate())) {
         return null;
       }
       comparableElements.add((ComparableElement<T>) element);
     }
-    return this.comparableTest(comparableElements, cell);
+    return this.comparableStep(comparableElements, cell);
   }
 
   protected abstract Class<T> getComparisonClass();
@@ -38,5 +38,5 @@ public abstract class ComparableReactionPipelineStep<T extends Comparable<T>>
    * @param cell     The current cell
    * @return The output elements
    */
-  protected abstract List<Element> comparableTest(List<ComparableElement<T>> elements, Cell cell);
+  protected abstract List<Element> comparableStep(List<ComparableElement<T>> elements, Cell cell);
 }
