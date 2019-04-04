@@ -18,6 +18,14 @@ public class SolutionBuilder {
 
   /**
    * Creates a solution builder.
+   */
+  public SolutionBuilder() {
+    this.sealed = false;
+    this.registry = null;
+  }
+
+  /**
+   * Creates a solution builder.
    *
    * @param registry The library registry used to create named element generators
    *                 and reaction pipeline steps.
@@ -42,6 +50,12 @@ public class SolutionBuilder {
   private void checkCurrentPipeline() {
     if (this.currentPipeline == null) {
       throw new IllegalStateException("Pipeline not created");
+    }
+  }
+
+  private void checkRegistry() {
+    if (this.registry == null) {
+      throw new IllegalStateException("Registry is not configured");
     }
   }
 
@@ -146,6 +160,7 @@ public class SolutionBuilder {
    * @return The solution builder for chained calls
    */
   public SolutionBuilder addElement(String name, Object... args) {
+    this.checkRegistry();
     return this.addElement(this.registry.createElementGenerator(name, args));
   }
 
@@ -186,6 +201,7 @@ public class SolutionBuilder {
    * @return The solution builder for chained calls
    */
   public SolutionBuilder addStep(String name, Object... args) {
+    this.checkRegistry();
     return this.addStep(this.registry.createReactionPipelineStep(name, args));
   }
 }
