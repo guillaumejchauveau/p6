@@ -84,7 +84,7 @@ public class CellParser {
     if (!(this.structure instanceof Map)) {
       throw new InvalidSyntaxException("Cell structure expected");
     }
-    Map structure = (Map) this.structure;
+    var structure = (Map) this.structure;
 
     // Cell name.
     try {
@@ -108,7 +108,7 @@ public class CellParser {
         throw new InvalidSyntaxException("Cell rules expected to be a list");
       }
 
-      for (Object rule : (List) structure.get("rules")) {
+      for (var rule : (List) structure.get("rules")) {
         if (!(rule instanceof String)) {
           throw new InvalidSyntaxException("Cell rule expected to be a string");
         }
@@ -127,7 +127,7 @@ public class CellParser {
       if (!(structure.get("elements") instanceof List)) {
         throw new InvalidSyntaxException("Cell elements expected to be a list");
       }
-      for (Object element : (List) structure.get("elements")) {
+      for (var element : (List) structure.get("elements")) {
         if (!(element instanceof String)) {
           throw new InvalidSyntaxException("Cell element expected to be a string");
         }
@@ -159,9 +159,9 @@ public class CellParser {
    *                 reaction pipelines
    */
   private void parseSubCells(LibraryRegistry registry) throws InvalidSyntaxException {
-    for (Object subCellStructure : this.subCellsStructures) {
-      CellParser subCellParser = new CellParser(subCellStructure);
-      Cell subCell = subCellParser.create(registry);
+    for (var subCellStructure : this.subCellsStructures) {
+      var subCellParser = new CellParser(subCellStructure);
+      var subCell = subCellParser.create(registry);
       this.subCells.add(subCell);
       this.references.put(subCell.getName(), subCell);
     }
@@ -176,8 +176,8 @@ public class CellParser {
    */
   private void parseReactionPipelines(LibraryRegistry registry) throws InvalidSyntaxException {
     try {
-      ReactionPipelineParser reactionPipelineParser = new ReactionPipelineParser(this.references);
-      for (String reactionPipelineSource : this.reactionPipelinesSources) {
+      var reactionPipelineParser = new ReactionPipelineParser(this.references);
+      for (var reactionPipelineSource : this.reactionPipelinesSources) {
         this.reactionPipelines.add(reactionPipelineParser.create(reactionPipelineSource, registry));
       }
     } catch (ReflectiveOperationException e) {
@@ -194,8 +194,8 @@ public class CellParser {
    */
   private void parseElementGenerators(LibraryRegistry registry) throws InvalidSyntaxException {
     try {
-      ElementGeneratorParser elementGeneratorParser = new ElementGeneratorParser(this.references);
-      for (String elementGeneratorSource : this.elementGeneratorsSources) {
+      var elementGeneratorParser = new ElementGeneratorParser(this.references);
+      for (var elementGeneratorSource : this.elementGeneratorsSources) {
         this.elementGenerators.add(elementGeneratorParser.create(elementGeneratorSource, registry));
       }
     } catch (ReflectiveOperationException e) {
@@ -217,17 +217,17 @@ public class CellParser {
     this.parseElementGenerators(registry);
     this.parseReactionPipelines(registry);
     this.logger.debug("Creating cell '" + this.name + "'");
-    Cell cell = new Cell();
+    var cell = new Cell();
     cell.setName(this.name);
-    for (Cell subCell : this.subCells) {
+    for (var subCell : this.subCells) {
       cell.addSubCell(subCell);
     }
     this.logger.debug("Added " + this.subCells.size() + " sub-cells");
-    for (ReactionPipeline reactionPipeline : this.reactionPipelines) {
+    for (var reactionPipeline : this.reactionPipelines) {
       cell.addPipeline(reactionPipeline);
     }
     this.logger.debug("Added " + this.reactionPipelines.size() + " reaction pipelines");
-    for (ElementGenerator elementGenerator : this.elementGenerators) {
+    for (var elementGenerator : this.elementGenerators) {
       cell.addAllElements(elementGenerator);
     }
     this.logger.debug("Added " + this.elementGenerators.size() + " element generators");

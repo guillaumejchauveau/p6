@@ -27,10 +27,9 @@ public abstract class Sort<T extends Comparable<T>> extends ComparableReactionPi
    * {@inheritDoc}
    */
   @Override
-  protected List<Element> comparableTest(List<ComparableElement<T>> comparableElements, Cell cell) {
-    comparableElements.sort((ComparableElement<T> o1, ComparableElement<T> o2) -> {
-      return o1.compareTo(o2) * (this.elementSide == Element.Side.LEFT ? -1 : 1);
-    });
+  protected List<Element> comparableStep(List<ComparableElement<T>> comparableElements, Cell cell) {
+    var order = this.elementSide == Element.Side.LEFT ? -1 : 1;
+    comparableElements.sort((o1, o2) -> o1.compareTo(o2) * order);
     return new ArrayList<>(comparableElements);
   }
 }

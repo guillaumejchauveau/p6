@@ -1,0 +1,11 @@
+# Un crible d'Eratosthene.
+# Une cible d'iteration a 2000 et une stabilite a 500 suffisent pour les plus part des cas (avec 80 entiers).
+{
+  name: crible
+  rules: [
+    x, y : divisible($x) : choose($y)
+  ]
+  elements: [
+    range(2, 80, 1)
+  ]
+}

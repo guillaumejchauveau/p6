@@ -14,8 +14,8 @@ public class Divisible extends IntegerReactionPipelineStep {
   }
 
   @Override
-  protected List<Element> integerTest(List<IntegerElement> elements, Cell cell) {
-    List<Element> output = new ArrayList<>();
+  protected List<Element> integerStep(List<IntegerElement> elements, Cell cell) {
+    var output = new ArrayList<Element>();
     if (elements.get(0).evaluate() % elements.get(1).evaluate() == 0) {
       output.add(elements.get(0));
       output.add(elements.get(1));
@@ -26,7 +26,7 @@ public class Divisible extends IntegerReactionPipelineStep {
       return null;
     }
     if (this.elementSide == Element.Side.RIGHT) {
-      Element tmp = output.get(0);
+      var tmp = output.get(0);
       output.remove(0);
       output.add(tmp);
     }

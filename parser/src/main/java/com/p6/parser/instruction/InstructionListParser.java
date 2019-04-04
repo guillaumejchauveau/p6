@@ -60,16 +60,21 @@ public abstract class InstructionListParser<T extends Instruction> {
    * @throws InvalidSyntaxException Thrown if the string could not be parsed
    */
   public List<T> parse(String clause) throws InvalidSyntaxException {
-    List<T> instructions = new ArrayList<>();
-    String buffer = "";
+    var instructions = new ArrayList<T>();
+    var buffer = "";
     T instruction = null;
-    State state = State.INSTRUCTION_NAME;
+    var state = State.INSTRUCTION_NAME;
 
-    for (int i = 0; i < clause.length(); i++) {
-      char currentChar = clause.charAt(i);
-      boolean eol = i == clause.length() - 1;
+    for (var i = 0; i < clause.length(); i++) {
+      var currentChar = clause.charAt(i);
+      var eol = i == clause.length() - 1;
 
-      if (",:()".contains(Character.toString(currentChar)) || eol) {
+      var specialChar = ",:()".contains(Character.toString(currentChar));
+
+      if (specialChar || eol) {
+        if (!specialChar) {
+          buffer += currentChar;
+        }
         buffer = buffer.trim();
 
         switch (state) {

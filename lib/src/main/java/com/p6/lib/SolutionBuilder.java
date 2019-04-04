@@ -7,7 +7,6 @@ import com.p6.core.solution.Cell;
 import com.p6.core.solution.Element;
 import java.util.Collection;
 
-// TODO: Create a guide.
 /**
  * An object used to created easily a P6 program (a complete solution).
  */
@@ -16,6 +15,14 @@ public class SolutionBuilder {
   private ReactionPipeline currentPipeline;
   private Boolean sealed;
   private LibraryRegistry registry;
+
+  /**
+   * Creates a solution builder.
+   */
+  public SolutionBuilder() {
+    this.sealed = false;
+    this.registry = null;
+  }
 
   /**
    * Creates a solution builder.
@@ -46,6 +53,12 @@ public class SolutionBuilder {
     }
   }
 
+  private void checkRegistry() {
+    if (this.registry == null) {
+      throw new IllegalStateException("Registry is not configured");
+    }
+  }
+
   /**
    * Returns the created solution if the top cell is sealed.
    *
@@ -66,7 +79,7 @@ public class SolutionBuilder {
    */
   public Cell createCell() {
     this.checkSeal();
-    Cell cell = new Cell();
+    var cell = new Cell();
     if (this.currentCell != null) {
       if (this.currentPipeline != null) {
         this.currentCell.addPipeline(this.currentPipeline);
@@ -147,6 +160,7 @@ public class SolutionBuilder {
    * @return The solution builder for chained calls
    */
   public SolutionBuilder addElement(String name, Object... args) {
+    this.checkRegistry();
     return this.addElement(this.registry.createElementGenerator(name, args));
   }
 
@@ -187,6 +201,7 @@ public class SolutionBuilder {
    * @return The solution builder for chained calls
    */
   public SolutionBuilder addStep(String name, Object... args) {
+    this.checkRegistry();
     return this.addStep(this.registry.createReactionPipelineStep(name, args));
   }
 }

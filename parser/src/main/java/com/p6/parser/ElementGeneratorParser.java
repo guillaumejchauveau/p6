@@ -4,7 +4,6 @@ import com.p6.core.genesis.ElementGenerator;
 import com.p6.lib.LibraryRegistry;
 import com.p6.parser.instruction.ElementGeneratorInstruction;
 import com.p6.parser.instruction.InstructionListParser;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -38,7 +37,7 @@ public class ElementGeneratorParser extends InstructionListParser<ElementGenerat
    */
   public ElementGenerator create(String clause, LibraryRegistry registry)
       throws InvalidSyntaxException {
-    List<ElementGeneratorInstruction> instructions = this.parse(clause);
+    var instructions = this.parse(clause);
     if (instructions.size() == 0) {
       throw new InvalidSyntaxException("Element generator instruction expected", clause, 0);
     }

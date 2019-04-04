@@ -3,6 +3,10 @@ plugins {
   application
 }
 
+java {
+  sourceCompatibility = JavaVersion.VERSION_11
+}
+
 application {
   mainClassName = "com.p6.cli.App"
 }

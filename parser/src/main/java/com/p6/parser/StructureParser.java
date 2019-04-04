@@ -85,10 +85,10 @@ public class StructureParser {
    * @throws InvalidSyntaxException Thrown if the syntax of the source is invalid
    */
   public Object parseNextStructure() throws InvalidSyntaxException {
-    AtomicReference<Object> structure = new AtomicReference<>();
+    var structure = new AtomicReference<>();
     structure.set(null);
 
-    this.parseSource((Character currentChar, Boolean eol) -> {
+    this.parseSource((currentChar, eol) -> {
       if (currentChar != WHITESPACE && !eol) {
         switch (currentChar) {
           case LIST_START:
@@ -115,8 +115,8 @@ public class StructureParser {
    * @return The extracted string
    */
   private String parseNextString() throws InvalidSyntaxException {
-    StringBuilder builder = new StringBuilder();
-    this.parseSource((Character currentChar, Boolean eol) -> {
+    var builder = new StringBuilder();
+    this.parseSource((currentChar, eol) -> {
       if (eol) {
         return true;
       }
@@ -138,9 +138,9 @@ public class StructureParser {
    * @return The extracted list
    */
   private List parseNextList() throws InvalidSyntaxException {
-    List<Object> list = new ArrayList<>();
+    var list = new ArrayList<>();
 
-    this.parseSource((Character currentChar, Boolean eol) -> {
+    this.parseSource((currentChar, eol) -> {
       if (currentChar == LIST_START && this.inProgressListsStack.peek() != list) {
         this.inProgressListsStack.push(list);
         return false;
@@ -180,10 +180,10 @@ public class StructureParser {
    * @return The extracted map
    */
   private Map<String, Object> parseNextMap() throws InvalidSyntaxException {
-    Map<String, Object> map = new HashMap<>();
-    AtomicReference<StringBuilder> key = new AtomicReference<>();
+    var map = new HashMap<String, Object>();
+    var key = new AtomicReference<StringBuilder>();
 
-    this.parseSource((Character currentChar, Boolean eol) -> {
+    this.parseSource((currentChar, eol) -> {
       if (currentChar == MAP_START && this.inProgressMapsStack.peek() != map) {
         this.inProgressMapsStack.push(map);
         return false;
@@ -235,12 +235,12 @@ public class StructureParser {
    * @param parser A function that use the current position's character to actually parse the source
    */
   private void parseSource(StructureCharParser parser) throws InvalidSyntaxException {
-    boolean skipLine = false;
-    boolean eol = false;
-    boolean stop = false;
+    var skipLine = false;
+    var eol = false;
+    var stop = false;
 
     for (; this.position < this.source.length() && !stop; this.position++) {
-      char currentChar = this.source.charAt(this.position);
+      var currentChar = this.source.charAt(this.position);
 
       if (LINE_TERMINATORS.contains(Character.toString(currentChar))) {
         skipLine = false;

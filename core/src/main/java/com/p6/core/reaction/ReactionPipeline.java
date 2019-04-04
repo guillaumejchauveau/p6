@@ -45,8 +45,8 @@ public class ReactionPipeline {
    * @return The status of the pipeline: true if it succeeded, false if it failed.
    */
   public Boolean handle(List<Element> inputElements, Cell cell) {
-    List<Element> outputElements = inputElements;
-    for (ReactionPipelineStep step : this.steps) {
+    var outputElements = inputElements;
+    for (var step : this.steps) {
       outputElements = step.handle(outputElements, cell);
       if (cell.isDissolved()) {
         this.logger.debug("Cell dissolved with steps " + this);

@@ -14,11 +14,11 @@ import org.junit.Test;
 public class DissolveCellTest extends TestCase {
   @Test
   public void test() {
-    Cell rootCell = new Cell();
-    Cell cell = new Cell();
+    var rootCell = new Cell();
+    var cell = new Cell();
     rootCell.addSubCell(cell);
-    DissolveCell step = new DissolveCell();
-    Element el = new Element<Object>(null) {
+    var step = new DissolveCell();
+    var el = new Element<>(null) {
     };
     //product.react(el, el);
     Assert.assertTrue(cell.isDissolved());

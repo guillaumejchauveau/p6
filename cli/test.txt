@@ -1,9 +1,0 @@
-{
-  name: Eratosthene
-  rules: [
-    a, b : divisible($a) : choose($b)
-  ]
-  elements: [
-    range(2,80, 1)
-  ]
-}

@@ -30,7 +30,7 @@ public class CreateElement implements ReactionPipelineStep {
    */
   @Override
   public List<Element> handle(List<Element> inputElements, Cell cell) {
-    List<Element> outputElements = new ArrayList<>();
+    var outputElements = new ArrayList<Element>();
     try {
       outputElements.add(this.elementConstructor.newInstance(this.args));
     } catch (ReflectiveOperationException e) {

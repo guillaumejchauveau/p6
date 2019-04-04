@@ -16,8 +16,8 @@ import org.apache.logging.log4j.Logger;
  */
 public class LibraryRegistry {
   private Map<String, Library> libraries;
-  private Map<String, InitArgsParser<? extends ElementGenerator>> elementGenerators;
-  private Map<String, InitArgsParser<? extends ReactionPipelineStep>> reactionPipelineSteps;
+  private Map<String, InitArgsParser<ElementGenerator>> elementGenerators;
+  private Map<String, InitArgsParser<ReactionPipelineStep>> reactionPipelineSteps;
   private Logger logger;
 
   /**
@@ -29,7 +29,7 @@ public class LibraryRegistry {
     this.reactionPipelineSteps = new HashMap<>();
     this.logger = LogManager.getLogger();
 
-    for (Library library : ServiceLoader.load(Library.class)) {
+    for (var library : ServiceLoader.load(Library.class)) {
       this.addLibrary(library);
     }
   }
@@ -44,14 +44,12 @@ public class LibraryRegistry {
       throw new IllegalArgumentException("Duplicated library");
     }
     this.libraries.put(library.getName(), library);
-    Map<String, InitArgsParser<? extends ElementGenerator>> libraryElementGenerators =
-        library.getElementGenerators();
-    for (String name : libraryElementGenerators.keySet()) {
+    var libraryElementGenerators = library.getElementGenerators();
+    for (var name : libraryElementGenerators.keySet()) {
       this.registerElementGenerator(name, libraryElementGenerators.get(name));
     }
-    Map<String, InitArgsParser<? extends ReactionPipelineStep>> libraryPipelineSteps =
-        library.getReactionPipelineSteps();
-    for (String name : libraryPipelineSteps.keySet()) {
+    var libraryPipelineSteps = library.getReactionPipelineSteps();
+    for (var name : libraryPipelineSteps.keySet()) {
       this.registerPipelineStep(name, libraryPipelineSteps.get(name));
     }
     this.logger.info("Library '" + library.getName() + "' loaded");
@@ -64,9 +62,9 @@ public class LibraryRegistry {
    * @param elementGenerator The {@link InitArgsParser} used to instantiate the object
    */
   public void registerElementGenerator(
-      String name, InitArgsParser<? extends ElementGenerator> elementGenerator) {
+      String name, InitArgsParser<ElementGenerator> elementGenerator) {
     if (this.elementGenerators.containsKey(name)) {
-      throw new IllegalArgumentException("Duplicated element generator");
+      throw new IllegalArgumentException("Duplicated element generator '" + name + "'");
     }
     this.elementGenerators.put(name, elementGenerator);
   }
@@ -77,10 +75,9 @@ public class LibraryRegistry {
    * @param name         The unique name for the reaction pipeline step
    * @param pipelineStep The {@link InitArgsParser} used to instantiate the object
    */
-  public void registerPipelineStep(String name,
-                                   InitArgsParser<? extends ReactionPipelineStep> pipelineStep) {
+  public void registerPipelineStep(String name, InitArgsParser<ReactionPipelineStep> pipelineStep) {
     if (this.reactionPipelineSteps.containsKey(name)) {
-      throw new IllegalArgumentException("Duplicated reaction pipeline step");
+      throw new IllegalArgumentException("Duplicated reaction pipeline step '" + name + "'");
     }
     this.reactionPipelineSteps.put(name, pipelineStep);
   }
@@ -94,7 +91,7 @@ public class LibraryRegistry {
    */
   public ElementGenerator createElementGenerator(String name, Object... args) {
     if (!this.elementGenerators.containsKey(name)) {
-      throw new IllegalArgumentException("Unknown element generator");
+      throw new IllegalArgumentException("Unknown element generator '" + name + "'");
     }
     return this.elementGenerators.get(name).parseArgs(args);
   }
@@ -108,7 +105,7 @@ public class LibraryRegistry {
    */
   public ReactionPipelineStep createReactionPipelineStep(String name, Object... args) {
     if (!this.reactionPipelineSteps.containsKey(name)) {
-      throw new IllegalArgumentException("Unknown reaction pipeline step");
+      throw new IllegalArgumentException("Unknown reaction pipeline step '" + name + "'");
     }
     return this.reactionPipelineSteps.get(name).parseArgs(args);
   }

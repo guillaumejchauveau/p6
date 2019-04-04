@@ -16,14 +16,14 @@ abstract class IntegerReactionPipelineStep implements ReactionPipelineStep {
    */
   @Override
   public List<Element> handle(List<Element> inputElements, Cell cell) {
-    List<IntegerElement> integerElements = new ArrayList<>();
-    for (Element element : inputElements) {
+    var integerElements = new ArrayList<IntegerElement>();
+    for (var element : inputElements) {
       if (!(element instanceof IntegerElement)) {
         return null;
       }
       integerElements.add((IntegerElement) element);
     }
-    return this.integerTest(integerElements, cell);
+    return this.integerStep(integerElements, cell);
   }
 
   /**
@@ -34,5 +34,5 @@ abstract class IntegerReactionPipelineStep implements ReactionPipelineStep {
    * @param cell     The current cell
    * @return The output elements
    */
-  protected abstract List<Element> integerTest(List<IntegerElement> elements, Cell cell);
+  protected abstract List<Element> integerStep(List<IntegerElement> elements, Cell cell);
 }

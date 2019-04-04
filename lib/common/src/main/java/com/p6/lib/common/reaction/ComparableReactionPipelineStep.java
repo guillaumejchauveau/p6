@@ -14,18 +14,18 @@ public abstract class ComparableReactionPipelineStep<T extends Comparable<T>>
    */
   @Override
   public List<Element> handle(List<Element> inputElements, Cell cell) {
-    List<ComparableElement<T>> comparableElements = new ArrayList<>();
-    for (Element element : inputElements) {
+    var comparableElements = new ArrayList<ComparableElement<T>>();
+    for (var element : inputElements) {
       if (!(element instanceof ComparableElement)) {
         return null;
       }
-      // Checks if the value of the element is comparable with the other element values.
+      // Checks if the value of the element is comparable with the other elements' value.
       if (!this.getComparisonClass().isInstance(element.evaluate())) {
         return null;
       }
       comparableElements.add((ComparableElement<T>) element);
     }
-    return this.comparableTest(comparableElements, cell);
+    return this.comparableStep(comparableElements, cell);
   }
 
   protected abstract Class<T> getComparisonClass();
@@ -38,5 +38,5 @@ public abstract class ComparableReactionPipelineStep<T extends Comparable<T>>
    * @param cell     The current cell
    * @return The output elements
    */
-  protected abstract List<Element> comparableTest(List<ComparableElement<T>> elements, Cell cell);
+  protected abstract List<Element> comparableStep(List<ComparableElement<T>> elements, Cell cell);
 }
